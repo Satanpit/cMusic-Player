@@ -41,15 +41,21 @@
             	<div data-ng-click="Play(track, $index, searchTracks.items)" class="play"></div>
                 
                 <div data-ng-if="track.owner_id != owner_id" class="track-options">
-                	<a data-ng-click="addToMyPlaylist(track)" href="">
+                	<a data-title="Окрыть информацию об исполнителе" data-ng-click="artistMoreInfo(track.artist)" href="">
+                        <i class="a-icon-info-sign a-icon-opacity"></i>
+                    </a>
+                	<a data-title="Добавить композициию в мои аудиозаписи" data-ng-click="addToMyPlaylist(track)" href="">
                         <i class="a-icon-plus a-icon-opacity"></i>
                     </a>
                 </div>
                 <div data-ng-if="track.owner_id == owner_id" class="track-options">
-                	<a data-ng-click="editMyTrack(track, $index, 2)" href="">
+                	<a data-title="Окрыть информацию об исполнителе" data-ng-click="artistMoreInfo(track.artist)" href="">
+                        <i class="a-icon-info-sign a-icon-opacity"></i>
+                    </a>
+                	<a data-title="Редактировать трек" data-ng-click="editMyTrack(track, $index, 2)" href="">
                         <i class="a-icon-pencil a-icon-opacity"></i>
                     </a>
-                    <a data-ng-click="deleteMyTrack(track.id, track.owner_id, $index, 2)" href="">
+                    <a data-title="Удалить трек" data-ng-click="deleteMyTrack(track.id, track.owner_id, $index, 2)" href="">
                         <i class="a-icon-remove a-icon-opacity"></i>
                     </a>
                 </div>
