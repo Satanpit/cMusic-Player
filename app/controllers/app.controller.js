@@ -1035,7 +1035,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 			$scope.Play($scope.tracks[$scope.current_index + 1], $scope.current_index + 1, $scope.isMyPlaylist ? undefined : $scope.tracks);
 		}
 		else {
-			$scope.Play($scope.tracks[0], 0, $scope.playType);
+			$scope.Play($scope.tracks[0], 0, $scope.isMyPlaylist ? undefined : $scope.tracks);
 		}
 		
 		tracker.sendEvent('Следующий трек', 'Следующий трек');
