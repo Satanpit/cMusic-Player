@@ -1,0 +1,115 @@
+<section id="events">
+	<header data-ng-init="User('lastfmUser').getLastFmUserInfo()" class="tabs-header clear">
+    	<img src="icons/no-album.png" width="64" height="64" data-image="{{lastfmUser.image[1]['#text']}}" >
+        <h4>События</h4>
+        
+        <span data-ng-if="is_lastfm_auth" class="user-name">{{lastfmUser.name}}</span>
+        <span data-ng-if="!is_lastfm_auth" class="user-name">Гость</span>
+        
+        <nav data-ng-init="eventsType = 'all'">
+            <a 
+                data-ng-click="eventsType = 'all'" 
+                data-ng-class="{'active' : eventsType == 'all'}" 
+            href=""><i class="a-icon-calendar a-icon-opacity"></i> Все события</a>
+            
+            <a 
+                data-ng-click="Events('recommendedEvents').getRecommendedEvents(); eventsType = 'recommended'" 
+                data-ng-class="{'active' : eventsType == 'recommended'}" 
+            href=""><i class="a-icon-comment a-icon-opacity"></i> Рекомендованные</a>
+            
+            <a 
+                data-ng-click="Events('userEvents').getUserEvents(); eventsType = 'my'" 
+                data-ng-class="{'active' : eventsType == 'my'}" 
+            href=""><i class="a-icon-user a-icon-opacity"></i> Мои концерты</a>
+        </nav>
+    </header>
+    
+    <div data-ng-init="Events('geoEvents').getGeoEvents()" data-scroll="Events('geoEvents').getGeoEvents(1)" data-ng-if="eventsType == 'all'" class="slide">
+        <div data-ng-if="geoEvents">
+            <div class="event clear" data-ng-repeat="event in geoEvents.items">
+                <div class="event-date">
+                    <b>{{event.startDate.date}}</b>
+                    {{event.startDate.month}} {{event.startDate.year}}
+                </div>
+                <div class="event-content">
+                    <h3>{{event.title}}</h3>
+                    <div class="event-artists text-overflow">{{event.artists.artist}}</div>
+                    
+                    <div class="event-venue">
+                        <span class="blue-bg"><i class="a-icon-map-marker a-icon-white"></i></span>
+                        <span class="venue">{{event.venue.location.city}}, {{event.venue.location.country}}</span>
+                    </div>
+                    
+                    <a href="" class="btn btn-min" data-ng-click="getEventFull(event.id)">Читать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="message" data-ng-if="!geoEvents">
+        	Событий не найдено
+        </div>
+    </div>
+    
+    <div data-ng-if="eventsType == 'recommended'" data-scroll="Events('recommendedEvents').getRecommendedEvents(1)" class="slide">
+        <div data-ng-if="recommendedEvents">
+            <div class="event clear" data-ng-repeat="event in recommendedEvents.items">
+                <div class="event-date">
+                    <b>{{event.startDate.date}}</b>
+                    {{event.startDate.month}} {{event.startDate.year}}
+                </div>
+                <div class="event-content">
+                    <h3>{{event.title}}</h3>
+                    <div class="event-artists text-overflow">{{event.artists.artist}}</div>
+                    
+                    <div class="event-venue">
+                        <span class="blue-bg"><i class="a-icon-map-marker a-icon-white"></i></span>
+                        <span class="venue">{{event.venue.location.city}}, {{event.venue.location.country}}</span>
+                    </div>
+                    
+                    <a href="" class="btn btn-min" data-ng-click="getEventFull(event.id)">Читать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="message" data-ng-if="!is_lastfm_auth">
+            Для просмотра этого раздела Вам нужно авторизироваться на LastFM 
+            <a class="btn btn-min btn-red right" data-ng-click="GetLastfmAuthForm()" href="">
+                <b><i class="a-icon-user a-icon-white"></i></b>
+                Войти на LastFM
+            </a>
+        </div>
+        <div class="message" data-ng-if="!geoEvents">
+        	Событий не найдено
+        </div>
+    </div>
+    
+    <div data-ng-if="eventsType == 'my'" data-scroll="Events('userEvents').getUserEvents(1)" class="slide">
+        <div data-ng-if="userEvents">
+            <div class="event clear" data-ng-repeat="event in userEvents.items">
+                <div class="event-date">
+                    <b>{{event.startDate.date}}</b>
+                    {{event.startDate.month}} {{event.startDate.year}}
+                </div>
+                <div class="event-content">
+                    <h3>{{event.title}}</h3>
+                    <div class="event-artists text-overflow">{{event.artists.artist}}</div>
+                    
+                    <div class="event-venue">
+                        <span class="blue-bg"><i class="a-icon-map-marker a-icon-white"></i></span>
+                        <span class="venue">{{event.venue.location.city}}, {{event.venue.location.country}}</span>
+                    </div>
+                    
+                    <a href="" class="btn btn-min" data-ng-click="getEventFull(event.id)">Читать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="message" data-ng-if="!is_lastfm_auth">
+            Для просмотра этого раздела Вам нужно авторизироваться на LastFM 
+            <a class="btn btn-min btn-red right" data-ng-click="GetLastfmAuthForm()" href="">
+                <b><i class="a-icon-user a-icon-white"></i></b>
+                Войти на LastFM
+            </a>
+        </div>
+        <div class="message" data-ng-if="!geoEvents">
+        	Событий не найдено
+        </div>
+    </div>
+</section>

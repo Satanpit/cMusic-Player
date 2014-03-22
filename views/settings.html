@@ -1,0 +1,63 @@
+<div id="cmusic-settings">
+	<div class="modal-content">
+    	<a class="modal-close" data-ng-click="showSettings()" href="">Закрыть <i class="a-icon-window-close a-icon-white"></i></a>
+    	<h1> <img src="/icons/settings-large.png" /> Настройки</h1>
+        
+        <p>&nbsp;</p>
+        
+        <div class="clear" id="cmusic-accounts">
+        	<div id="vk-account">
+            	<img width="126" height="126" src="/icons/no-album.png" data-image="{{vkUser.photo_200}}" />
+                <div class="title">Аккаунт ВКонтакте</div>
+                <div class="user-name">{{vkUser.first_name}} {{vkUser.last_name}}</div>
+            </div>
+            <div data-ng-if="is_lastfm_auth" id="lastfm-account">
+            	<img width="126" height="126" src="/icons/no-album.png" data-image="{{lastfmUser.image[2]['#text']}}" />
+                <div class="title">Аккаунт LastFM</div>
+                <div class="user-name">{{lastfmUser.name}}</div>
+            </div>
+            <div data-ng-if="!is_lastfm_auth" id="lastfm-account">
+            	<a data-ng-click="GetLastfmAuthForm()" class="btn btn-large">
+                    <b><img src="/icons/icon-enter.png" /></b>
+                    Вход LastFM
+                </a>
+            </div>
+        </div>
+        
+        <p>&nbsp;</p>
+        
+        <div class="row">
+            <div class="checkbox">	
+                <input data-ng-change="notifications()" data-ng-model="$parent.isNotifications" type="checkbox" id="notifications"/>
+                <label for="notifications"></label>
+            </div>
+            Показывать уведомления о следующем треке в свернутом режиме
+        </div>
+        <div class="row">
+            <div class="checkbox">	
+                <input data-ng-change="scrobble()" data-ng-model="$parent.isScrobble" type="checkbox"  id="isScrobble" name="isScrobble" />
+                <label for="isScrobble"></label>
+            </div>
+            Включить скробблинг
+        </div>
+        <div class="row">
+            <div class="checkbox">	
+                <input data-ng-change="translation()" data-ng-model="$parent.isTranslation"  type="checkbox" id="isTranslation" name="isTranslation" />
+                <label for="isTranslation"></label>
+            </div>
+            Включить трансляцию текущего трека в статус ВК
+        </div>
+        
+        <div id="hotkeys">
+        	<h5>Горячие клавиши приложения:</h5>
+            
+            <ul class="list">
+            	<li><b>Ctrl + Space</b> - плей/пауза</li>
+                <li><b>Ctrl + Next</b> - следующий трек</li>
+                <li><b>Ctrl + Prev</b> - предыдущий трек</li>
+                <li><b>Ctrl + Up</b> - громкость +</li>
+                <li><b>Ctrl + Down</b> - громкость -</li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="modal-window">
+    <div data-ng-click="modalClose()" class="modal-window-bg"></div>
+    <div class="modal-window-content">
+        <header>Редактировать композицию <a data-ng-click="modalClose()" class="close"><i class="a-icon-window-close a-icon-white"></i></a></header>
+        <section>
+            <form data-ng-submit="saveTrackInfo()">
+                <div class="row clear">
+                    <label for="track-artist">Исполнитель</label>
+                    <input data-ng-model="editableTrack.artist" type="text" name="track-artist" id="track-artist">
+                </div>
+                <div class="row clear">
+                    <label for="track-title">Название</label>
+                    <input data-ng-model="editableTrack.title" type="text" name="track-title" id="track-title">
+                </div>
+                <div class="row clear">
+                    <label for="track-genre">Жанр</label>
+                    <select 
+                        data-ng-model="editableTrack.genre_id"  
+                        data-ng-options="key as value for (key, value) in getGenreList()">
+                    </select>
+                </div>
+                <div class="row clear">
+                    <label for="track-title">&nbsp;</label>
+                    <input type="submit" value="Сохранить" />
+                </div>
+            </form>
+        </section> 
+    </div>
+</div>

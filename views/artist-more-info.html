@@ -1,0 +1,243 @@
+<section id="artist-more-info">
+	<header class="tabs-header clear">
+    	<img src="icons/no-album.png" width="64" height="64" data-image="{{artist_min_info.image['#text']}}" >
+        <h4>{{artist_min_info.name}}</h4>
+        
+        <ul class="artist-tags">
+            <li data-ng-repeat="tag in artist_min_info.tags">
+                {{tag.name}}
+            </li>
+        </ul>
+        
+        <nav data-ng-init="$parent.moreInfoType = 'bio'">
+            <a 
+                data-ng-click="$parent.moreInfoType = 'bio'" 
+                data-ng-class="{'active' : moreInfoType == 'bio'}" 
+            href=""><i class="a-icon-music a-icon-opacity"></i> Информация</a>
+            
+            <a 
+                data-ng-click="Artist(artist_min_info.name).getSimilar('moreInfoSimilar');$parent.moreInfoType = 'similar'" 
+                data-ng-class="{'active' : moreInfoType == 'similar'}" 
+            href=""><i class="a-icon-search a-icon-opacity"></i> Похожие исполнители</a>
+            
+            <a 
+                data-ng-click="Artist(artist_min_info.name).getAlbums('moreInfoArtistTopAlbums'); $parent.moreInfoType = 'albums'" 
+                data-ng-class="{'active' : moreInfoType == 'albums'}" 
+            href=""><i class="a-icon-th a-icon-opacity"></i> Дискография</a>
+            <a 
+                data-ng-click="Artist(artist_min_info.name).getEvents('moreInfoArtistEvents'); $parent.moreInfoType = 'events'" 
+                data-ng-class="{'active' : moreInfoType == 'events'}" 
+            href=""><i class="a-icon-time a-icon-opacity"></i> События</a>
+        </nav>
+    </header>
+    
+    <div data-ng-if="$parent.moreInfoType == 'bio'" class="slide">
+    	<div class="artist-bio">
+        	<h6><span class="blue-bg"><i class="a-icon-info-sign a-icon-white"></i></span> Биография</h6>
+            <div class="bio">
+                <span data-ng-if="artist_min_info.bio.summary" data-ng-bind-html="artist_min_info.bio.summary"></span>
+                <div data-ng-if="!artist_min_info.bio.summary">
+                    Биография исполнителя не найдена
+                </div>
+                
+                <div class="playcount">
+                    <b>{{artist_min_info.count || 0}}</b><br />
+                    твоих воспроизведений
+                </div>
+                
+                <div class="bio-info">
+                    <span class="blue-bg"><i class="a-icon-calendar a-icon-white"></i></span>
+                    
+                    <span data-ng-if="artist_min_info.bio.formationlist.formation.yearfrom || artist_min_info.bio.yearformed">
+                        {{artist_min_info.bio.formationlist.formation.yearfrom || artist_min_info.bio.yearformed}} - 
+                        {{artist_min_info.bio.formationlist.formation.yearto || 'по сегодняшний день'}}
+                    </span>
+                    <span data-ng-if="!artist_min_info.bio.formationlist.formation.yearfrom && !artist_min_info.bio.yearformed">
+                    	Неизвестно
+                    </span>
+                </div>
+                <div class="bio-info">
+                    <span class="blue-bg"><i class="a-icon-map-marker a-icon-white"></i></span>
+                    <span data-ng-if="artist_min_info.bio.placeformed">
+                    	{{artist_min_info.bio.placeformed}}
+                    </span>
+                    <span data-ng-if="!artist_min_info.bio.placeformed">
+                    	Неизвестно
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <ul data-ng-init="artistMoreContentType = 0" class="links-list">
+        	<li>
+            	<a 
+                	data-ng-class="{active: artistMoreContentType == 0}" 
+                    data-ng-click="artistMoreContentType = 0" 
+                    href="">Топ 10 треков артиста</a>
+            </li>
+            <li>
+            	<a 
+                	data-ng-class="{active: artistMoreContentType == 1}" 
+                    data-ng-click="Artist(artist_min_info.name).getUserTracks('moreInfoUserTracks'); artistMoreContentType = 1" 
+                    href="">Все треки артиста в плейлисте</a>
+            </li>
+        </ul>
+        
+        <ul data-ng-if="artistMoreContentType == 0" class="tracks-list">
+        	<li class="track"
+                data-ng-class="{current : isCurrentTrack(track), paused : isCurrentTrack(track) && !isPlay}" 
+                data-ng-repeat="track in artist_min_info.topTracks.tracks">
+                
+            	<div class="text-overflow">
+                	<i class="a-icon-play a-icon-opacity"></i>
+                    <a data-ng-click="searchByArtist(track.artist)" href="" data-ng-bind-html="track.artist" class="track-artist"></a> – 
+                    <span data-ng-bind-html="track.title" class="track-title"></span>
+                    <span class="track-duration">{{track.duration}}</span>
+                </div>
+                
+            	<div data-ng-click="Play(track, $index, artist_min_info.topTracks.tracks)" class="play"></div>
+                
+                <div class="track-options">
+                    <a data-title="Добавить в мои аудиозаписи" data-ng-click="addToMyPlaylist(track)" href="">
+                        <i class="a-icon-plus a-icon-opacity"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        
+        <ul data-ng-if="artistMoreContentType == 1" class="tracks-list">
+        	<li class="track"
+                data-ng-class="{current : isCurrentTrack(track), paused : isCurrentTrack(track) && !isPlay}" 
+                data-ng-repeat="track in moreInfoUserTracks">
+                
+            	<div class="text-overflow">
+                	<i class="a-icon-play a-icon-opacity"></i>
+                    <a data-ng-click="searchByArtist(track.artist)" href="" data-ng-bind-html="track.artist" class="track-artist"></a> – 
+                    <span data-ng-bind-html="track.title" class="track-title"></span>
+                    <span class="track-duration">{{track.duration}}</span>
+                </div>
+                
+            	<div data-ng-click="Play(track, $index, moreInfoUserTracks)" class="play"></div>
+                
+                <div class="track-options">
+                	<a data-title="Показать похожие треки" data-ng-click="showTrackRecommendations(track)" href="">
+                        <i class="a-icon-headphones a-icon-opacity"></i>
+                    </a>
+                	<a data-title="Редактировать трек" data-ng-click="editMyTrack(track, $index, 1)" href="">
+                        <i class="a-icon-pencil a-icon-opacity"></i>
+                    </a>
+                    <a data-title="Удалить трек" data-ng-click="deleteMyTrack(track.aid, track.owner_id, $index, 1)" href="">
+                        <i class="a-icon-remove a-icon-opacity"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <div class="message" data-ng-if="!moreInfoUserTracks.length && $parent.artistMoreContentType == 1 && state.userTracksLoaded">
+        	Не найдено ни одного трека артиста.
+        </div>
+    </div>
+    
+    <div data-ng-if="$parent.moreInfoType == 'similar'" class="slide">
+        <ul class="artists">
+            <li data-ng-repeat="s in moreInfoSimilar">
+                <a data-ng-click="artistMoreInfo(s.name)" href="">
+                    <img src="icons/no-image.png" width="126" height="126" data-image="{{s.image.2['#text']}}" >
+                    <span>{{s.name}}</span>
+                    <i class="red" data-ng-if="s.match == 1">Такая же музыка</i>
+                    <i class="orange" data-ng-if="s.match < 1 && s.match > 0.35">Очень похожая</i>
+                    <i data-ng-if="s.match < 0.35">Похожая музыка</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div data-ng-if="$parent.moreInfoType == 'albums' && !albumTracks" class="slide">
+    	<ul class="albums">
+        	<li data-ng-repeat="album in moreInfoArtistTopAlbums">
+           		<a data-ng-click="Artist(album.artist).getAlbum(album.name, 'albumTracks')" href="">
+                	<img src="icons/no-image.png" width="250" height="250" image="{{album.image.3['#text']}}">
+                    <div class="album-info">
+                    	<span class="name">{{album.name}}</span>
+                        <span class="year" data-ng-if="album.year">{{album.year}} г.</span>
+                        <div class="tracks-count">{{album.count}} композиций</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="message" data-ng-if="!moreInfoArtistTopAlbums">
+        	Дискография исполнителя не найдена
+        </div>
+    </div>
+    
+    <div data-ng-if="albumTracks && $parent.moreInfoType == 'albums'" class="slide">
+        <div data-ng-if="state.loadAlbum" class="album">
+        	<a data-ng-click="toAlbumList()" class="to-albums-list clear" href=""><i class="a-icon-chevron-left a-icon-opacity"></i> Вернуться к альбомам</a>
+    		
+            <div class="album-info">
+            	<img src="icons/no-image.png" width="126" height="126" image="{{albumTracks.image.2['#text']}}">
+
+                <div class="info">
+                	<div class="name">{{albumTracks.name}}</div>
+                    <div class="year" data-ng-if="albumTracks.year">Релиз:<br /> <b>{{albumTracks.year}} года</b></div>
+                    <div class="tracks-count">Композиций: <br /><b>{{albumTracks.count}}</b></div>
+                    
+                    <div class="playcount">
+                        <b>{{albumTracks.playcount || 0}}</b><br />
+                        воспроизведений
+                    </div>
+                </div>
+            </div>
+
+            <ul class="tracks-list">
+                <li class="track"
+                    data-ng-class="{current : isCurrentTrack(track), paused : isCurrentTrack(track) && !isPlay}" 
+                    data-ng-repeat="track in albumTracks.tracks">
+                    
+                    <div class="text-overflow">
+                        <i class="a-icon-play a-icon-opacity"></i>
+                        <a data-ng-click="searchByArtist(track.artist)" href="" data-ng-bind-html="track.artist" class="track-artist"></a> – 
+                        <span data-ng-bind-html="track.title" class="track-title"></span>
+                        <span class="track-duration">{{track.duration}}</span>
+                    </div>
+                    
+                    <div data-ng-click="Play(track, $index, albumTracks.tracks)" class="play"></div>
+                    
+                    <div class="track-options">
+                        <a data-title="Добавить в мои аудиозаписи" data-ng-click="addToMyPlaylist(track)" href="">
+                            <i class="a-icon-plus a-icon-opacity"></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div data-ng-if="!state.loadAlbum">
+        	Подождите, загружаю альбом...
+        </div>
+    </div>
+    
+    <div data-ng-if="$parent.moreInfoType == 'events'" class="slide">
+        <div data-ng-if="moreInfoArtistEvents">
+            <div class="event clear" data-ng-repeat="event in moreInfoArtistEvents">
+                <div class="event-date">
+                    <b>{{event.startDate.date}}</b>
+                    {{event.startDate.month}} {{event.startDate.year}}
+                </div>
+                <div class="event-content">
+                    <h3>{{event.title}}</h3>
+                    <div class="event-artists text-overflow">{{event.artists.artist}}</div>
+                    
+                    <div class="event-venue">
+                        <span class="blue-bg"><i class="a-icon-map-marker a-icon-white"></i></span>
+                        <span class="venue">{{event.venue.location.city}}, {{event.venue.location.country}}</span>
+                    </div>
+                    
+                    <a href="" class="btn btn-min" data-ng-click="getEventFull(event.id)">Читать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="message" data-ng-if="!moreInfoArtistEvents">
+        	У этого исполнителя нет событий
+        </div>
+    </div>
+</section>
