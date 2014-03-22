@@ -1,11 +1,11 @@
 Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, $interval, $templateCache, VK, LastFM, audio, stateManager, storage, utils){
 	/**
-	 * cMusic Player ver 2.0
+	 * cMusic Player ver 2.0.3
 	 * Глобальный контроллер приложения
 	 *
 	 * @author Alex Hyrenko
 	 * @email alex.hyrenko@gmail.com
-	 * @ver 2.0
+	 * @ver 2.0.3
 	 */
 	
 	$rootScope.Init = function() {
@@ -1006,7 +1006,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 		}
 	});
 	
-	// Следим за текущим состоянием воспроизведени
+	// Следим за текущим состоянием воспроизведения
 	audio.get().bind("play", function() {
 		currentTime = setInterval(function() {
 			if(audio.get()[0].currentTime) {
