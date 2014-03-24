@@ -909,6 +909,11 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 			}
 			else {
 				$scope.isMyPlaylist	= true;
+				$scope.trackLyrics	= false;
+				
+				if($scope.$$childTail.artistContentType == 2) {
+					$scope.getTrackLyrics(track);
+				}
 				
 				if($scope.tracks !== $scope.playlistTracks.items) {
 					$scope.tracks = $scope.playlistTracks.items;
@@ -916,7 +921,10 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 				
 				if(!$scope.currentTrack || track.artist != $scope.currentTrack.artist) {
 					$scope.topTracks						= [];
+					$scope.userTracksByArtist				= [];
+					
 					$scope.$$childTail.artistContentType 	= 0;
+					$scope.artistContentType 				= 0;
 					$scope.content_template 				= 'views/played-info.html';
 					$scope.playedInfoType 					= 'bio';
 					$scope.playedSimilar					= false;
@@ -1318,10 +1326,13 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 		$scope.albumTracks = false;
 	}
 	
-	$scope.getTrackLyrics = function() {
-		if($scope.currentTrack.lyrics_id) {
-			VK.getLyrics($scope.currentTrack.lyrics_id, function(result) {
+	$scope.getTrackLyrics = function(track) {
+		if(track.lyrics_id) {
+			stateManager.set('loadTrackLyrics');
+			
+			VK.getLyrics(track.lyrics_id, function(result) {
 				$scope.trackLyrics = result.response.text;
+				stateManager.remove('loadTrackLyrics');
 			});
 		}
 		else {

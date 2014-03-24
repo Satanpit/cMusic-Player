@@ -243,7 +243,7 @@ Player.factory('VK', function($http, $rootScope, $timeout, storage){
 		
 		searchByUser: function(q, count, performer_only, callback) {
 			call('execute', {
-				code: 	'var a = API.audio.search({"q":"'+ q +'","count":'+ count +', "search_own": 1, "performer_only" : '+ performer_only +'}).items; '+
+				code: 	'var a = API.audio.search({"q":"'+ q +'","count":'+ count +', "search_own":1, "performer_only" :'+ performer_only +'}).items; '+
 						'var b = API.audio.get({"audio_ids": a@.id}); return b;',
 				v	: '5.13'
 			}, function(result){

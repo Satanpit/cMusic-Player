@@ -71,25 +71,25 @@
         <ul data-ng-init="artistContentType = 0" class="links-list">
         	<li>
             	<a 
-                	data-ng-class="{active: artistContentType == 0}" 
-                    data-ng-click="artistContentType = 0" 
+                	data-ng-class="{active: $parent.artistContentType == 0}" 
+                    data-ng-click="$parent.artistContentType = 0" 
                     href="">Топ 10 треков артиста</a>
             </li>
             <li>
             	<a 
-                	data-ng-class="{active: artistContentType == 1}" 
-                    data-ng-click="Artist(currentArtistInfo.name).getUserTracks('userTracksByArtist'); artistContentType = 1" 
+                	data-ng-class="{active: $parent.artistContentType == 1}" 
+                    data-ng-click="Artist(currentArtistInfo.name).getUserTracks('userTracksByArtist'); $parent.artistContentType = 1" 
                     href="">Все треки артиста в плейлисте</a>
             </li>
             <li>
             	<a 
-                	data-ng-class="{active: artistContentType == 2}" 
-                    data-ng-click="getTrackLyrics(); artistContentType = 2" 
+                	data-ng-class="{active: $parent.artistContentType == 2}" 
+                    data-ng-click="getTrackLyrics(currentTrack); $parent.artistContentType = 2" 
                     href="">Текст песни</a>
             </li>
         </ul>
         
-        <ul data-ng-if="artistContentType == 0" class="tracks-list">
+        <ul data-ng-if="$parent.artistContentType == 0" class="tracks-list">
         	<li class="track"
                 data-ng-class="{current : isCurrentTrack(track), paused : isCurrentTrack(track) && !isPlay}" 
                 data-ng-repeat="track in topTracks.tracks">
@@ -111,7 +111,7 @@
             </li>
         </ul>
         
-        <ul data-ng-if="artistContentType == 1" class="tracks-list">
+        <ul data-ng-if="$parent.artistContentType == 1" class="tracks-list">
         	<li class="track"
                 data-ng-class="{current : isCurrentTrack(track), paused : isCurrentTrack(track) && !isPlay}" 
                 data-ng-repeat="track in userTracksByArtist">
@@ -139,9 +139,9 @@
             </li>
         </ul>
         
-        <div class="track-lyrics" data-ng-if="artistContentType == 2">
+        <div data-ng-if="$parent.artistContentType == 2" class="track-lyrics">
         	<span data-ng-if="trackLyrics">{{trackLyrics}}</span>
-            <span data-ng-if="!trackLyrics">Текст песни не найден</span>
+            <span data-ng-if="!trackLyrics && !state.loadTrackLyrics">Текст песни не найден</span>
         </div>
     </div>
     
