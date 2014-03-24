@@ -1259,9 +1259,10 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	
 	// Автокомплит для поиска 
 	$scope.getSearchAutocomplete = function(val) {
-		searchAutocomplete = [];
 		if(val) {
 			return LastFM.artist.search(val, 5, 0, function(result){
+				searchAutocomplete = [];
+				
 				if(result.results.artistmatches.artist && result.results.artistmatches.artist.length > 0) {
 					angular.forEach(result.results.artistmatches.artist, function(item){
 						searchAutocomplete.push({

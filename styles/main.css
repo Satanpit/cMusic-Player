@@ -2122,6 +2122,7 @@ input[type="password"] {
 .dropdown-menu.autocomplete > li > a {
 	color:#999;
 	opacity:1;
+	height:auto;
 }
 
 .dropdown-menu > li {
@@ -2145,7 +2146,7 @@ input[type="password"] {
 
 .dropdown-menu.autocomplete {
 	width:100%;
-	max-height:400px;
+	max-height:380px;
 	visibility:visible;
 	overflow:hidden;
 }
