@@ -210,8 +210,8 @@ span.blue-bg {
 	background:URL('../icons/player-next.png') 10px center;
 }
 
-#player-control-volume:before,
-#player-control-volume:after {
+#player-control-volume input:before,
+#player-control-volume input:after {
 	content:"";
 	display:block;
 	position:absolute;
@@ -222,26 +222,34 @@ span.blue-bg {
 	background:URL('../icons/player-vol-min.png') center center no-repeat;
 }
 
-#player-control-volume:after {
+#player-control-volume input:after {
 	left:auto;
 	right:-25px;
 	background:URL('../icons/player-vol-max.png') center center no-repeat;
 }
 
 #player-control-volume {
+    position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 110px;
+	left: 200px;
+	line-height: 90px;
+	font-size: 0;
+	text-align:right;
+}
+
+#player-control-volume input {
 	-webkit-appearance: none;
-    display:inline-block;
-	position:absolute;
-	top:43px;
-	right:105px;
-	width:105px;
+	position:relative;
+	width:100%;
+	max-width:150px;
 	height:2px;
 	background:#FFF;
 	cursor:pointer;
-	margin:0 0 0 40px;
 }
 
-#player-control-volume::-webkit-slider-thumb {
+#player-control-volume input::-webkit-slider-thumb {
    -webkit-appearance: none;
     width:14px;
 	height:14px;
@@ -2287,7 +2295,7 @@ input[type="password"] {
 	}
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 865px) {
 	#global-menu,
 	#cmusic-logo,
 	#player-info-panel,
