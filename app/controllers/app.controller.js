@@ -132,12 +132,13 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 					if($scope[var_name].count > 50) {
 						offset = (Math.random() * (($scope[var_name].count - 50) - 1) + 1).toFixed(0);
 					}
-					else {
-						offset = 0;
-					}
 				}
 				
 				VK.get(50, offset || 0, album_id, function(result) {
+					if($scope.isShuffle) {
+						result.response.items.sort(function() {return 0.5 - Math.random()});
+					}
+					
 					angular.forEach(result.response.items, function(item, index) {
 						item.duration_sec 	= item.duration;
 						item.duration 		= $filter('sec2min')(item.duration);
@@ -151,13 +152,9 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 					
 					$scope[var_name].count = result.response.count;
 					
-					if($scope.isShuffle) {
-						$scope[var_name].items.sort(function() {return 0.5 - Math.random()});
-						
-						if($scope.currentTrack && $scope.isMyPlaylist) {
-							$scope[var_name].items.unshift($scope.currentTrack);
-							$scope.tracks = $scope[var_name].items;
-						}
+					if($scope.isShuffle && $scope.currentTrack && $scope.isMyPlaylist && !isLoadMoreItems) {
+						$scope[var_name].items.unshift($scope.currentTrack);
+						$scope.tracks = $scope[var_name].items;
 					}
 					
 					stateManager.remove('loadMoreTracks');
