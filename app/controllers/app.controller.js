@@ -703,6 +703,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 		if(album_id != $scope.album_id) {
 			stateManager.set('loadPlaylist');
 			$scope.playlistTracks	= false;
+			$scope.isShuffle		= false;
 			$scope.album_id			= album_id;
 			
 			$scope.Tracks('playlistTracks').get(album_id);
