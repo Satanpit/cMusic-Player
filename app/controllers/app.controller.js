@@ -973,7 +973,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 									iconUrl	: image || 'icons/no-image.png',
 									buttons	: [
 										{'title' : 'Следующий трек' },
-										{'title' : 'Предидущый трек' }
+										{'title' : 'Предыдущый трек' }
 									]
 								}, function() {});
 							});
