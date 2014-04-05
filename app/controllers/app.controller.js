@@ -734,9 +734,9 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	
 	// Редактирование трека из моих аудиозаписей
 	$scope.editMyTrack = function(track, index, type) {
+		console.log(track);
 		$scope.modal_form 				= 'views/edit-my-track.html';
 		$scope.editableTrack 			= track;
-		$scope.editableTrack.genre_id 	= String($scope.editableTrack.genre_id);
 		tracker.sendAppView('Форма редактирования трека');
 	}
 	
@@ -831,8 +831,12 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 		if(track.owner_id != $scope.owner_id) {
 			VK.add(track.id || track.aid, track.owner_id, function(result) {
 				if(result.response > 0) {
-					track.id = result.response;
-					$scope.playlistTracks.items.unshift(track);
+					track.id 		= result.response;
+					track.owner_id	= $scope.owner_id;
+					
+					if($scope.album_id == 0) {
+						$scope.playlistTracks.items.unshift(track);
+					}
 				}
 			});
 			
