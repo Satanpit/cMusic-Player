@@ -6,11 +6,15 @@
 	"icons": {
 
 	},
+
 	"app": {
 		"background": {
 			"scripts": ["background.js"]
 		}
 	},
+
+    "offline_enabled": true,
+
 	"permissions": [
 		"https://api.vk.com/*",
 		"https://oauth.vk.com/*",

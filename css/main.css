@@ -1,20 +1,20 @@
 @font-face {
   font-family: 'Open Sans';
-  font-style: normal;
+  src: url('../fonts/OpenSans-Light-webfont.eot'), url('../fonts/OpenSans-Light-webfont.woff') format('woff'), url('../fonts/OpenSans-Light-webfont.ttf') format('truetype'), url('../fonts/OpenSans-Light-webfont.svg#OpenSansLight') format('svg');
   font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(/fonts/open_sans_light.woff) format('woff');
+  font-style: normal;
 }
 @font-face {
   font-family: 'Open Sans';
+  src: url('../fonts/OpenSans-Regular-webfont.eot'), url('../fonts/OpenSans-Regular-webfont.woff') format('woff'), url('../fonts/OpenSans-Regular-webfont.ttf') format('truetype'), url('../fonts/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
+  font-weight: normal;
   font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(/fonts/open_sans.woff) format('woff');
 }
 @font-face {
   font-family: 'Open Sans';
-  font-style: normal;
+  src: url('../fonts/OpenSans-Bold-webfont.eot'), url('../fonts/OpenSans-Bold-webfont.woff') format('woff'), url('../fonts/OpenSans-Bold-webfont.ttf') format('truetype'), url('../fonts/OpenSans-Bold-webfont.svg#OpenSansBold') format('svg');
   font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/fonts/open_sans_bold.woff) format('woff');
+  font-style: normal;
 }
 * {
   margin: 0;
@@ -22,11 +22,18 @@
   box-sizing: border-box;
   outline: none;
 }
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
 body {
   background: #ffffff;
   color: #666666;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
+  -webkit-font-smoothing: subpixel-antialiased !important;
+  -webkit-backface-visibility: hidden;
 }
 ul,
 ol,
@@ -38,6 +45,35 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+::-webkit-input-placeholder {
+  color: #52636a;
+  font-size: 12px;
+  line-height: 14px;
+}
+.drag-area {
+  -webkit-app-region: drag;
+}
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 5px;
+}
+::-webkit-scrollbar-button {
+  width: 2px;
+  height: 0;
+}
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  position: absolute;
+  right: 10px;
+  background: #a8acb2;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #93979d;
+}
 .app-header {
   position: absolute;
   top: 0;
@@ -45,22 +81,206 @@ a {
   bottom: 0;
   left: 0;
   height: 60px;
-  border-bottom: #e8ecf0 1px solid;
+  border: #e8ecf0 1px solid;
+  border-left: none;
 }
 .app-header .app-header-controls {
+  padding: 9px 20px;
   position: absolute;
   top: 0;
   right: 55%;
   bottom: 0;
+  left: 60px;
+}
+.app-header .app-header-controls .play-controls {
+  display: inline-block;
+  height: 100%;
+  font-size: 0;
+}
+.app-header .app-header-controls .play-controls a {
+  display: inline-block;
+  width: 14px;
+  height: 15px;
+  margin-right: 15px;
+  vertical-align: middle;
+  opacity: .5;
+  transition: opacity 0.15s ease;
+}
+.app-header .app-header-controls .play-controls a:hover {
+  opacity: 1;
+}
+.app-header .app-header-controls .play-controls a.active {
+  background-position-x: -44px;
+  opacity: 1;
+}
+.app-header .app-header-controls .play-controls .prev {
+  background: url('../img/sprite-header.png') 0 -128px no-repeat;
+}
+.app-header .app-header-controls .play-controls .play {
+  width: 40px;
+  height: 40px;
+  border: #52636a 1px solid;
+  border-radius: 50%;
+  background: url('../img/sprite-header.png') 13px -53px no-repeat;
+}
+.app-header .app-header-controls .play-controls .next {
+  background: url('../img/sprite-header.png') 0 0 no-repeat;
+  margin-right: 20px;
+}
+.app-header .app-header-controls .play-controls .repeat {
+  background: url('../img/sprite-header.png') 0 -192px no-repeat;
+}
+.app-header .app-header-controls .play-controls .shuffle {
+  background: url('../img/sprite-header.png') 0 -320px no-repeat;
+}
+.app-header .app-header-controls .volume-controls {
+  position: absolute;
+  top: 0;
+  right: 90px;
+  bottom: 0;
+  left: 210px;
+  line-height: 60px;
+  font-size: 0;
+  text-align: left;
+  overflow: hidden;
+  padding: 0 24px;
+}
+.app-header .app-header-controls .volume-controls:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: auto;
+  bottom: 0;
   left: 0;
+  width: 24px;
+  background: #FFF;
+}
+.app-header .app-header-controls .volume-controls input {
+  -webkit-appearance: none;
+  position: relative;
+  width: 100%;
+  max-width: 150px;
+  height: 3px;
+  cursor: pointer;
+  background: #cbd0d2;
+}
+.app-header .app-header-controls .volume-controls input:after,
+.app-header .app-header-controls .volume-controls input:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -21px;
+  top: -6px;
+  width: 21px;
+  height: 14px;
+  background: url('../img/sprite-header.png') 0 -512px no-repeat;
+  opacity: .5;
+  z-index: 2;
+}
+.app-header .app-header-controls .volume-controls input:after {
+  right: -30px;
+  left: auto;
+  background: url('../img/sprite-header.png') 0 -448px no-repeat;
+}
+.app-header .app-header-controls .volume-controls input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 11px;
+  height: 11px;
+  background: #97a1a6;
+  border-radius: 50%;
+  box-shadow: -6px 0 0 -4px #76bceb, -9px 0 0 -4px #76bceb, -12px 0 0 -4px #76bceb, -15px 0 0 -4px #76bceb, -18px 0 0 -4px #76bceb, -21px 0 0 -4px #76bceb, -24px 0 0 -4px #76bceb, -27px 0 0 -4px #76bceb, -30px 0 0 -4px #76bceb, -33px 0 0 -4px #76bceb, -36px 0 0 -4px #76bceb, -39px 0 0 -4px #76bceb, -42px 0 0 -4px #76bceb, -45px 0 0 -4px #76bceb, -48px 0 0 -4px #76bceb, -51px 0 0 -4px #76bceb, -54px 0 0 -4px #76bceb, -57px 0 0 -4px #76bceb, -60px 0 0 -4px #76bceb, -63px 0 0 -4px #76bceb, -66px 0 0 -4px #76bceb, -69px 0 0 -4px #76bceb, -72px 0 0 -4px #76bceb, -75px 0 0 -4px #76bceb, -78px 0 0 -4px #76bceb, -81px 0 0 -4px #76bceb, -84px 0 0 -4px #76bceb, -87px 0 0 -4px #76bceb, -90px 0 0 -4px #76bceb, -93px 0 0 -4px #76bceb, -96px 0 0 -4px #76bceb, -99px 0 0 -4px #76bceb, -102px 0 0 -4px #76bceb, -105px 0 0 -4px #76bceb, -108px 0 0 -4px #76bceb, -111px 0 0 -4px #76bceb, -114px 0 0 -4px #76bceb, -117px 0 0 -4px #76bceb, -120px 0 0 -4px #76bceb, -123px 0 0 -4px #76bceb, -126px 0 0 -4px #76bceb, -129px 0 0 -4px #76bceb, -132px 0 0 -4px #76bceb, -135px 0 0 -4px #76bceb, -138px 0 0 -4px #76bceb, -141px 0 0 -4px #76bceb, -144px 0 0 -4px #76bceb, -147px 0 0 -4px #76bceb;
+}
+.app-header .app-header-controls .public-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  display: inline-block;
+  padding: 0 20px 0 0;
+  width: 100px;
+  line-height: 56px;
+  font-size: 0;
+  text-align: right;
+}
+.app-header .app-header-controls .public-controls a {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  opacity: .5;
+  margin-left: 20px;
+  transition: opacity 0.15s ease;
+}
+.app-header .app-header-controls .public-controls a:hover {
+  opacity: 1;
+}
+.app-header .app-header-controls .public-controls a.active {
+  background-position-x: -44px;
+  opacity: 1;
+}
+.app-header .app-header-controls .public-controls .scrobble {
+  width: 16px;
+  background: url('../img/sprite-header.png') 0 -256px no-repeat;
+}
+.app-header .app-header-controls .public-controls .translate {
+  background: url('../img/sprite-header.png') 0 -384px no-repeat;
 }
 .app-header .app-header-track-info {
   position: absolute;
   top: 0;
-  right: 80px;
+  right: 120px;
   bottom: 0;
   left: 45%;
   border-left: #e8ecf0 1px solid;
+  padding: 10px 20px;
+  line-height: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.app-header .app-header-track-info .track-title {
+  color: #52636a;
+  padding-right: 70px;
+  margin-bottom: 8px;
+}
+.app-header .app-header-track-info .track-progress {
+  position: relative;
+  padding: 7px 0 5px 0;
+  margin-right: 70px;
+  height: 15px;
+  cursor: pointer;
+}
+.app-header .app-header-track-info .track-progress:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #dce0e1;
+}
+.app-header .app-header-track-info .track-progress .buffered,
+.app-header .app-header-track-info .track-progress .played {
+  position: absolute;
+  top: 7px;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: #ced3d5;
+}
+.app-header .app-header-track-info .track-progress .played {
+  background: #76bceb;
+}
+.app-header .app-header-track-info .track-bitrate {
+  font-size: 10px;
+  float: right;
+  line-height: 14px;
+}
+.app-header .app-header-track-info .track-progress-time {
+  float: right;
+  font-size: 10px;
+  opacity: .8;
 }
 .app-header .app-header-window-controls {
   position: absolute;
@@ -69,7 +289,41 @@ a {
   bottom: 0;
   left: auto;
   width: 120px;
+  line-height: 61px;
+  text-align: center;
   border-left: #e8ecf0 1px solid;
+}
+.app-header .app-header-window-controls a {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0 10px;
+  opacity: .5;
+  transition: opacity 0.15s ease;
+}
+.app-header .app-header-window-controls a:hover {
+  opacity: 1;
+}
+.app-header .app-header-window-controls .window-minimize {
+  background: url('../img/sprite-header.png') 0 -704px no-repeat;
+}
+.app-header .app-header-window-controls .window-full-screen {
+  background: url('../img/sprite-header.png') 0 -640px no-repeat;
+}
+.app-header .app-header-window-controls .window-close {
+  background: url('../img/sprite-header.png') 0 -576px no-repeat;
+}
+.app-header:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 60px;
+  height: 15px;
+  -webkit-app-region: drag;
+  z-index: 2;
 }
 .app-menu {
   position: absolute;
@@ -193,6 +447,22 @@ a {
   z-index: 2;
   transition: opacity 0.15s ease;
 }
+.app-menu menu .count-alarms {
+  position: absolute;
+  top: 19px;
+  right: 20px;
+  bottom: auto;
+  left: auto;
+  width: 19px;
+  height: 19px;
+  background: #ffa65c;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #FFF;
+}
 .app-menu.show {
   width: 190px;
 }
@@ -239,6 +509,82 @@ a {
   bottom: 0;
   left: 60px;
   background: #f3f7f7;
+  border-bottom: #e8ecf0 1px solid;
+}
+.app-playlist .playlist-options {
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  border-bottom: #e8ecf0 1px solid;
+}
+.app-playlist .playlist-options .search {
+  float: left;
+  width: 50%;
+  line-height: 40px;
+  height: 40px;
+}
+.app-playlist .playlist-options .search input[type=text] {
+  border: transparent 1px solid;
+  padding: 10px 10px 10px 40px;
+  width: 200px;
+  border-radius: 3px;
+  background: url('../img/sprite-default.png') 10px -694px no-repeat;
+  opacity: .5;
+  color: #52636a;
+  font-size: 12px;
+  transition: all 0.15s ease;
+}
+.app-playlist .playlist-options .search input[type=text]:focus,
+.app-playlist .playlist-options .search input[type=text]:hover {
+  border-color: #e8ecf0;
+  background-color: #FFF;
+  opacity: 1;
+}
+.app-playlist .playlist-options .search input[type=text]:focus {
+  width: 100%;
+}
+.app-playlist .tracks {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.app-playlist .tracks > li {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  line-height: 20px;
+  cursor: pointer;
+  vertical-align: top;
+  font-size: 11px;
+}
+.app-playlist .tracks > li:hover {
+  background: #e8ecf0;
+}
+.app-playlist .tracks > li .icon-play {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: #52636a 1px solid;
+  border-radius: 50%;
+  background: url('../img/sprite-default.png') 2px -446px no-repeat;
+  opacity: .5;
+}
+.app-playlist .tracks > li .artist {
+  font-weight: 700;
+  vertical-align: top;
+}
+.app-playlist .tracks > li .track {
+  vertical-align: top;
+}
+.app-playlist .tracks > li .time {
+  float: right;
+  font-size: 11px;
 }
 .app-content {
   position: absolute;
@@ -247,5 +593,6 @@ a {
   bottom: 0;
   left: 45%;
   background: #FFF;
-  border-left: #e8ecf0 1px solid;
+  border: #e8ecf0 1px solid;
+  border-top: none;
 }

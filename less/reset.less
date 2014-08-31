@@ -1,24 +1,3 @@
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(/fonts/open_sans_light.woff) format('woff');
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(/fonts/open_sans.woff) format('woff');
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/fonts/open_sans_bold.woff) format('woff');
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -26,11 +5,19 @@
   outline: none;
 }
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   background: @body-bg;
   color: @text-color-default;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
+  -webkit-font-smoothing: subpixel-antialiased !important;
+  -webkit-backface-visibility: hidden;
 }
 
 ul,
@@ -43,4 +30,10 @@ a {
   color: @text-color-default;
   text-decoration: none;
   cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+  color: @dark;
+  font-size: 12px;
+  line-height: 14px;
 }

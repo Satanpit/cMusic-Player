@@ -1,5 +1,38 @@
-<header class="app-header">
-    <section class="app-header-controls"></section>
-    <section class="app-header-track-info"></section>
-    <section class="app-header-window-controls"></section>
+<header data-ng-controller="HeaderCtrl" class="app-header">
+    <section class="app-header-controls">
+        <div class="play-controls">
+            <a class="prev"></a>
+            <a class="play"></a>
+            <a class="next"></a>
+
+            <a class="repeat active"></a>
+            <a class="shuffle"></a>
+        </div>
+
+        <div class="volume-controls">
+            <input data-ng-model="volume" type="range" min="0" max="1" step="0.01">
+        </div>
+
+        <div class="public-controls">
+            <a class="scrobble"></a>
+            <a class="translate"></a>
+        </div>
+    </section>
+    <section class="app-header-track-info">
+        <div class="track-bitrate">320 kbit/s</div>
+
+        <div class="track-title">
+            <strong>Five Finger Death Punch</strong> - <span>Cradle to the Grave</span>
+        </div>
+        <div class="track-progress-time">00:53</div>
+        <div class="track-progress">
+            <div style="width: 70%" class="buffered"></div>
+            <div style="width: 30%" class="played"></div>
+        </div>
+    </section>
+    <section class="app-header-window-controls" data-ng-controller="WindowCtrl">
+        <a data-ng-click="minimize()" class="window-minimize"></a>
+        <a data-ng-click="fullScreen()" class="window-full-screen"></a>
+        <a data-ng-click="close()" class="window-close"></a>
+    </section>
 </header>

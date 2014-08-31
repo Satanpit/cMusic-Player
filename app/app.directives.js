@@ -54,9 +54,10 @@ Player.directive('scroll', function(){
 		link: function(scope, elm, attr) {
 			var raw = elm[0];
 			elm.bind('scroll', function() {
-				if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight - (raw.scrollTop / 4))) {
+				/*if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight - (raw.scrollTop / 4))) {
 					scope.$apply(attr.scroll);
-				 }
+				 }*/
+                console.log(123);
 			});
 		}
 	};

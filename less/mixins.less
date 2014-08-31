@@ -32,7 +32,9 @@
 @content-width: 100% - @playlist-width;
 
 // Sprites
-@sprite-menu: '../img/sprite-menu.png';
+@sprite-menu:   '../img/sprite-menu.png';
+@sprite-header: '../img/sprite-header.png';
+@sprite-default:'../img/sprite-default.png';
 
 
 .absolute(@top: auto, @right: auto, @bottom: auto, @left: auto) {
@@ -47,6 +49,30 @@
   transition: @property @duration @func;
 }
 
+.drag-area {
+  -webkit-app-region: drag;
+}
+
+.ellipsis () {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scroll-box(@top: 0, @right: 0, @bottom: 0, @left: 0) {
+  .absolute(@top, @right, @bottom, @left);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .icon-menu(@n: 0) {
   background-position: 22px (-66px * @n) + 20px;
+}
+
+.icon-header(@x:0, @y: 0) {
+  background: url(@sprite-header) @x @y no-repeat;
+}
+
+.icon(@x:0, @y: 0) {
+  background: url(@sprite-default) @x @y no-repeat;
 }
