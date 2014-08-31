@@ -1,0 +1,22 @@
+@import "mixins";
+
+.app-header {
+  .absolute(0, 0, 0, 0);
+  height: 60px;
+  border-bottom: @border-color 1px solid;
+
+  .app-header-controls {
+    .absolute(0, @content-width, 0, 0);
+  }
+
+  .app-header-track-info {
+    .absolute(0, 80px, 0, @playlist-width);
+    border-left: @border-color 1px solid;
+  }
+
+  .app-header-window-controls {
+    .absolute(0, 0, 0);
+    width: 120px;
+    border-left: @border-color 1px solid;
+  }
+}

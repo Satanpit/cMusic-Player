@@ -1,0 +1,52 @@
+// Colors
+@body-bg:             #FFF;
+@text-color-default:  #666;
+
+@dark:    #52636a;
+@dark-2:  #4b5b62;
+
+@light:   #f3f7f7;
+@light-2: #e8ecf0;
+
+@gray:    #f9f9f9;
+@black:   #333;
+
+@green:   #99ca6a;
+@green-2: #8fc060;
+
+@blue:    #76bceb;
+@blue-2:  #68afde;
+
+@orange:  #ffa65c;
+@orange-2:#ec954c;
+
+@red:     #e4644b;
+@red-2:   #de5440;
+
+@border-color:        #e8ecf0;
+@border-color-light:  #f0f3f6;
+@border-color-menu:   #5f7077;
+
+// Sizing
+@playlist-width: 45%;
+@content-width: 100% - @playlist-width;
+
+// Sprites
+@sprite-menu: '../img/sprite-menu.png';
+
+
+.absolute(@top: auto, @right: auto, @bottom: auto, @left: auto) {
+  position: absolute;
+  top: @top;
+  right: @right;
+  bottom: @bottom;
+  left: @left;
+}
+
+.transition(@property: all, @duration: 0.15s, @func: ease) {
+  transition: @property @duration @func;
+}
+
+.icon-menu(@n: 0) {
+  background-position: 22px (-66px * @n) + 20px;
+}

@@ -1,0 +1,15 @@
+@import "reset";
+@import "mixins";
+@import "header";
+@import "menu";
+@import "playlist";
+
+.app-content {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  left: @playlist-width;
+  background: #FFF;
+  border-left: @border-color 1px solid;
+}

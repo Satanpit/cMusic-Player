@@ -1,10 +1,10 @@
 {
 	"manifest_version": 2,
 	"name": "cMusic Player",
-	"description": "Приложение для прослушивания Вашей музыки ВКонтакте",
-	"version": "2.0.5",
+	"description": "Приложение для прослушивания музыки ВКонтакте",
+	"version": "3.0",
 	"icons": {
-		"128": "icons/128.png"
+
 	},
 	"app": {
 		"background": {
@@ -18,6 +18,9 @@
 		"http://fonts.googleapis.com/*",
 		"http://userserve-ak.last.fm/*",
 		"https://www.google-analytics.com/",
+        "alarms",
+        "fullscreen",
+        "identity",
 		"fileSystem",
 		"storage", 
 		"webview",
@@ -25,6 +28,6 @@
 		"identity",
 		"syncFileSystem",
         "unlimitedStorage",
-		"<all_urls>"
+		"*://*/*"
 	]
 }

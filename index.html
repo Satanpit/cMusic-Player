@@ -1,238 +1,25 @@
-<!doctype html>
-<html data-ng-app="Player" data-ng-csp>
+<!DOCTYPE html>
+<html lang="en" data-ng-csp>
 <head>
 	<title>cMusic Player</title>
     <meta charset="utf-8">
-    
-    <script src="app/vendor/jquery.min.js"></script>
-    <script src="app/vendor/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="app/vendor/angular.min.js"></script>
-    
-	<link rel="stylesheet" type="text/css" href="styles/main.css">
-    <link rel="stylesheet" type="text/css" href="styles/icons.css">
+
+    <script type="text/javascript" src="app/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="app/vendor/angular-route.min.js"></script>
+    <script type="text/javascript" src="app/vendor/angular-animate.min.js"></script>
+    <script type="text/javascript" src="app/vendor/BikeJS.js"></script>
+
+    <script type="text/javascript" src="app/app.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
-<body data-ng-cloak data-ng-controller="PlayerCtrl" data-ng-init="Init()">
-	<div id="players">
-    	<audio preload="metadata" id="my-player"></audio>
-    </div>
-    
-    <header id="global-header">
-    	<div id="cmusic-logo"></div>
-        
-        <div id="player-control-panel">
-        	<ul class="clear">
-            	<li>
-                	<a data-ng-click="controlPrev()" id="player-control-prev" href=""></a>
-                </li>
-                <li>
-                	<a data-ng-click="controlPlay()" data-ng-if="!isPlay" id="player-control-play" href=""></a>
-                </li>
-                <li>
-                	<a data-ng-click="controlPlay()" data-ng-if="isPlay" id="player-control-pause" href=""></a>
-                </li>
-                <li>
-                	<a data-ng-click="controlNext()" id="player-control-next" href=""></a>
-                </li>
-            </ul>
-            
-            <div id="playlist-options">
-                <a data-title="Повторять текущий трек" data-ng-click="repeatTrack()" data-ng-class="{active : isRepeatTrack}" id="repeat-track" href="">
-                	<i class="a-icon-retweet a-icon-opacity"></i>
-                </a>
-                <a data-title="Перемешать треки в плейлисте" data-ng-click="shuffle()" data-ng-class="{active : isShuffle}" id="shuffle" href="">
-                	<i class="a-icon-random a-icon-opacity"></i>
-                </a>
-            </div>
-            
-            <div id="player-control-volume">
-            	<input data-ng-model="volume" type="range" min="0" max="1" step="0.01" name="volume">
-            </div>
-        </div>
-        
-        <div data-ng-cloak id="player-info-panel">
-        	<img width="64" height="64" image="{{current_image.0['#text']}}" src="icons/no-album.png">
-            
-            <div data-ng-bind-html="currentTrack.artist || playlistTracks[0].artist" id="current-artist-name"></div>
-            <div data-ng-bind-html="currentTrack.title || playlistTracks[0].title" id="current-track-name"></div>
-            
-            <div data-ng-if="currentTrack" id="current-track-duration-full">{{currentTrack.duration_sec|sec2min}}</div>
-            <div data-ng-if="currentTrack" id="current-track-duration">{{currentTrack.duration}}</div>
-            <div data-ng-if="currentTrack" id="current-track-bitrate">{{currentTrack.bitrate}} kbit/s</div>
-            
-            <div data-ng-click="setProgress($event)" id="progress-bar">
-            	<div style="width:{{buffered}}%" id="progress-bufferd"></div>
-                <div style="width:{{played_progress}}%" id="progress-played"></div>
-            </div>
-            
-            <div id="played-options">
-            	<a data-title="Скробблинг LastFM" data-ng-click="scrobble()" data-ng-class="{active : isScrobble}" href="">
-                	<i class="a-icon-lastfm a-icon-opacity"></i>
-                </a>
-                <a data-title="Транслировать аудио в статус ВК" data-ng-click="translation()" data-ng-class="{active : isTranslation}" href="">
-                	<i class="a-icon-bullhorn a-icon-opacity"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div data-ng-controller="WindowCtrl" id="window-controls">
-        	<a data-ng-if="!isSecure" data-title="Закрепить в правой стороне экрана" data-ng-click="secure()" href="">
-            	<i class="a-icon-window-secure a-icon-white"></i>
-            </a>
-            <a data-ng-if="isSecure" data-title="Восстановить размер" data-ng-click="secure()" href="">
-            	<i class="a-icon-window-secure a-icon-white"></i>
-            </a>
-            <a data-title="Свернуть" data-ng-click="minimize()" href="">
-            	<i class="a-icon-window-minimize a-icon-white"></i>
-            </a>
-            <a data-ng-if="isMaximized" data-title="Восстановить размер" data-ng-click="fullscreen()" href="">
-                <i class="a-icon-window-fullscreen a-icon-white"></i>
-            </a>
-            <a data-ng-if="!isMaximized" data-title="Развернуть на весь экран " data-ng-click="fullscreen()" href="">
-                <i class="a-icon-window-fullscreen a-icon-white"></i>
-            </a>
-            <a data-title="Закрыть" data-ng-click="close()" href="">
-                <i class="a-icon-window-close a-icon-white"></i>
-            </a>
-        </div>
-    </header>
-    
-    <menu id="global-menu">
-    	<li class="dropdown">
-        	<a class="dropdown-toggle" id="menu-playlist" href="">Плейлисты</a>
-            <ul class="dropdown-menu pull-right playlists">
-                <li>
-                    <a data-ng-click="setAlbum(0)" href=""><i class="a-icon-all-playlists a-icon-white"></i> Все аудиозаписи</a>
-                </li>
-                <li data-ng-repeat="p in playlists">
-                    <a data-ng-click="setAlbum(p.album_id)" href=""><i class="a-icon-file a-icon-white"></i> {{p.title}}</a>
-                    <a class="edit-album" data-ng-click="editPlaylist(p.album_id, p.title, $index)" href=""><i class="a-icon-pencil a-icon-white a-icon-opacity"></i></a>
-                </li>
-                <li>
-                    <a data-ng-click="addPlaylist()" href=""><i class="a-icon-plus a-icon-white"></i> Добавить плейлист</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-        	<a data-ng-click="showSearch()" id="menu-search" href="">Поиск</a>
-        </li>
-        <li>
-        	<a data-ng-click="showEvents()" id="menu-events" href="">События</a>
-        </li>
-        <li>
-        	<a data-ng-click="showMyLib()" id="menu-lib" href="">Библиотека</a>
-        </li>
-        <li>
-        	<a data-ng-click="showMyRecommendations()" id="menu-recomends" href="">Рекомендации</a>
-        </li>
-        <li>
-        	<a data-ng-click="showSettings()" id="menu-settings" href="">Настройки</a>
-        </li>
-        <li>
-        	<a data-ng-click="showAboutPage()" id="menu-about" href="">О плеере</a>
-        </li>
-        
-        <div id="app-version">
-        	Версия {{appVersion}}
-        </div>
-    </menu>
-    
-    <div data-ng-class="{loaded : !state.tracksLoad || modal_form}" data-scroll="Tracks('playlistTracks').get(album_id, 1)" id="my-playlist">
-    	<ul data-ui-sortable="myPlaylistSortable" data-ng-model="playlistTracks.items" class="tracks-list">
-        	<li class="track"
-            	data-autoscrolling="{{isCurrentTrack(track)}}" 
-                data-ng-class="{current : isCurrentTrack(track), paused : isCurrentTrack(track) && !isPlay}" 
-                data-ng-scroller-repeat="track in playlistTracks.items"
-                data-ng-repeat="track in playlistTracks.items">
-                
-            	<div class="text-overflow">
-                	<i class="a-icon-play a-icon-opacity"></i>
-                    <a data-ng-click="searchByArtist(track.artist)" href="" data-ng-bind-html="track.artist" class="track-artist"></a> – 
-                    <span data-ng-bind-html="track.title" class="track-title"></span>
-                    <span class="track-duration">{{track.duration}}</span>
-                </div>
-                
-            	<div data-ng-click="Play(track, $index)" class="play"></div>
-                
-                <div class="track-options">
-                	<a data-title="Показать похожие треки" data-ng-click="showTrackRecommendations(track)" href="">
-                        <i class="a-icon-headphones a-icon-opacity"></i>
-                    </a>
-                	<a data-title="Редактировать трек" data-ng-click="editMyTrack(track, $index, 1)" href="">
-                        <i class="a-icon-pencil a-icon-opacity"></i>
-                    </a>
-                    <a data-title="Удалить трек" data-ng-click="deleteMyTrack(track.id, track.owner_id, $index, 1)" href="">
-                        <i class="a-icon-remove a-icon-opacity"></i>
-                    </a>
-                </div>
-            </li>
-        </ul>
-        
-        <div id="playlist-loader" data-ng-if="state.loadMoreTracks"></div>
-    </div>
-    
-    <div data-ng-cloak data-ng-class="{loaded : !state.loadContent}" id="main-content">
-    	<ng-include src="content_template"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-zindex data-ng-if="isSearchShow" class="new-page-animate">
-    	<a data-ng-click="showSearch()" href="" class="close close-gray"></a>
-        <ng-include src="'views/search.html'"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-zindex data-ng-if="isLibShow" class="new-page-animate">
-    	<a data-ng-click="showMyLib()" href="" class="close close-gray"></a>
-        <ng-include src="'views/my-library.html'"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-zindex data-ng-if="isArtistMoreInfoShow" class="new-page-animate">
-    	<a data-ng-click="closeArtistMoreInfo()" href="" class="close close-gray"></a>
-        <ng-include src="'views/artist-more-info.html'"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-zindex data-ng-if="isRecommendsShow" class="new-page-animate">
-    	<a data-ng-click="showMyRecommendations()" href="" class="close close-gray"></a>
-        <ng-include src="'views/my-recommendations.html'"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-zindex data-ng-if="isEventsShow" class="new-page-animate">
-    	<a data-ng-click="showEvents()" href="" class="close close-gray"></a>
-        <ng-include src="'views/events.html'"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-zindex data-ng-if="isRecommendedTracksShow" class="new-page-animate">
-    	<a data-ng-click="closeTrackRecommendations()" href="" class="close close-gray"></a>
-        <ng-include src="'views/track-recommendations.html'"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-ng-if="modal_content" class="cmusic-modal">
-    	<ng-include src="modal_content"></ng-include>
-    </div>
-    
-    <div data-ng-cloak data-ng-if="modal_form">
-    	<ng-include src="modal_form"></ng-include>
-    </div>
-    
-    <script src="app/vendor/google-analytics-bundle.js"></script> 
-    
-    <script src="app/vendor/md5.min.js"></script>
-    <script src="app/vendor/angular-animate.min.js"></script>
-    <script src="app/vendor/angular-sortable.js"></script>
-    
-    <script src="app/vendor/ui-bootstrap-custom-0.10.0.min.js"></script>
-    <script src="app/vendor/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
-    
-    <script src="app/app.js"></script>
-    <script src="app/app.directives.js"></script>
-    <script src="app/app.filters.js"></script>
-    
-    <script src="app/services/utils.service.js"></script>
-    <script src="app/services/chrome.storage.service.js"></script>
-    <script src="app/services/audio.service.js"></script>
-    <script src="app/services/lastfm.api.service.js"></script>
-    <script src="app/services/vk.api.service.js"></script>
-    <script src="app/services/stateManager.service.js"></script>
-    
-    <script src="app/controllers/window.controller.js"></script>
-    <script src="app/controllers/app.controller.js"></script>
+<body class="app" data-ng-app="Player" data-ng-controller="AppCtrl" data-ng-init="Init()">
+    <ng-include src="'views/appHeaderView.html'"></ng-include>
+    <ng-include src="'views/appMenuView.html'"></ng-include>
+    <ng-include src="'views/appPlaylistView.html'"></ng-include>
+    <ng-include src="'views/appContentView.html'"></ng-include>
+
+    <script type="text/javascript" src="app/controllers/app.controller.js"></script>
+    <script type="text/javascript" src="app/controllers/menu.controller.js"></script>
 </body>
 </html>

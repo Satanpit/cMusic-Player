@@ -1,0 +1,251 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(/fonts/open_sans_light.woff) format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/fonts/open_sans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/fonts/open_sans_bold.woff) format('woff');
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+body {
+  background: #ffffff;
+  color: #666666;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+}
+ul,
+ol,
+menu {
+  list-style: none;
+}
+a {
+  color: #666666;
+  text-decoration: none;
+  cursor: pointer;
+}
+.app-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 60px;
+  border-bottom: #e8ecf0 1px solid;
+}
+.app-header .app-header-controls {
+  position: absolute;
+  top: 0;
+  right: 55%;
+  bottom: 0;
+  left: 0;
+}
+.app-header .app-header-track-info {
+  position: absolute;
+  top: 0;
+  right: 80px;
+  bottom: 0;
+  left: 45%;
+  border-left: #e8ecf0 1px solid;
+}
+.app-header .app-header-window-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 120px;
+  border-left: #e8ecf0 1px solid;
+}
+.app-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  background: #52636a;
+  overflow: hidden;
+  z-index: 5;
+  transition: width 0.15s ease;
+}
+.app-menu menu {
+  width: 190px;
+}
+.app-menu menu li {
+  position: relative;
+  display: block;
+  height: 60px;
+}
+.app-menu menu li a {
+  display: block;
+  height: 100%;
+  padding: 20px 0 20px 60px;
+  opacity: .6;
+  color: #FFF;
+}
+.app-menu menu li a[class^="icon-menu-"] {
+  background-image: url('../img/sprite-menu.png');
+  background-repeat: no-repeat;
+  transition: opacity 0.15s ease;
+}
+.app-menu menu li a:hover,
+.app-menu menu li a.active {
+  opacity: 1;
+}
+.app-menu menu li:first-child {
+  background: #4b5b62;
+}
+.app-menu menu li:first-child a {
+  width: 60px;
+  padding: 0;
+  background: #76bceb;
+  opacity: 1;
+  text-align: center;
+}
+.app-menu menu li:first-child .title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 60px;
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 60px;
+}
+.app-menu menu li:last-child {
+  position: absolute;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #4b5b62;
+}
+.app-menu menu li:not(:first-child):not(:last-child):after {
+  content: "";
+  position: absolute;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 10px;
+  width: 40px;
+  height: 1px;
+  background: #5f7077;
+  transition: width 0.15s ease;
+}
+.app-menu menu li .helper {
+  position: relative;
+  display: inline-block;
+  width: 15px;
+  height: 2px;
+  background: #FFF;
+  margin-top: 28px;
+}
+.app-menu menu li .helper:before,
+.app-menu menu li .helper:after {
+  content: "";
+  display: block;
+  height: 2px;
+  background: inherit;
+  position: absolute;
+  top: -4px;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  transition: all 0.15s ease;
+}
+.app-menu menu li .helper:after {
+  position: absolute;
+  top: auto;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+}
+.app-menu menu li.alarm:before {
+  position: absolute;
+  top: 17px;
+  right: auto;
+  bottom: auto;
+  left: 19px;
+  content: "";
+  display: block;
+  width: 7px;
+  height: 7px;
+  border: #52636a 1px solid;
+  border-radius: 50%;
+  background: #ffa65c;
+  z-index: 2;
+  transition: opacity 0.15s ease;
+}
+.app-menu.show {
+  width: 190px;
+}
+.app-menu.show li:after {
+  width: 170px !important;
+}
+.app-menu.show .helper:before {
+  top: 0;
+}
+.app-menu.show .helper:after {
+  bottom: 0;
+}
+.app-menu.show .alarm:before {
+  opacity: 0;
+}
+.app-menu .icon-menu-news {
+  background-position: 22px -244px;
+}
+.app-menu .icon-menu-search {
+  background-position: 22px -376px;
+}
+.app-menu .icon-menu-lib {
+  background-position: 22px -178px;
+}
+.app-menu .icon-menu-recommends {
+  background-position: 22px -310px;
+}
+.app-menu .icon-menu-events {
+  background-position: 22px -112px;
+}
+.app-menu .icon-menu-about {
+  background-position: 22px 20px;
+}
+.app-menu .icon-menu-settings {
+  background-position: 22px -442px;
+}
+.app-menu .icon-menu-could {
+  background-position: 22px -46px;
+}
+.app-playlist {
+  position: absolute;
+  top: 60px;
+  right: 55%;
+  bottom: 0;
+  left: 60px;
+  background: #f3f7f7;
+}
+.app-content {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  left: 45%;
+  background: #FFF;
+  border-left: #e8ecf0 1px solid;
+}
