@@ -29,16 +29,20 @@ Player.directive('autoscrolling', function(){
 	}
 });
 
-Player.directive('image', function($rootScope, storage, utils){
+Player.directive('img-src', function($rootScope, storage, utils){
 	return {
 		restrict:'A',
 		
 		link: function(scope, elem, attr) {
-			attr.$observe('image', function() {
+			attr.$observe('img-src', function() {
 				if(attr.image) {
-					utils.getLocalImageURL(attr.image, function(url) {
-						elem[0].src = url;
-					});
+                    var xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = function() {
+                        elem[0].src = window.webkitURL.createObjectURL(xhr.response);
+                    };
+                    xhr.open('GET', attr['img-src'], true);
+                    xhr.send();
 				}
 				else {
 					elem[0].src = 'icons/no-image.png'

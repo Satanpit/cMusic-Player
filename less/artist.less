@@ -1,0 +1,83 @@
+@import "mixins";
+
+.artist-header {
+  padding: 20px;
+
+  img {
+    float: left;
+    width: 42px;
+    height: 42px;
+    padding: 1px;
+    margin-right: 20px;
+    border: #dde2e5 1px solid;
+    border-radius: 50%;
+  }
+
+  .name {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 300;
+    .ellipsis();
+  }
+
+  .tags {
+    height: 20px;
+    line-height: 20px;
+    font-size: 11px;
+    .ellipsis();
+
+    li {
+      display: inline-block;
+      margin-right: 20px;
+
+      a {
+        color: #999;
+        border-bottom: transparent 1px dotted;
+
+        &:hover {
+          border-bottom-color: #999;
+        }
+      }
+    }
+  }
+}
+
+.artist-info {
+  .scroll-box(140px, 16px, 20px, 0);
+  padding:0 9px 0 20px;
+
+  .bio {
+    text-align: justify;
+    line-height: 24px;
+    margin: -6px 0 20px 0;
+  }
+
+  .similar {
+    li > a {
+
+      &:after {
+        .absolute(auto, auto, 14px, -6px);
+        content: "";
+        display: block;
+        width: 9px;
+        height: 9px;
+        border: #fff 3px solid;
+        border-radius: 50%;
+        background: #a8b1b4;
+        z-index: 2;
+      }
+
+      &.similar-1:after {
+        background: @red;
+      }
+
+      &.similar-2:after {
+        background: @orange;
+      }
+    }
+  }
+
+  .albums {
+    margin-top: 20px;
+  }
+}

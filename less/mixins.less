@@ -27,6 +27,8 @@
 @border-color-light:  #f0f3f6;
 @border-color-menu:   #5f7077;
 
+@scroll-color: #cbd0d2;
+
 // Sizing
 @playlist-width: 45%;
 @content-width: 100% - @playlist-width;
@@ -60,9 +62,14 @@
 }
 
 .scroll-box(@top: 0, @right: 0, @bottom: 0, @left: 0) {
-  .absolute(@top, @right, @bottom, @left);
-  overflow-y: auto;
+  .absolute(@top, @right - 6px, @bottom, @left);
+  overflow-y: scroll;
   overflow-x: hidden;
+  padding-right: 4px;
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: @scroll-color;
+  }
 }
 
 .icon-menu(@n: 0) {

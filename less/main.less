@@ -5,14 +5,242 @@
 @import "header";
 @import "menu";
 @import "playlist";
+@import "artist";
 
 .app-content {
-  position: absolute;
-  right: 0;
-  top: 60px;
-  bottom: 0;
-  left: @playlist-width;
+  .absolute(60px, 0, 0, @playlist-width);
   background: #FFF;
   border: @border-color 1px solid;
   border-top: none;
 }
+
+.tracks-list {
+  > li {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    line-height: 20px;
+    cursor: pointer;
+    vertical-align: top;
+    font-size: 11px;
+
+    &:hover {
+      background: @light-2;
+    }
+
+    .icon-play {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      border: @dark 1px solid;
+      border-radius: 50%;
+      .icon(2px, -446px);
+      opacity: .5;
+    }
+
+    .artist {
+      font-weight: 700;
+      vertical-align: top;
+
+      &:hover {
+        border-bottom: @dark 1px dotted;
+      }
+    }
+
+    .track {
+      vertical-align: top;
+    }
+
+    .time {
+      float: right;
+      font-size: 11px;
+      opacity: .8;
+    }
+
+    &.current {
+      background: @blue;
+      color: #FFF;
+
+      .icon-play {
+        border-color: #FFF;
+        opacity: 1;
+        .icon(2px, -382px);
+      }
+
+      .artist {
+        color: #FFF;
+
+        &:hover {
+          border-bottom-color: #FFF;
+        }
+      }
+
+      .time {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.artists-list {
+  position: relative;
+  text-align: justify;
+  margin: -20px;
+
+  li {
+    display: inline;
+
+    a {
+      position: relative;
+      display: inline-block;
+      width: 120px;
+      height: 140px;
+      margin: 20px;
+      text-align: center;
+      vertical-align: top;
+
+      &:before {
+        content: "";
+        display: block;
+        width: 120px;
+        height: 120px;
+        .absolute(0, 0, 0, 0);
+        background: rgba(0, 0, 0, .6) url("../img/icon-artist-more.png") center no-repeat;
+        border-radius: 3px;
+        opacity: 0;
+        .transition(opacity);
+      }
+
+      &:hover {
+        &:before {
+          opacity: 1;
+        }
+      }
+
+      img {
+        display: block;
+        width: 120px;
+        height: 120px;
+        border-radius: 3px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+.albums-list {
+  position: relative;
+  text-align: justify;
+  margin: -20px;
+
+  li {
+    display: inline;
+
+    a {
+      position: relative;
+      display: inline-block;
+      width: 170px;
+      height: 200px;
+      margin: 20px;
+      text-align: left;
+      vertical-align: top;
+
+      img {
+        display: block;
+        width: 170px;
+        height: 170px;
+        margin-bottom: 10px;
+        border-radius: 3px;
+      }
+
+      .year {
+        font-size: 11px;
+        color: #999;
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        width: 170px;
+        height: 170px;
+        .absolute(0, 0, 0, 0);
+        background: rgba(0, 0, 0, .6) url("../img/icon-album-more.png") center no-repeat;
+        border-radius: 3px;
+        opacity: 0;
+        .transition(opacity);
+      }
+
+      &:hover {
+        &:before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+.tabs {
+  .absolute(auto, 20px, auto, 20px);
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 20px -20px 0 -20px;
+  font-size: 11px;
+  line-height: 11px;
+  clear: both;
+  .ellipsis();
+
+  li {
+    position: relative;
+    display: inline;
+    text-transform: uppercase;
+
+    &.active {
+      border-bottom: @blue 2px solid;
+      z-index: 2;
+
+      a {
+        color: @blue;
+      }
+    }
+
+    a {
+      display: inline-block;
+      padding: 0 20px 20px 20px;
+      .transition(color);
+
+      &:hover {
+        color: @blue;
+      }
+    }
+  }
+
+  &:after {
+    .absolute(auto, 0, 0, 0);
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: @border-color;
+  }
+}
+
+/*@media screen and (min-width: 1600px) {
+  .app-menu {
+    width: 180px;
+  }
+}*/

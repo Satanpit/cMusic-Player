@@ -16,8 +16,8 @@ body {
   color: @text-color-default;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  -webkit-font-smoothing: subpixel-antialiased !important;
-  -webkit-backface-visibility: hidden;
+//  -webkit-font-smoothing: subpixel-antialiased !important;
+//  -webkit-backface-visibility: hidden;
 }
 
 ul,
@@ -30,6 +30,27 @@ a {
   color: @text-color-default;
   text-decoration: none;
   cursor: pointer;
+}
+
+h2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  line-height: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+
+  &:after {
+    content: "";
+    height: 1px;
+    background: @border-color-light;
+    flex: 2;
+    margin-left: 10px;
+  }
 }
 
 ::-webkit-input-placeholder {
