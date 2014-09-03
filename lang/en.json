@@ -1,0 +1,11 @@
+{
+    "menu": {
+        "news": "News",
+        "search": "Search audio",
+        "lib": "My library",
+        "recommends": "Recommendations",
+        "events": "Events",
+        "about": "About",
+        "settings": "Settings"
+    }
+}

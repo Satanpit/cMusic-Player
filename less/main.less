@@ -86,11 +86,18 @@
 
 .artists-list {
   position: relative;
-  text-align: justify;
-  margin: -20px;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
 
   li {
-    display: inline;
+    display: inline-block;
+    flex: 1 0 140px;
+
+    &:empty {
+      height: 0;
+      border: none;
+    };
 
     a {
       position: relative;
@@ -133,6 +140,7 @@
     content: "";
     display: inline-block;
     width: 100%;
+    text-align: left;
   }
 }
 
@@ -239,8 +247,43 @@
   }
 }
 
-/*@media screen and (min-width: 1600px) {
-  .app-menu {
-    width: 180px;
+.app-slide {
+  .absolute(60px, 0, 0, @playlist-width);
+  background: #FFF;
+  z-index: 5;
+  box-shadow: -2px 2px 3px rgba(0, 0, 0, .1);
+
+  .app-slide-content {
+    .scroll-box(20px, 20px, 20px, 20px);
   }
+}
+
+.slide.ng-enter, .slide.ng-leave {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+  z-index: 5;
+}
+
+.slide.ng-enter {
+  -webkit-transform: translateX(100%);
+}
+
+.slide.ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+}
+
+/*.slide.ng-enter, .slide.ng-leave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: #FFF;
+  transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+
+.slide.ng-enter {
+  -webkit-transform: translateX(0);
 }*/

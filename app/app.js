@@ -1,7 +1,46 @@
-var Player = angular.module('Player', ['ngAnimate']);
+var Player = angular.module('Player', ['ngAnimate', 'pascalprecht.translate', 'ui.router']);
 
-Player.config(function($sceProvider) {
-    $sceProvider.enabled(false);
+Player.config(function($stateProvider, $urlRouterProvider, $translateProvider, Config) {
+    $translateProvider.useStaticFilesLoader({
+        prefix: Config.lang.prefix,
+        suffix: Config.lang.suffix
+    });
+
+    $translateProvider.preferredLanguage(
+        Config.lang.support.indexOf(navigator.language) !== -1 ? navigator.language : Config.lang.default
+    );
+
+    $stateProvider.state('main', {
+        url: "",
+        views: {
+            "header": {
+                controller: "HeaderCtrl",
+                templateUrl: "views/main/headerView.html"
+            },
+            "menu": {
+                controller: "MenuCtrl",
+                templateUrl: "views/main/menuView.html"
+            },
+            "playlist": {
+                controller: "",
+                templateUrl: "views/main/playlistView.html"
+            },
+            "content": {
+                controller: "",
+                templateUrl: "views/main/contentView.html"
+            }
+        }
+    }).state('main.slide', {
+        views: {
+            "slide@": {
+                templateUrl: "views/main/slideView.html",
+            }
+        }
+    }).state('main.slide.news', {
+        template: "12313212",
+    });
+}).run(function() {
+
 });
 
 Player.factory('$exceptionHandler', function() {

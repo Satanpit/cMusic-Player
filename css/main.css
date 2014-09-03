@@ -32,6 +32,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 body {
   background: #ffffff;
@@ -728,11 +729,17 @@ h2:after {
 }
 .artists-list {
   position: relative;
-  text-align: justify;
-  margin: -20px;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
 }
 .artists-list li {
-  display: inline;
+  display: inline-block;
+  flex: 1 0 140px;
+}
+.artists-list li:empty {
+  height: 0;
+  border: none;
 }
 .artists-list li a {
   position: relative;
@@ -772,6 +779,7 @@ h2:after {
   content: "";
   display: inline-block;
   width: 100%;
+  text-align: left;
 }
 .albums-list {
   position: relative;
@@ -873,8 +881,53 @@ h2:after {
   height: 1px;
   background: #e8ecf0;
 }
-/*@media screen and (min-width: 1600px) {
-  .app-menu {
-    width: 180px;
-  }
+.app-slide {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  left: 45%;
+  background: #FFF;
+  z-index: 5;
+  box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+.app-slide .app-slide-content {
+  position: absolute;
+  top: 20px;
+  right: 14px;
+  bottom: 20px;
+  left: 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+.app-slide .app-slide-content:hover::-webkit-scrollbar-thumb {
+  background: #cbd0d2;
+}
+.slide.ng-enter,
+.slide.ng-leave {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+  z-index: 5;
+}
+.slide.ng-enter {
+  -webkit-transform: translateX(100%);
+}
+.slide.ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+}
+/*.slide.ng-enter, .slide.ng-leave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: #FFF;
+  transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+
+.slide.ng-enter {
+  -webkit-transform: translateX(0);
 }*/
