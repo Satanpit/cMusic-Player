@@ -323,6 +323,10 @@
             }
 
             return this;
+        },
+
+        children: function() {
+            return this.pushElements([this[0].children]);
         }
     };
 

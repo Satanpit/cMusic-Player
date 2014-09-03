@@ -1,3 +1,5 @@
+"use strict";
+
 var Player = angular.module('Player', ['ngAnimate', 'pascalprecht.translate', 'ui.router']);
 
 Player.config(function($stateProvider, $urlRouterProvider, $translateProvider, Config) {
@@ -33,11 +35,18 @@ Player.config(function($stateProvider, $urlRouterProvider, $translateProvider, C
     }).state('main.slide', {
         views: {
             "slide@": {
-                templateUrl: "views/main/slideView.html",
+                templateUrl: "views/main/slideView.html"
             }
         }
     }).state('main.slide.news', {
-        template: "12313212",
+        views: {
+            "content": {
+                template: "test"
+            }
+        },
+        onEnter: function($state) {
+            console.log($state.current.name);
+        }
     });
 }).run(function() {
 
@@ -48,3 +57,5 @@ Player.factory('$exceptionHandler', function() {
         console.warn(exception.message + ' (caused by "' + cause + '")');
     };
 });
+
+var $ = BikeJS;
