@@ -5,7 +5,6 @@
     <meta charset="utf-8">
 
     <script type="text/javascript" src="app/vendor/angular.min.js"></script>
-    <script type="text/javascript" src="app/vendor/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="app/vendor/angular-animate.min.js"></script>
     <script type="text/javascript" src="app/vendor/angular-translate.min.js"></script>
     <script type="text/javascript" src="app/vendor/bikejs.js"></script>
@@ -13,19 +12,17 @@
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/app.config.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-</head>
-<body class="app" data-ng-app="Player" data-ng-controller="AppCtrl">
-    <div ui-view="header"></div>
-    <div ui-view="menu"></div>
-    <div ui-view="playlist"></div>
-    <div ui-view="content"></div>
-    <div ui-view="slide" class="slide"></div>
-    <div ui-view="screen"></div>
-
     <script type="text/javascript" src="app/controllers/app.controller.js"></script>
     <script type="text/javascript" src="app/controllers/menu.controller.js"></script>
     <script type="text/javascript" src="app/controllers/header.controller.js"></script>
     <script type="text/javascript" src="app/controllers/window.controller.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body class="app" data-ng-app="Player" data-ng-controller="AppCtrl">
+    <ng-include src="'views/main/headerView.html'"></ng-include>
+    <ng-include src="'views/main/menuView.html'"></ng-include>
+    <ng-include src="'views/main/playlistView.html'"></ng-include>
+    <ng-include src="'views/main/contentView.html'"></ng-include>
 </body>
 </html>

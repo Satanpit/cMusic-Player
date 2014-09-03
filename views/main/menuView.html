@@ -1,32 +1,32 @@
-<section data-ng-class="{show: isMenuShow}" class="app-menu">
+<section data-ng-class="{show: isMenuShow}" data-ng-controller="MenuCtrl" class="app-menu">
     <menu>
         <li>
-            <a data-ng-click="toggleShow()">
+            <a data-toggle="isMenuShow">
                 <div class="helper"></div>
             </a>
             <div class="title">cMusic</div>
         </li>
         <li>
-            <a ui-sref="main.slide.news" ui-sref-active="active" translate="menu.news" class="icon-menu-news"></a>
+            <a translate="menu.news" class="icon-menu-news"></a>
         </li>
         <li>
-            <a ui-sref="main.search" translate="menu.search" class="icon-menu-search"></a>
+            <a translate="menu.search" class="icon-menu-search"></a>
         </li>
         <li>
-            <a ui-sref="main.library" translate="menu.lib" class="icon-menu-lib"></a>
+            <a translate="menu.lib" class="icon-menu-lib"></a>
         </li>
         <li>
-            <a ui-sref="main.recommendations" translate="menu.recommends" class="icon-menu-recommends"></a>
+            <a translate="menu.recommends" class="icon-menu-recommends"></a>
         </li>
         <li class="alarm">
-            <a ui-sref="main.events" translate="menu.events" class="icon-menu-events"></a>
+            <a translate="menu.events" class="icon-menu-events"></a>
             <span class="count-alarms">5</span>
         </li>
         <li>
-            <a ui-sref="main.about" translate="menu.about" class="icon-menu-about"></a>
+            <a translate="menu.about" class="icon-menu-about"></a>
         </li>
         <li>
-            <a ui-sref="main.settings" translate="menu.settings" class="icon-menu-settings"></a>
+            <a translate="menu.settings" class="icon-menu-settings"></a>
         </li>
     </menu>
 </section>

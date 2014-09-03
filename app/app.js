@@ -1,8 +1,8 @@
 "use strict";
 
-var Player = angular.module('Player', ['ngAnimate', 'pascalprecht.translate', 'ui.router']);
+var Player = angular.module('Player', ['ngAnimate', 'pascalprecht.translate']);
 
-Player.config(function($stateProvider, $urlRouterProvider, $translateProvider, Config) {
+Player.config(function($translateProvider, Config) {
     $translateProvider.useStaticFilesLoader({
         prefix: Config.lang.prefix,
         suffix: Config.lang.suffix
@@ -11,43 +11,6 @@ Player.config(function($stateProvider, $urlRouterProvider, $translateProvider, C
     $translateProvider.preferredLanguage(
         Config.lang.support.indexOf(navigator.language) !== -1 ? navigator.language : Config.lang.default
     );
-
-    $stateProvider.state('main', {
-        url: "",
-        views: {
-            "header": {
-                controller: "HeaderCtrl",
-                templateUrl: "views/main/headerView.html"
-            },
-            "menu": {
-                controller: "MenuCtrl",
-                templateUrl: "views/main/menuView.html"
-            },
-            "playlist": {
-                controller: "",
-                templateUrl: "views/main/playlistView.html"
-            },
-            "content": {
-                controller: "",
-                templateUrl: "views/main/contentView.html"
-            }
-        }
-    }).state('main.slide', {
-        views: {
-            "slide@": {
-                templateUrl: "views/main/slideView.html"
-            }
-        }
-    }).state('main.slide.news', {
-        views: {
-            "content": {
-                template: "test"
-            }
-        },
-        onEnter: function($state) {
-            console.log($state.current.name);
-        }
-    });
 }).run(function() {
 
 });
@@ -58,4 +21,21 @@ Player.factory('$exceptionHandler', function() {
     };
 });
 
-var $ = BikeJS;
+Player.directive('toggle', function() {
+    return {
+        scope: {
+            toggle: '='
+        },
+        link: function($scope, element) {
+            $scope.$watch("toggle", function(value) {
+                element.toggleClass('active', value);
+            });
+
+            BikeJS(element).on('click', function() {
+                $scope.$apply(function() {
+                    $scope.toggle = !$scope.toggle;
+                });
+            });
+        }
+    }
+});
