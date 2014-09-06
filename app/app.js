@@ -31,7 +31,7 @@ Player.directive('toggle', function() {
                 element.toggleClass('active', value);
             });
 
-            BikeJS(element).on('click', function() {
+            element.on('click', function() {
                 $scope.$apply(function() {
                     $scope.toggle = !$scope.toggle;
                 });
