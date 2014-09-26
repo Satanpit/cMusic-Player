@@ -20,22 +20,3 @@ Player.factory('$exceptionHandler', function() {
         console.warn(exception.message + ' (caused by "' + cause + '")');
     };
 });
-
-Player.directive('toggle', function() {
-    return {
-        scope: {
-            toggle: '='
-        },
-        link: function($scope, element) {
-            $scope.$watch("toggle", function(value) {
-                element.toggleClass('active', value);
-            });
-
-            element.on('click', function() {
-                $scope.$apply(function() {
-                    $scope.toggle = !$scope.toggle;
-                });
-            });
-        }
-    }
-});

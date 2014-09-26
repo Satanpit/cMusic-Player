@@ -4,10 +4,10 @@ Player.constant('Config', {
             url: 'https://api.vk.com/method/',
             clientId: 3989655,
             scope: 'audio,status,offline',
-            ver: '5.13',
+            ver: '5.25',
             requestLimit: 3
         },
-        lastfm: {
+        lastFm: {
             url: 'https://ws.audioscrobbler.com/2.0/',
             key: '4d1b3ad77378fa5c95fe3483b3caf97b',
             secret: 'b19a84c20f77a31b7113f128380d66d6',
@@ -30,10 +30,7 @@ Player.constant('Config', {
     },
 
     user: {
-        vkGetUserInfoParams: {
-            fields: 'photo_200,city,country',
-            nameCase: 'Nom'
-        }
+
     },
 
     lang: {
