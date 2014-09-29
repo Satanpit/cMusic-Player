@@ -32,6 +32,42 @@ body.loaded {
   border-top: none;
 }
 
+.btn {
+  position: relative;
+  padding: 10px 20px;
+  min-width: 160px;
+  text-align: center;
+  color: #FFF;
+  background: @blue;
+  border-radius: 3px;
+  font-size: 14px;
+  .transition(background-color);
+
+  &.login {
+    padding-left: 55px;
+
+    &:before {
+      content: "";
+      display: block;
+      .absolute(0, auto, 0, 0);
+      width: 40px;
+      height: 100%;
+      background: @blue-2 url("../img/login-icon.png") center no-repeat;
+      z-index: 2;
+      border-radius: 3px 0 0 3px;
+      .transition(background-color);
+    }
+  }
+
+  &:hover {
+    background: @blue-2;
+
+    &:before {
+      background-color: @blue;
+    }
+  }
+}
+
 .tracks-list {
   > li {
     position: relative;
