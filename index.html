@@ -4,16 +4,24 @@
 	<title>cMusic Player</title>
     <meta charset="utf-8">
 
+    <!-- Vendor files -->
     <script type="text/javascript" src="app/vendor/angular.min.js"></script>
     <script type="text/javascript" src="app/vendor/angular-animate.min.js"></script>
     <script type="text/javascript" src="app/vendor/angular-translate.min.js"></script>
-    <script type="text/javascript" src="app/vendor/bikejs.js"></script>
 
+    <!-- App -->
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/app.config.js"></script>
 
+    <!-- Services -->
+    <script type="text/javascript" src="app/services/state.service.js"></script>
+    <script type="text/javascript" src="app/services/utils.service.js"></script>
+    <script type="text/javascript" src="app/services/vk.api.service.js"></script>
+
+    <!-- Directives -->
     <script type="text/javascript" src="app/directives/utils.directive.js"></script>
 
+    <!-- Controllers -->
     <script type="text/javascript" src="app/controllers/app.controller.js"></script>
     <script type="text/javascript" src="app/controllers/menu.controller.js"></script>
     <script type="text/javascript" src="app/controllers/header.controller.js"></script>
@@ -22,7 +30,36 @@
 
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
-<body class="app" data-ng-app="Player" data-ng-controller="AppCtrl">
+<body class="app" data-ng-app="Player" data-ng-controller="AppCtrl" data-ng-class="{loaded: state.loaded}">
+    <div class="modal-page app-login-vk">
+        <div class="modal-content">
+            <header>
+                <img src="img/app-logo-120.png"/>
+                cMusicPlayer
+            </header>
+            <p translate="login.vk.description">
+                <b>cMusic Player</b> - это приложение которое облегчит Вам прослушивание музыки и поможет обрести новых  любимых исполнителей. <br/>
+                С cMusic Вы сможете следить за концертами групп, которые Вам нравятся, скробблить композиции на LastFM, просматривать рекомендованных  Вам исполнителей, <br/>
+                узнавать больше об артистах, которые нравятся и все глубже поглощаться в мир музыки, которую мы все так любим.
+            </p>
+            <h3>Основные возможности плеера:</h3>
+
+            <ul class="list">
+                <li>Прослушивание музыки из ВК</li>
+                <li>Скробблинг аудиозаписей на LastFM</li>
+                <li>Сохранение треков в Google Drive и прослушывание музыки offline </li>
+                <li>Просмотр биографии, похожих исполнителей, дискографии и событий артиста</li>
+                <li>Поиск аудиозаписей по названию исполнителя/трека</li>
+                <li>Просмотр рекомендованых артистов и треков на основе скробблинга LastFM</li>
+            </ul>
+            <footer>
+                123123
+            </footer>
+        </div>
+    </div>
+    <!--<div class="app-loader">
+        Loading...
+    </div>-->
     <ng-include src="'views/main/headerView.html'"></ng-include>
     <ng-include src="'views/main/menuView.html'"></ng-include>
     <ng-include src="'views/main/playlistView.html'"></ng-include>

@@ -11,8 +11,6 @@ Player.config(function($translateProvider, Config) {
     $translateProvider.preferredLanguage(
         Config.lang.support.indexOf(navigator.language) !== -1 ? navigator.language : Config.lang.default
     );
-}).run(function() {
-
 });
 
 Player.factory('$exceptionHandler', function() {

@@ -1,0 +1,36 @@
+@import "mixins";
+
+.modal-page {
+  .absolute(0, 0, 0, 0);
+  z-index: 999;
+  background: #FFF;
+
+  .modal-content {
+    .absolute(100px, 100px, 100px, 100px);
+    font-size: 13px;
+    line-height: 24px;
+
+    p {
+      margin: 50px 0;
+    }
+  }
+}
+
+.app-login-vk {
+  header {
+    img {
+      margin-right: 20px;
+    }
+
+    height: 120px;
+    font-size: 72px;
+    font-weight: 200;
+    line-height: 120px;
+    vertical-align: top;
+    color: @blue;
+  }
+
+  footer {
+    .absolute(auto, 0, 0, 0);
+  }
+}

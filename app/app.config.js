@@ -2,9 +2,9 @@ Player.constant('Config', {
     api: {
         vk: {
             url: 'https://api.vk.com/method/',
-            clientId: 3989655,
-            scope: 'audio,status,offline',
             ver: '5.25',
+            method: 'GET',
+            async: true,
             requestLimit: 3
         },
         lastFm: {
@@ -16,11 +16,17 @@ Player.constant('Config', {
     },
 
     oauth: {
-        redirectURL: 'https://' + chrome.runtime.id + '.chromiumapp.org/cb',
+        interactive: true,
         vk: {
-            url: 'https://oauth.vk.com/authorize?',
-            display: 'page',
-            responseType: 'token'
+            url: 'https://oauth.vk.com/authorize',
+            params: {
+                client_id		: 3989655,
+                scope			: 'audio,status,offline',
+                redirect_uri	: 'https://' + chrome.runtime.id + '.chromiumapp.org/cb',
+                v				: '5.25',
+                display			: "page",
+                response_type	: "token"
+            }
         }
     },
 

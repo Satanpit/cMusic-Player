@@ -21,7 +21,15 @@ Player.directive('playlist', function() {
     return {
         link: function($scope, element) {
             element.on('click', function(e) {
-                console.log(e.target);
+                var elem = e.target;
+
+                if (elem.classList.contains('artist')) {
+
+                }
+                else {
+                    var audio = element[0].parentNode.children.item('audio');
+                    console.log(elem);
+                }
             });
         }
     }

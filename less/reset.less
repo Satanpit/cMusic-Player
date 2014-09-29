@@ -17,7 +17,7 @@ body {
   color: @text-color-default;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-//  -webkit-font-smoothing: subpixel-antialiased !important;
+  -webkit-font-smoothing: subpixel-antialiased !important;
 //  -webkit-backface-visibility: hidden;
 }
 
@@ -51,6 +51,23 @@ h2 {
     background: @border-color-light;
     flex: 2;
     margin-left: 10px;
+  }
+}
+
+ul.list {
+  li {
+    line-height: 6px;
+    margin: 20px 0;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 14px;
+      background: @blue;
+      vertical-align: top;
+    }
   }
 }
 

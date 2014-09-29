@@ -6,6 +6,24 @@
 @import "menu";
 @import "playlist";
 @import "artist";
+@import "modal-page";
+
+.app-loader {
+  display: flex;
+  .absolute(0, 0, 0, 0);
+  z-index: 999;
+  background: #f5f5f5;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  .transition(opacity);
+}
+
+body.loaded {
+  .app-loader {
+    visibility: hidden;
+  }
+}
 
 .app-content {
   .absolute(60px, 0, 0, @playlist-width);
