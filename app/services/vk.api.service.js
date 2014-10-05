@@ -1,4 +1,4 @@
-Player.factory('VK', function($http, Config, Utils) {
+Player.factory('VK', function($http, $q, Config, Utils) {
     "use strict";
 
     var API = {
@@ -16,26 +16,33 @@ Player.factory('VK', function($http, Config, Utils) {
     };
 
     return {
-        auth: function(success, error) {
+        auth: function() {
+            var deferred = $q.defer();
+
             chrome.identity.launchWebAuthFlow({
                 url         : Config.oauth.vk.url + Utils.serialize(Config.oauth.vk.params),
                 interactive : Config.oauth.interactive
             }, function(url) {
                 var params = Utils.parseURL(url.replace(Config.oauth.vk.params.redirect_uri + "#", ""));
 
-                if (!params.user_id || !params.access_token) {
-                    error();
-                    return false;
+                if (params.user_id && params.access_token) {
+                    deferred.resolve({
+                        userId: params.user_id,
+                        token: params.access_token
+                    });
                 }
-
-                success(params.user_id, params.access_token);
+                else {
+                    deferred.reject();
+                }
             });
+
+            return deferred.promise;
         },
 
         init: function(user, count, albumId) {
             API.user = {
-                id: user.user_id,
-                token: user.access_token
+                id: user.id,
+                token: user.token
             };
 
             return API.get('execute.init', {
