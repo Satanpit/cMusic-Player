@@ -5,9 +5,7 @@ Player.factory('State', function($rootScope) {
 
     return {
         set: function(key, value) {
-            $rootScope.$apply(function() {
-                $rootScope.state[key] = value || true;
-            });
+            $rootScope.state[key] = value || true;
 
             return this;
         },

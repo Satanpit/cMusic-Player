@@ -15,6 +15,7 @@
 
     <!-- Services -->
     <script type="text/javascript" src="app/services/state.service.js"></script>
+    <script type="text/javascript" src="app/services/storage.service.js"></script>
     <script type="text/javascript" src="app/services/utils.service.js"></script>
     <script type="text/javascript" src="app/services/vk.api.service.js"></script>
 
@@ -31,7 +32,12 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body class="app" data-ng-app="Player" data-ng-controller="AppCtrl" data-ng-class="{loaded: state.loaded}">
-    <div class="modal-page app-login-vk">
+    <div class="modal-page app-login-vk" data-ng-class="{show: state.authFormVK}">
+        <section class="app-header-window-controls" data-ng-controller="WindowCtrl">
+            <a data-ng-click="minimize()" class="window-minimize"></a>
+            <a data-ng-click="fullScreen()" class="window-full-screen"></a>
+            <a data-ng-click="close()" class="window-close"></a>
+        </section>
         <div class="modal-content">
             <header>
                 <img src="img/app-logo-120.png"/>
@@ -57,9 +63,9 @@
             </footer>
         </div>
     </div>
-    <!--<div class="app-loader">
+    <div class="app-loader">
         Loading...
-    </div>-->
+    </div>
     <ng-include src="'views/main/headerView.html'"></ng-include>
     <ng-include src="'views/main/menuView.html'"></ng-include>
     <ng-include src="'views/main/playlistView.html'"></ng-include>

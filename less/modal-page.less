@@ -4,6 +4,9 @@
   .absolute(0, 0, 0, 0);
   z-index: 999;
   background: #FFF;
+  opacity: 0;
+  visibility: hidden;
+  .transition(opacity);
 
   .modal-content {
     .absolute(100px, 100px, 100px, 100px);
@@ -13,6 +16,16 @@
     p {
       margin: 50px 0;
     }
+  }
+
+  .app-header-window-controls {
+    bottom: auto;
+    border: none;
+  }
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
   }
 }
 
