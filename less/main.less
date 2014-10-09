@@ -68,6 +68,42 @@ body.loaded {
   }
 }
 
+.info-box {
+  position: relative;
+  padding: 20px;
+  background: @orange;
+  color: #FFF;
+  border-radius: 3px;
+  line-height: 22px;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right:0;
+    top:0;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-left: 15px solid @orange-2;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    right:0;
+    top:0;
+    width: 15px;
+    height: 15px;
+    background: #FFF;
+  }
+
+  p {
+    margin: 0 0 10px 0 !important;
+  }
+}
+
 .tracks-list {
   > li {
     position: relative;
