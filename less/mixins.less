@@ -26,6 +26,7 @@
 @border-color:        #e8ecf0;
 @border-color-light:  #f0f3f6;
 @border-color-menu:   #5f7077;
+@border-color-input:  #ededed;
 
 @scroll-color: #cbd0d2;
 
@@ -38,6 +39,9 @@
 @sprite-header: '../img/sprite-header.png';
 @sprite-default:'../img/sprite-default.png';
 
+//Background images
+@bg-lastfm: '../img/login-lastfm-bg.png';
+
 
 .absolute(@top: auto, @right: auto, @bottom: auto, @left: auto) {
   position: absolute;
@@ -49,6 +53,16 @@
 
 .transition(@property: all, @duration: 0.15s, @func: ease) {
   transition: @property @duration @func;
+}
+
+.transform(@property) {
+  -webkit-transform: @property;
+  transform: @property;
+}
+
+.animation(@name, @time: 0.2s, @func: ease) {
+  -webkit-animation: @name @time @func;
+  animation: @name @time @func;
 }
 
 .drag-area {

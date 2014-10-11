@@ -1,3 +1,3 @@
-Player.controller('HeaderCtrl', function($scope){
+function HeaderController() {
 
-});
+}

@@ -1,4 +1,4 @@
-Player.constant('Config', {
+var Config = {
     api: {
         vk: {
             url: 'https://api.vk.com/method/',
@@ -11,7 +11,9 @@ Player.constant('Config', {
             url: 'https://ws.audioscrobbler.com/2.0/',
             key: '4d1b3ad77378fa5c95fe3483b3caf97b',
             secret: 'b19a84c20f77a31b7113f128380d66d6',
-            format: 'json'
+            format: 'json',
+            method: 'POST',
+            async: true
         }
     },
 
@@ -47,6 +49,7 @@ Player.constant('Config', {
     },
 
     app: {
+        version: '3.0',
         volume: 0.8,
         imageLocalCache: true,
         syncGoogleDrive: true,
@@ -80,6 +83,11 @@ Player.constant('Config', {
                 artist: 50,
                 user: 30
             }
+        },
+        settings: {
+            notification: true,
+            scrobble: true,
+            translate: true
         }
     }
-});
+};

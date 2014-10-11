@@ -1,4 +1,4 @@
-Player.factory('Utils', function() {
+function UtilsService($http, $q) {
     "use strict";
 
     return {
@@ -19,8 +19,25 @@ Player.factory('Utils', function() {
             return items;
         },
 
-        serialize: function(object) {
-            return '?' + Object.keys(object).reduce(function(a,k){a.push(k+'='+encodeURIComponent(object[k]));return a},[]).join('&')
+        serialize: function(object, notStart) {
+            return (!notStart ? '?' : '') + Object.keys(object).reduce(function(a,k){
+                a.push(k+'='+encodeURIComponent(object[k]));
+                return a
+            },[]).join('&');
+        },
+
+        assign: function(obj1, obj2) {
+            if (typeof obj1 === 'object' && typeof obj2 === 'object') {
+                var tmp = angular.copy(obj1);
+                Object.keys(obj2).forEach(function(key) {
+                    tmp[key] = obj2[key];
+                });
+                return tmp;
+            } else {
+                if (typeof obj1 === 'object') return obj1;
+            }
+
+            throw Error('obj1 is not object');
         },
 
         parseURL: function(url) {
@@ -44,6 +61,20 @@ Player.factory('Utils', function() {
             }
 
             return output;
+        },
+
+        loadBlobImage: function(url) {
+            var xhr = new XMLHttpRequest(),
+                deferred = $q.defer();
+
+            xhr.responseType = 'blob';
+            xhr.onload = function() {
+                deferred.resolve(window.webkitURL.createObjectURL(xhr.response));
+            };
+            xhr.open('GET', url, true);
+            xhr.send();
+
+            return deferred.promise;
         }
     }
-});
+}

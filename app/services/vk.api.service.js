@@ -1,4 +1,4 @@
-Player.factory('VK', function($http, $q, Config, Utils) {
+function VkService($http, $q, Utils, Config) {
     "use strict";
 
     var API = {
@@ -59,6 +59,21 @@ Player.factory('VK', function($http, $q, Config, Utils) {
                     offset	: offset
                 });
             }
+        },
+
+        user: {
+            get: function(user) {
+                API.user = {
+                    id: user.id,
+                    token: user.token
+                };
+
+                return API.get('users.get', {
+                    user_ids	: user.id,
+                    fields		: 'photo_200,city,country',
+                    name_case	: 'Nom'
+                });
+            }
         }
     }
-});
+}

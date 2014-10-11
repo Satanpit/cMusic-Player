@@ -1,20 +1,34 @@
-"use strict";
+(function() {
+    "use strict";
 
-var Player = angular.module('Player', ['ngAnimate', 'pascalprecht.translate']);
+    angular.module('cMusic', ['ngAnimate', 'pascalprecht.translate'])
+        .config(function($translateProvider, Config) {
+            $translateProvider.useStaticFilesLoader({
+                prefix: Config.lang.prefix,
+                suffix: Config.lang.suffix
+            });
 
-Player.config(function($translateProvider, Config) {
-    $translateProvider.useStaticFilesLoader({
-        prefix: Config.lang.prefix,
-        suffix: Config.lang.suffix
-    });
+            $translateProvider.preferredLanguage(
+                Config.lang.support.indexOf(navigator.language) !== -1 ? navigator.language : Config.lang.default
+            );
+        })
 
-    $translateProvider.preferredLanguage(
-        Config.lang.support.indexOf(navigator.language) !== -1 ? navigator.language : Config.lang.default
-    );
-});
+        .constant('Config', Config)
 
-Player.factory('$exceptionHandler', function() {
-    return function (exception, cause) {
-        console.warn(exception.message + ' (caused by "' + cause + '")');
-    };
-});
+        .factory('Utils', UtilsService)
+        .factory('State', StateService)
+        .factory('Storage', StorageService)
+        .factory('VK', VkService)
+        .factory('LastFM', LastFmService)
+        .factory('Auth', AuthService)
+
+        .controller('AppController', AppController)
+        .controller('WindowController', WindowController)
+        .controller('HeaderController', HeaderController)
+        .controller('MenuController', MenuController)
+        .controller('PlaylistController', PlaylistController)
+        .controller('AuthController', AuthController)
+
+        .directive('link', ImageDirective)
+        .directive('toggle', ToggleDirective)
+})();

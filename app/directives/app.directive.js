@@ -1,4 +1,6 @@
-Player.directive('toggle', function() {
+function ToggleDirective() {
+    "use strict";
+
     return {
         scope: {
             toggle: '='
@@ -15,9 +17,29 @@ Player.directive('toggle', function() {
             });
         }
     }
-});
+}
 
-Player.directive('playlist', function() {
+function ImageDirective(Utils) {
+    "use strict";
+
+    return {
+        restrict:'A',
+
+        link: function(scope, element, attr) {
+            attr.$observe('link', function() {
+                if(attr.link) {
+                    Utils.loadBlobImage(attr.link).then(function(response) {
+                        element[0].src = response;
+                    });
+                }
+            });
+        }
+    }
+}
+
+function PlaylistDirective() {
+    "use strict";
+
     return {
         link: function($scope, element) {
             element.on('click', function(e) {
@@ -27,10 +49,9 @@ Player.directive('playlist', function() {
 
                 }
                 else {
-                    var audio = element[0].parentNode.children.item('audio');
-                    console.log(elem);
+                    $scope.play(elem.dataset.url);
                 }
             });
         }
     }
-});
+}

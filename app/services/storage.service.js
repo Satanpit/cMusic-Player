@@ -1,4 +1,4 @@
-Player.factory('Storage', function($q) {
+function StorageService($q) {
     "use strict";
 
     return {
@@ -37,4 +37,4 @@ Player.factory('Storage', function($q) {
             return deferred.promise;
         }
     }
-});
+}

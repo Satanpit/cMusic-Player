@@ -1,20 +1,20 @@
-Player.controller('WindowCtrl', function($scope){
+function WindowController() {
     var current = chrome.app.window.current();
 
-    $scope.close = function() {
+    this.close = function() {
         current.close();
-	};
+    };
 
-    $scope.fullScreen = function(){
-		if(current.isMaximized()) {
+    this.fullScreen = function(){
+        if(current.isMaximized()) {
             current.restore();
-		}
-		else {
+        }
+        else {
             current.maximize();
-		}
-	};
+        }
+    };
 
-    $scope.minimize = function() {
+    this.minimize = function() {
         current.minimize();
-	};
-});
+    };
+}

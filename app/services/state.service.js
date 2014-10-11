@@ -1,4 +1,4 @@
-Player.factory('State', function($rootScope) {
+function StateService($rootScope) {
     "use strict";
 
     $rootScope.state = [];
@@ -20,4 +20,4 @@ Player.factory('State', function($rootScope) {
             return this;
         }
     }
-});
+}

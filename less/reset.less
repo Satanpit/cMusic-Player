@@ -33,6 +33,12 @@ a {
   cursor: pointer;
 }
 
+h1 {
+  font-size: 48px;
+  line-height: 50px;
+  font-weight: 200;
+}
+
 h2 {
   display: flex;
   flex-direction: row;
@@ -67,6 +73,88 @@ ul.list {
       margin-right: 14px;
       background: @blue;
       vertical-align: top;
+    }
+  }
+}
+
+input[type=text],
+input[type=password] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  line-height: 18px;
+  color: @text-color-default;
+  border: @border-color-input 1px solid;
+  border-radius: 3px;
+  .transition();
+
+  &:focus {
+    border-color: #d4d4d4;
+  }
+
+  &::-webkit-input-placeholder {
+    color: #999;
+    line-height: 18px;
+  }
+}
+
+.checkbox {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+
+  input[type=checkbox] {
+    display: none;
+
+    &:checked {
+
+      & ~ label {
+        &:after {
+          background: @light-2;
+          color: @text-color-default;
+        }
+
+        &:before {
+          background: @blue;
+          color: #FFF;
+        }
+      }
+    }
+  }
+
+  label {
+    display: inline-block;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:after,
+    &:before {
+      display: inline-block;
+      box-sizing: border-box;
+      border-radius: 3px;
+      width: 50%;
+      text-align: center;
+    }
+
+    &:after {
+      content: attr(data-unchecked);
+      background: @red;
+      border-radius: 0 3px 3px 0;
+      color: #FFF;
+    }
+
+    &:before {
+      content: attr(data-checked);
+      border-radius: 3px 0 0 3px;
+      background: @light-2;
+      color: @text-color-default;
+    }
+  }
+
+  &.select {
+    label:after {
+      background: @blue;
     }
   }
 }

@@ -6,7 +6,8 @@
 @import "menu";
 @import "playlist";
 @import "artist";
-@import "modal-page";
+@import "auth";
+@import "animate";
 
 .app-loader {
   display: flex;
@@ -32,6 +33,14 @@ body.loaded {
   border-top: none;
 }
 
+.link {
+  color: @blue;
+
+  &:hover {
+    color: @blue-2;
+  }
+}
+
 .btn {
   position: relative;
   padding: 10px 20px;
@@ -42,6 +51,23 @@ body.loaded {
   border-radius: 3px;
   font-size: 14px;
   .transition(background-color);
+
+  &.light {
+    background: @light;
+    color: #999;
+
+    &:hover {
+      background: @light-2;
+    }
+  }
+
+  &.green {
+    background: @green;
+
+    &:hover {
+      background: @green-2;
+    }
+  }
 
   &.login {
     padding-left: 55px;

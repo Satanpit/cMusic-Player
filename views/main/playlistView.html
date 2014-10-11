@@ -1,5 +1,4 @@
-<section data-ng-controller="PlaylistCtrl" class="app-playlist">
-    <audio preload="metadata"></audio>
+<section data-ng-controller="PlaylistController as playlist" class="app-playlist">
     <div class="playlist-options">
         <div class="search">
             <input autocomplete="off" type="text" data-ng-model="search" placeholder="{{ 'playlist.search'|translate }}" name="q">
@@ -8,8 +7,8 @@
 
         </div>
     </div>
-    <ul data-playlist="general" class="tracks tracks-list">
-        <li data-ng-repeat="track in tracks">
+    <ul data-playlist="general" data-ng-init="Init()" class="tracks tracks-list">
+        <li data-ng-repeat="track in tracks" data-url="{{ track.url }}">
             <i class="icon-play"></i>
             <a class="artist">{{ track.artist }}</a> – <span class="track">{{ track.title }}</span>
             <div class="time">{{ track.time }}</div>

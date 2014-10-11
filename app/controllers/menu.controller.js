@@ -1,3 +1,3 @@
-Player.controller('MenuCtrl', function($scope) {
+function MenuController() {
 
-});
+}

@@ -1,39 +1,26 @@
-Player.factory('LastFM', function($http, storage){
+Player.factory('LastFMtmp', function($http, Utils){
 	var options	= {
 		api_key		: '4d1b3ad77378fa5c95fe3483b3caf97b',
 		api_secret	: 'b19a84c20f77a31b7113f128380d66d6',
 		api_url		: 'https://ws.audioscrobbler.com/2.0/',
 		user		: false,
 		session		: false
-	}
+	};
 	
 	var call = function(method, params, callback, data, session, requestMethod, api_sig){
 		params['api_key'] 	= options.api_key;
 		params['method']	= method;
-		
-		if(session) {
-			params['sk'] = options.session;
-		}
-		
+
 		if(requestMethod == 'POST' || api_sig) {
-			params['api_sig'] = getApiSignature($.extend({}, params, data))
+			params['api_sig'] = getApiSignature(Utils.assign(params, data))
 		}
 		
 		params['format'] = 'json';
-		
-		array = [];
-		for(var param in params){
-			array.push(encodeURIComponent(param) + "=" + encodeURIComponent(params[param]));
-		}
-		
-		if(data) {
-			data = 	$.param(data);
-		}
-		
+
 		return $http({
 			method	: requestMethod || 'GET',
-			url		: options.api_url + '?' + array.join('&'),
-			data	: data,
+			url		: options.api_url + Utils.serialize(params),
+			data	: Utils.serialize(data, true),
 			headers	: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			}
@@ -42,8 +29,8 @@ Player.factory('LastFM', function($http, storage){
 		});
 	};
 	
-	var getApiSignature = function(params){
-		var keys   = [];
+	var getApiSignature = function(object){
+		/*var keys   = [];
 		var string = '';
 
 		for(var key in params){
@@ -58,9 +45,12 @@ Player.factory('LastFM', function($http, storage){
 			string += key + params[key];
 		}
 
-		string += options.api_secret;
-		
-		return hex_md5(string);
+		string += options.api_secret;*/
+
+        return md5(Object.keys(object).sort().reduce(function(prev, current) {
+            prev.push(current + object[current]);
+            return prev;
+        }, []).join('') + options.api_secret);
 	};
 	
 	var isAuth = function(callback) {
@@ -318,16 +308,6 @@ Player.factory('LastFM', function($http, storage){
 			
 			auth: function(user, passw, callback) {
 				call('auth.getMobileSession', {}, function(result){
-					if(result.session) {
-						options.session = result.session.key;
-						options.user	= result.session.name;
-						
-						storage.set({
-							'lastfm_session' 	: result.session.key,
-							'lastfm_user'		: result.session.name
-						});
-					}
-					
 					callback(result)
 				}, {
 					username	: user,
