@@ -1,0 +1,36 @@
+<div class="modal-page app-login-lastFm" data-ng-class="{show: state.authFormLastFm}">
+    <!--<section class="app-header-window-controls" data-ng-controller="WindowCtrl">
+        <a data-ng-click="minimize()" class="window-minimize"></a>
+        <a data-ng-click="fullScreen()" class="window-full-screen"></a>
+        <a data-ng-click="close()" class="window-close"></a>
+    </section>-->
+    <div class="modal-content">
+        <header>
+            <img src="img/lastfm-logo-120.png"/>
+            {{ 'login.lastFm.title'|translate }}
+        </header>
+        <p translate="login.lastFm.description"></p>
+
+        <section class="cols">
+            <section class="left">
+                <h3 translate="login.lastFm.form.title"></h3>
+
+                <input name="login" data-ng-model="lastFmLogin" placeholder="{{ 'login.lastFm.form.login'|translate }}" type="text">
+                <input name="login" data-ng-model="lastFmPass" placeholder="{{ 'login.lastFm.form.pass'|translate }}" type="password">
+
+                <div class="form-footer">
+                    <a translate="login.lastFm.form.submit" class="btn login"></a>
+                    <a href="http://www.lastfm.ru/join" target="_blank" translate="login.lastFm.registration" class="link"></a>
+                    <a href="http://last.fm" target="_blank" class="link">Last.FM</a>
+                </div>
+            </section>
+            <section class="right">
+                <h3 translate="login.lastFm.scrobble.title"></h3>
+
+                {{ 'login.lastFm.scrobble.description'|translate }}
+
+                <a class="btn light" translate="login.lastFm.skip"></a>
+            </section>
+        </section>
+    </div>
+</div>

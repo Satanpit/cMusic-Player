@@ -1,0 +1,34 @@
+@import "mixins";
+
+.auth-item {
+
+  &.ng-enter,
+  &.ng-leave.ng-leave-active {
+    .animation(auth-hide-item, 0.5s);
+  }
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active {
+    .animation(auth-show-item, 0.5s);
+  }
+}
+
+/* Animate keyframes */
+
+@-webkit-keyframes auth-show-item {
+  from {
+    .transform(translateX(100%));
+  }
+  to {
+    .transform(translateX(0));
+  }
+}
+
+@-webkit-keyframes auth-hide-item {
+  from {
+    .transform(translateX(0));
+  }
+  to {
+    .transform(translateX(-100%));
+  }
+}

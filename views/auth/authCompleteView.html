@@ -1,0 +1,45 @@
+<section class="auth-complete">
+    <section class="complete-header">
+        <div class="cols">
+            <div class="left">
+                <img data-link="{{ auth.userData.photo_200 }}"/>
+            </div>
+            <div class="right">
+                <h1>{{ 'login.complete.title'|translate }}, {{ auth.userData.first_name }}</h1>
+                <div translate="login.complete.description"></div>
+            </div>
+        </div>
+    </section>
+    <section class="complete-content">
+        <div class="cols">
+            <div class="left">
+                <div class="checkbox">
+                    <input type="checkbox" id="settingsNotification" data-ng-model="auth.settings.notification" />
+                    <label data-checked="{{ 'settings.notification.yes'|translate }}" data-unchecked="{{ 'settings.notification.no'|translate }}" for="settingsNotification"></label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="settingsScrobble" data-ng-model="auth.settings.scrobble" />
+                    <label data-checked="{{ 'settings.scrobble.yes'|translate }}" data-unchecked="{{ 'settings.scrobble.no'|translate }}" for="settingsScrobble"></label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="settingsTranslate" data-ng-model="auth.settings.translate" />
+                    <label data-checked="{{ 'settings.translate.yes'|translate }}" data-unchecked="{{ 'settings.translate.no'|translate }}" for="settingsTranslate"></label>
+                </div>
+                <div class="checkbox select">
+                    <input data-ng-true-value="ru" data-ng-false-value="en" type="checkbox" id="settingsLang" data-ng-model="auth.settings.lang" />
+                    <label data-checked="{{ 'settings.lang.ru'|translate }}" data-unchecked="{{ 'settings.lang.en'|translate }}" for="settingsLang"></label>
+                </div>
+            </div>
+            <div class="right">
+                <p>{{ 'settings.notification.name'|translate }}</p>
+                <p>{{ 'settings.scrobble.name'|translate }}</p>
+                <p>{{ 'settings.translate.name'|translate }}</p>
+                <p>{{ 'settings.lang.name'|translate }}</p>
+            </div>
+        </div>
+    </section>
+    <section class="complete-footer">
+        <a data-ng-click="auth.saveSettings()" class="btn green">{{ 'login.complete.go'|translate }}</a>
+        <a href="http://vk.com/cmusicplayer" target="_blank" style="margin-left: 40px" class="link">{{ 'login.complete.appGroup'|translate }}</a>
+    </section>
+</section>
