@@ -14,6 +14,7 @@
     <script type="text/javascript" src="app/services/state.service.js"></script>
     <script type="text/javascript" src="app/services/storage.service.js"></script>
     <script type="text/javascript" src="app/services/utils.service.js"></script>
+    <script type="text/javascript" src="app/services/data.service.js"></script>
     <script type="text/javascript" src="app/services/vk.api.service.js"></script>
     <script type="text/javascript" src="app/services/lastfm.api.service.js"></script>
     <script type="text/javascript" src="app/services/auth.service.js"></script>
@@ -35,20 +36,14 @@
 
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
-<body class="app" data-ng-app="cMusic" data-ng-controller="AppController as app" data-ng-class="{loaded: state.loaded}">
+<body class="app" data-ng-app="cMusic" data-ng-controller="AppController as app">
     <section data-ng-controller="AuthController as auth" data-ng-init="auth.checkUserAuth()">
-        <section class="app-auth" data-ng-if="auth.showAuthForm" data-ng-include="'views/auth/authView.html'"></section>
-
-        <section data-ng-if="!auth.showAuthForm">
-            <ng-include src="'views/main/headerView.html'"></ng-include>
-            <ng-include src="'views/main/menuView.html'"></ng-include>
-            <ng-include src="'views/main/playlistView.html'"></ng-include>
-            <ng-include src="'views/main/contentView.html'"></ng-include>
-        </section>
+        <ng-include src="'views/auth/authView.html'" class="app-auth" data-ng-if="auth.showAuthForm"></ng-include>
     </section>
 
-    <!--<div class="app-loader">
-        Loading...
-    </div>-->
+    <ng-include src="'views/main/headerView.html'"></ng-include>
+    <ng-include src="'views/main/menuView.html'"></ng-include>
+    <ng-include src="'views/main/playlistView.html'"></ng-include>
+    <ng-include src="'views/main/contentView.html'"></ng-include>
 </body>
 </html>

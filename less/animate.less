@@ -1,5 +1,13 @@
 @import "mixins";
 
+.app-auth {
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active {
+    .animation(auth-hide, 0.5s);
+  }
+}
+
 .auth-item {
 
   &.ng-enter,
@@ -30,5 +38,15 @@
   }
   to {
     .transform(translateX(-100%));
+  }
+}
+
+@-webkit-keyframes auth-hide {
+  from {
+    .transform(translateX(0));
+  }
+  to {
+    .transform(translateX(-80%));
+    opacity: 0;
   }
 }

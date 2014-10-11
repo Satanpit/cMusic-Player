@@ -1,4 +1,4 @@
-function AuthController($timeout, Storage, VK, LastFM, Config) {
+function AuthController(Data, Storage, VK, LastFM, Config) {
     "use strict";
 
     this.settings = {
@@ -9,7 +9,7 @@ function AuthController($timeout, Storage, VK, LastFM, Config) {
     };
 
     this.checkUserAuth = function() {
-        Storage.get(['app', 'vk', 'lastFm']).then(function() {
+        Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
 
         }).then(null, function() {
             this.showAuthForm = 'vk';
@@ -32,6 +32,7 @@ function AuthController($timeout, Storage, VK, LastFM, Config) {
                 token: data.vk.token
             })
         }.bind(this)).then(function(result) {
+
             this.userData = result.data.response[0];
         }.bind(this));
     };
@@ -54,11 +55,7 @@ function AuthController($timeout, Storage, VK, LastFM, Config) {
         Storage.set({
             app: this.settings
         }).then(function() {
-            this.showAuthForm = 'complete';
-
-            $timeout(function(){
-                this.showAuthForm = false;
-            }.bind(this), 500);
+            this.showAuthForm = false;
         }.bind(this));
 
         Storage.remove(['app', 'vk', 'lastFm']);

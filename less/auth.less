@@ -1,7 +1,10 @@
 @import "mixins";
 
 .app-auth {
-  .absolute(0, 0, 0, 0);
+  //.absolute(0, 0, 0, 0);
+  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: 10;
   background: #FFF;
   border: @border-color-light 1px solid;
@@ -14,7 +17,6 @@
 
   .app-auth-content {
     height: 100%;
-    .transition(opacity, 0.5s);
 
     .auth-item {
       .absolute(0, 0, 0, 0);

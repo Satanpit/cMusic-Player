@@ -1,3 +1,4 @@
 function PlaylistController() {
+    "use strict";
 
 }

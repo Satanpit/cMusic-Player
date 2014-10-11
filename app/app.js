@@ -24,10 +24,10 @@
 
         .controller('AppController', AppController)
         .controller('WindowController', WindowController)
+        .controller('AuthController', AuthController)
         .controller('HeaderController', HeaderController)
         .controller('MenuController', MenuController)
         .controller('PlaylistController', PlaylistController)
-        .controller('AuthController', AuthController)
 
         .directive('link', ImageDirective)
         .directive('toggle', ToggleDirective)
