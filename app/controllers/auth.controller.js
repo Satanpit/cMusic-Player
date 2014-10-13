@@ -1,4 +1,4 @@
-function AuthController(Data, Storage, VK, LastFM, Config) {
+function AuthController($scope, Storage, VK, LastFM, Config) {
     "use strict";
 
     this.settings = {
@@ -10,8 +10,8 @@ function AuthController(Data, Storage, VK, LastFM, Config) {
 
     this.checkUserAuth = function() {
         Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
-
-        }).then(null, function() {
+            $scope.$emit('user.auth', data);
+        }.bind(this)).then(null, function() {
             this.showAuthForm = 'vk';
         }.bind(this));
     };
@@ -40,8 +40,16 @@ function AuthController(Data, Storage, VK, LastFM, Config) {
     this.loginLastFm = function() {
         if (this.lastFmLogin && this.lastFmPass) {
             LastFM.user.auth(this.lastFmLogin, this.lastFmPass).then(function(response) {
-                console.log('Response:', response);
-            }).then(null, function(error) {
+                return Storage.set({
+                    lastFm: {
+                        name: response.session.name,
+                        session: response.session.key
+                    }
+                });
+            }).then(function(){
+                this.showAuthForm = 'settings';
+
+            }.bind(this)).then(null, function(error) {
                 console.log(error);
             });
         }
@@ -58,6 +66,6 @@ function AuthController(Data, Storage, VK, LastFM, Config) {
             this.showAuthForm = false;
         }.bind(this));
 
-        Storage.remove(['app', 'vk', 'lastFm']);
+        //Storage.remove(['app', 'vk', 'lastFm']);
     };
 }

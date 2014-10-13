@@ -3,15 +3,28 @@ function VkService($http, $q, Utils, Config) {
 
     var API = {
         get: function(method, params) {
+            var deferred = $q.defer();
+
             params.access_token = API.user.token;
             params.v = Config.api.vk.ver;
 
-            return $http({
+            $http({
                 method  : Config.api.vk.method,
                 url	    : Config.api.vk.url + method,
                 async	: Config.api.vk.async,
                 params	: params
+            }).success(function(data) {
+                if (data.error) {
+                    deferred.reject(data.error);
+                }
+                else {
+                    deferred.resolve(data.response);
+                }
+            }).error(function(error) {
+                deferred.reject(error);
             });
+
+            return deferred.promise;
         }
     };
 

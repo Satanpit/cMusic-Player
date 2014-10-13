@@ -5,14 +5,14 @@ function ToggleDirective() {
         scope: {
             toggle: '='
         },
-        link: function($scope, element) {
-            $scope.$watch("toggle", function(value) {
+        link: function(scope, element) {
+            scope.$watch("toggle", function(value) {
                 element.toggleClass('active', value);
             });
 
             element.on('click', function() {
-                $scope.$apply(function() {
-                    $scope.toggle = !$scope.toggle;
+                scope.$apply(function() {
+                    scope.toggle = !scope.toggle;
                 });
             });
         }
@@ -23,26 +23,35 @@ function ImageDirective(Utils) {
     "use strict";
 
     return {
-        restrict:'A',
+        restrict:'EA',
+        replace: true,
+        template: '<img>',
 
         link: function(scope, element, attr) {
-            attr.$observe('link', function() {
-                if(attr.link) {
-                    Utils.loadBlobImage(attr.link).then(function(response) {
-                        element[0].src = response;
-                    });
-                }
+            attr.$observe('imageSrc', function(src) {
+                Utils.loadBlobImage(src).then(function(response) {
+                    element[0].src = response;
+                });
             });
         }
     }
+}
+
+function LoaderDirective() {
+
 }
 
 function PlaylistDirective() {
     "use strict";
 
     return {
-        link: function($scope, element) {
-            element.on('click', function(e) {
+        restrict: 'EA',
+        replace: true,
+        transclude: true,
+        templateUrl: 'views/main/playlistView.html',
+
+        link: function(scope, element, attr) {
+            /*element.on('click', function(e) {
                 var elem = e.target;
 
                 if (elem.classList.contains('artist')) {
@@ -51,7 +60,7 @@ function PlaylistDirective() {
                 else {
                     $scope.play(elem.dataset.url);
                 }
-            });
+            });*/
         }
     }
 }

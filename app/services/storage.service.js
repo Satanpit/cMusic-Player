@@ -31,7 +31,7 @@ function StorageService($q) {
             var deferred = $q.defer();
 
             chrome.storage.sync.remove(key, function() {
-                deferred.resolve(data);
+                deferred.resolve();
             });
 
             return deferred.promise;

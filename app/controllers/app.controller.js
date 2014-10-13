@@ -1,4 +1,4 @@
-function AppController(Config) {
+function AppController(VK, State, User, Config) {
     /**
      * Global app controller
      *

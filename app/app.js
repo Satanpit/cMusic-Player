@@ -15,6 +15,12 @@
 
         .constant('Config', Config)
 
+        .value('User', {
+            set: function(data) {
+                this.settings = data;
+            }
+        })
+
         .factory('Utils', UtilsService)
         .factory('State', StateService)
         .factory('Storage', StorageService)
@@ -29,6 +35,17 @@
         .controller('MenuController', MenuController)
         .controller('PlaylistController', PlaylistController)
 
-        .directive('link', ImageDirective)
+        .directive('uiImage', ImageDirective)
+        .directive('uiPlaylist', PlaylistDirective)
+
         .directive('toggle', ToggleDirective)
+
+        .run(function(Storage, State, User) {
+            Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
+                User.set(data);
+
+            }).then(null, function() {
+                State.set('showAuthProcess');
+            });
+        })
 })();
