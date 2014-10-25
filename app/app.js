@@ -39,13 +39,15 @@
         .directive('uiPlaylist', PlaylistDirective)
 
         .directive('toggle', ToggleDirective)
+        .directive('toggleEventMenu', EventsToggleMenu)
+        .directive('uiScrollbar', ScrollBarDirective)
 
         .run(function(Storage, State, User) {
-            Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
+            /*Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
                 User.set(data);
 
             }).then(null, function() {
                 State.set('showAuthProcess');
-            });
+            });*/
         })
 })();

@@ -14,10 +14,29 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: #93979d;
   border-radius:3px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background:#93979d;
+.ui-scrollbar {
+  .absolute(0, 7px, 0, auto);
+  display: block;
+  width: 4px;
+  z-index: 11;
+  border-radius: 4px;
+  opacity: 0;
+  overflow-y: auto;
+  .transition(opacity);
+
+  div {
+    width: 4px;
+  }
+
+  &.show {
+    opacity: .5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
 }

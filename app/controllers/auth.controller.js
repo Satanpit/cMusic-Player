@@ -9,11 +9,11 @@ function AuthController($scope, Storage, VK, LastFM, Config) {
     };
 
     this.checkUserAuth = function() {
-        Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
+        /*Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
             $scope.$emit('user.auth', data);
         }.bind(this)).then(null, function() {
             this.showAuthForm = 'vk';
-        }.bind(this));
+        }.bind(this));*/
     };
 
     this.showIdentityWindow = function() {

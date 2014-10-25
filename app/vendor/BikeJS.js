@@ -7,7 +7,7 @@
  * @email alex.hyrenko@gmail.com
  */
 
-(function(scope) {
+(function(scope, name) {
     "use strict";
 
     scope.BikeJS = function (selector) {
@@ -24,8 +24,12 @@
             return [].slice.call(this);
         },
 
-        each: function(elements, func) {
-              [].forEach.call(elements, func);
+        each: function(func) {
+            return [].forEach.call(this, func);
+        },
+
+        filter: function(func) {
+            return [].filter.call(this, func);
         },
 
         pushElements: function(elements) {
@@ -63,7 +67,7 @@
     };
 
     BikeJS.Modules.Events =  {
-        _events: [],
+        cache: [],
 
         ready: function(callback) {
             this.on('DOMContentLoaded', function(e) {
@@ -86,19 +90,16 @@
         },
 
         on: function(event, callback) {
-            var elements = this.getElements();
+            if (this.length) {
+                this.each(function(el) {
+                    event = event.split('.');
 
-            if (elements.length) {
-                this.each(elements, function(el) {
-                    el.addEventListener(event, callback, false);
+                    el.addEventListener(event[0], callback, false);
 
-                    if (!this._events[el]) {
-                        this._events[el] = [];
-                    }
-
-                    this._events[el].push({
-                        event: event,
-                        func: callback
+                    this.cache.push({
+                        name: event.join('.'),
+                        handler: callback,
+                        node: el
                     });
                 }.bind(this));
             }
@@ -109,26 +110,55 @@
             return this;
         },
 
-        off: function(event, callback) {
-            var elements = this.getElements();
+        off: function(event) {
+            if (this.length) {
+                this.cache = this.cache.filter(function(item) {
+                    if (~item.name.indexOf('.') && item.name === event) {
+                        item.node.removeEventListener(event.split('.')[0], item.handler, false);
 
-            if (elements.length) {
-                this.each(elements, function(el) {
-                    el.removeEventListener(event, callback, false);
-                });
-            }
-            else {
-                document.removeEventListener(event, callback, false);
+                        return false;
+                    }
+                    else {
+                        var result = true;
+                        this.each(function(element) {
+                            if (item.name === event && item.node === element) {
+                                element.removeEventListener(event, item.handler, false);
+
+                                result = false
+                            }
+                            else result = true;
+                        });
+
+                        return result;
+                    }
+                }.bind(this));
             }
 
             return this;
+        },
+
+        observe: function(callback, config) {
+            if (this.length && typeof callback === 'function') {
+                var config = config || { childList: true, subtree: true },
+                    observer = new MutationObserver(callback);
+
+                this.each(function(el) {
+                    observer.observe(el, config);
+                });
+            }
+
+            return this;
+        },
+
+        unObserve: function() {
+
         }
     };
 
     BikeJS.Modules.DOM = {
         html: function(value) {
             if (value) {
-                this.each(this.getElements(), function(el) {
+                this.each(function(el) {
                     el.innerHTML = value;
                 });
             }
@@ -138,7 +168,7 @@
 
         text: function(value) {
             if (value) {
-                this.each(this.getElements(), function(el) {
+                this.each(function(el) {
                     el.innerText = value;
                 });
 
@@ -150,7 +180,7 @@
 
         val: function(value) {
             if (value) {
-                this.each(this.getElements(), function(el) {
+                this.each(function(el) {
                     el.value = value;
                 });
 
@@ -186,7 +216,7 @@
 
         parent: function() {
             var _parents = [];
-            this.each(this.getElements(), function(el) {
+            this.each(function(el) {
                 _parents.push(el.parentNode);
             });
 
@@ -211,7 +241,7 @@
 
         data: function(key, value) {
             if (value || typeof key === "object") {
-                this.each(this.getElements(), function(element) {
+                this.each(function(element) {
                     if (typeof key === "object") {
                         for (var obj in key) {
                             element.dataset[obj] = key[obj];
@@ -233,7 +263,7 @@
         },
 
         addClass: function(name) {
-            this.each(this.getElements(), function(el) {
+            this.each(function(el) {
                 el.classList.add(name);
             });
 
@@ -245,7 +275,7 @@
         },
 
         toggleClass: function(name) {
-            this.each(this.getElements(), function(el) {
+            this.each(function(el) {
                 el.classList.toggle(name);
             });
 
@@ -253,7 +283,7 @@
         },
 
         removeClass: function(name) {
-            this.each(this.getElements(), function(el) {
+            this.each(function(el) {
                 el.classList.remove(name);
             });
 
@@ -296,10 +326,10 @@
         },
 
         remove: function() {
-            this.each(this.getElements(), function(el) {
+            this.each(function(el) {
                 el.parentNode.removeChild(el);
 
-                if (this._events[el].length) {
+                /*if (this._events[el].length) {
                     var events = this._events[el];
 
                     for (var i = 0; i < events.length; i++) {
@@ -307,7 +337,7 @@
                     }
 
                     events.length = 0;
-                }
+                }*/
             }.bind(this));
 
             return this.pushElements([document]);
@@ -317,7 +347,7 @@
             if (typeof document.body[arguments[0]] === "function") {
                 var args = arguments;
 
-                this.each(this.getElements(), function(el) {
+                this.each(function(el) {
                     el[args[0]].apply(el, [].slice.call(args, 1));
                 });
             }
@@ -332,7 +362,7 @@
 
     BikeJS.Modules.Styles = {
         show: function() {
-            this.each(this.getElements(), function(el) {
+            this.each(function(el) {
                 el.style.display = '';
             });
 
@@ -340,11 +370,27 @@
         },
 
         hide: function() {
-            this.each(this.getElements(), function(el) {
+            this.each(function(el) {
                 el.style.display = 'none';
             });
 
             return this;
+        },
+
+        css: function(style, value) {
+            this.each(function(el) {
+                el.style[style] = (typeof value !== 'number' ? value : value + 'px');
+            });
+
+            return this;
+        },
+
+        width: function(value) {
+            return value ? this.css('width', (~value.indexOf('px') ? value : value + 'px')) : this[0].clientWidth;
+        },
+
+        height: function(value) {
+            return value ? this.css('height', ~toString(value).indexOf('px') ? value : value + 'px') : this[0].clientHeight;
         }
     };
 
@@ -365,4 +411,8 @@
     BikeJS.Core.extend();
 
     BikeJS.Init.prototype = BikeJS.Core;
-})(window);
+
+    if (name) {
+        scope[name] = BikeJS;
+    }
+})(window, '$');

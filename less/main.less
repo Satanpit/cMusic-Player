@@ -8,6 +8,25 @@
 @import "artist";
 @import "auth";
 @import "animate";
+@import "events";
+
+/*[data-title] {
+  position: relative;
+  
+  &:before {
+    content: attr(data-title);
+    display: block;
+    background: @black;
+    color: #FFF;
+    font-size: 11px;
+    line-height: 15px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    border-radius: 3px;
+    .absolute(-100%, auto, auto, auto);
+
+  }
+}*/
 
 .app-loader {
   display: flex;
@@ -320,7 +339,7 @@ body.loaded {
 }
 
 .tabs {
-  .absolute(auto, 20px, auto, 20px);
+  .absolute(auto, 20px, 0, 20px);
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;

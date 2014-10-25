@@ -4,6 +4,7 @@
 
 @dark:    #52636a;
 @dark-2:  #4b5b62;
+@dark-3:  #a8b1b4;
 
 @light:   #f3f7f7;
 @light-2: #e8ecf0;
@@ -38,9 +39,13 @@
 @sprite-menu:   '../img/sprite-menu.png';
 @sprite-header: '../img/sprite-header.png';
 @sprite-default:'../img/sprite-default.png';
+@sprite-events:'../img/sprite-events.png';
 
 //Background images
 @bg-lastfm: '../img/login-lastfm-bg.png';
+
+// Animation settings
+@event-show-menu-delay: .2s;
 
 
 .absolute(@top: auto, @right: auto, @bottom: auto, @left: auto) {
@@ -53,6 +58,10 @@
 
 .transition(@property: all, @duration: 0.15s, @func: ease) {
   transition: @property @duration @func;
+}
+
+.delay(@duration: .2s) {
+  transition-delay: @duration;
 }
 
 .transform(@property) {
@@ -80,14 +89,9 @@
 }
 
 .scroll-box(@top: 0, @right: 0, @bottom: 0, @left: 0) {
-  .absolute(@top, @right - 6px, @bottom, @left);
+  .absolute(@top, @right, @bottom, @left);
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-right: 4px;
-
-  &:hover::-webkit-scrollbar-thumb {
-    background: @scroll-color;
-  }
 }
 
 .icon-menu(@n: 0) {

@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  vertical-align: top;
 }
 
 html,
@@ -33,6 +34,12 @@ a {
   cursor: pointer;
 }
 
+a[href] {
+  &:hover {
+    border-bottom: @dark 1px dotted;
+  }
+}
+
 h1 {
   font-size: 48px;
   line-height: 50px;
@@ -58,6 +65,10 @@ h2 {
     flex: 2;
     margin-left: 10px;
   }
+}
+
+b {
+  font-weight: 500;
 }
 
 ul.list {

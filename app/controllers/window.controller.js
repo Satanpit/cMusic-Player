@@ -1,5 +1,5 @@
 function WindowController() {
-    var current = chrome.app.window.current();
+    var current = chrome.app.window ? chrome.app.window.current() : undefined;
 
     this.close = function() {
         current.close();
