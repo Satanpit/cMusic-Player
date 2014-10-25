@@ -1,0 +1,230 @@
+@import "mixins";
+
+.events {
+  .scroll-box(120px, 0, 0, 0);
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.events-list {
+
+  & > li {
+    position: relative;
+    height: 80px;
+    padding: 20px;
+    border-bottom: 1px solid #f3f7f7;
+    color: #999;
+    line-height: 20px;
+    .transition(background);
+
+    &:hover {
+      background: #fcfcfc;
+
+      .event-options {
+        background: #fcfcfc;
+      }
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .event-date {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      margin-right: 20px;
+      background: @blue;
+      border-radius: 3px;
+      color: #FFF;
+      text-align: center;
+      line-height: 24px;
+      font-weight: 500;
+
+      &:after {
+        content: attr(data-month);
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        line-height: 18px;
+        height: 18px;
+        font-size: 10px;
+        text-transform: uppercase;
+        background: @blue-2;
+        border-radius: 0 0 3px 3px;
+        font-weight: 400;
+      }
+    }
+
+    &.status-go {
+      .event-date:before {
+        content: "";
+        .absolute(-4px, auto, auto, -4px);
+        display: block;
+        width: 7px;
+        height: 7px;
+        background: @green;
+        border: 2px solid #FFF;
+        border-radius: 50%;
+      }
+
+      .event-options > .go {
+        background-color: @green;
+        background-position-y: -120px;
+
+        &:hover {
+          background-color: @red;
+          background-position-y: -186px;
+        }
+      }
+    }
+
+    &.status-possibly {
+      .event-date:before {
+        content: "";
+        .absolute(-4px, auto, auto, -4px);
+        display: block;
+        width: 7px;
+        height: 7px;
+        background: @dark-3;
+        border: 2px solid #FFF;
+        border-radius: 50%;
+      }
+
+      .event-options > .possibly {
+        background-color: @blue;
+        background-position-y: -253px;
+
+        &:hover {
+          background-color: @red;
+          background-position-y: -186px;
+        }
+      }
+    }
+
+    .event-title {
+      display: inline-block;
+      width: 30%;
+      margin-right: 20px;
+      .ellipsis();
+
+      a {
+        font-weight: 500;
+        color: @text-color-default;
+      }
+
+      ul {
+        li {
+          display: inline-block;
+          cursor: pointer;
+          font-size: 11px;
+          line-height: 17px;
+
+          &:hover {
+            border-bottom: #999 1px dotted;
+          }
+
+          &:after {
+            content: ",";
+            display: inline;
+          }
+
+          &:last-child:after {
+            content: "";
+          }
+        }
+      }
+    }
+
+    .event-venue {
+      display: inline-block;
+      width: 30%;
+      .ellipsis();
+    }
+
+    .event-options {
+      padding-left: 20px;
+      background: #FFF;
+      font-size: 0;
+      .absolute(20px, 20px, 20px, auto);
+      .transform(translateX(181px));
+      .transition(all, .2s);
+
+      & > li {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: rgba(red(@dark), green(@dark), blue(@dark), .05) center 0 no-repeat;
+        border-radius: 50%;
+        cursor: pointer;
+        line-height: 45px;
+        text-align: center;
+        font-size: 0;
+        margin-right: 20px;
+        .transition(background);
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          background-color: rgba(red(@dark), green(@dark), blue(@dark), .15);
+        }
+
+        &.go,
+        &.possibly,
+        &.more {
+          background-image: url(@sprite-events);
+        }
+
+        &.go {
+          background-position-y: -385px;
+        }
+
+        &.possibly {
+          background-position-y: -318px;
+        }
+
+        &.more {
+          background-position-y: 10px;
+        }
+
+        &.show {
+          div,
+          &:after,
+          &:before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #a9b1b5;
+            .transition(transform, .2s);
+            .delay(@event-show-menu-delay);
+          }
+
+          div {
+            margin: 0 3px;
+            vertical-align: baseline;
+          }
+        }
+      }
+
+      &.show {
+        .transform(translateX(0));
+
+        & > li.show:after {
+          .transform(translateX(-7px));
+        }
+
+        & > li.show:before {
+          .transform(translateX(7px));
+        }
+      }
+    }
+  }
+}
