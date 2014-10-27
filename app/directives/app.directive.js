@@ -51,6 +51,7 @@ function ScrollBarDirective() {
 
         link: function(scope, element) {
             var block = $(element[0]),
+                children = element[0].children[0],
                 observe = scope.observe || true,
                 offset = scope.offset || {
                     top: 20,
@@ -63,10 +64,10 @@ function ScrollBarDirective() {
                 scrollBarContent = scrollBarParent.find('div');
 
             scrollBarParent.css('top', block[0].offsetTop + offset.top);
-            scrollBarContent.height(block[0].scrollHeight - (offset.top + offset.bottom));
+            scrollBarContent.height(Math.max(children.scrollHeight, children.clientHeight) - (offset.top + offset.bottom));
 
             observe && block.observe(function() {
-                scrollBarContent.height(block[0].scrollHeight - (offset.top + offset.bottom));
+                scrollBarContent.height(Math.max(children.scrollHeight, children.clientHeight) - (offset.top + offset.bottom));
             });
 
             block.on('scroll.scrollbar', function(e) {
