@@ -7,11 +7,13 @@
 
         </div>
     </div>
-    <ul data-playlist="general" class="tracks tracks-list">
-        <li data-ng-repeat="track in playlist.tracks" data-url="{{ track.url }}">
-            <i class="icon-play"></i>
-            <a class="artist">{{ track.artist }}</a> – <span class="track">{{ track.title }}</span>
-            <div class="time">{{ track.time }}</div>
-        </li>
-    </ul>
+    <section data-ui-scrollbar class="tracks">
+        <ul data-playlist="general" class="tracks-list">
+            <li data-ng-repeat="track in ::app.tracks" data-url="{{ track.url }}">
+                <i class="icon-play"></i>
+                <a class="artist">{{ track.artist }}</a> – <span class="track">{{ track.title }}</span>
+                <div class="time">{{ track.time }}</div>
+            </li>
+        </ul>
+    </section>
 </section>

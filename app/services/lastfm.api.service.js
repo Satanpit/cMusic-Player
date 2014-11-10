@@ -69,6 +69,32 @@ function LastFmService($http, $q, Utils, Config) {
                     limit		: limit,
                     page		: page
                 });
+            },
+
+            getRecommendedEvents: function(limit, page, session) {
+                return API.get('user.getRecommendedEvents', {
+                    limit: limit,
+                    page: page
+                }, {
+                    sk: session
+                });
+            },
+
+            getEvents: function(limit, page) {
+                return API.get('user.getEvents', {
+                    user: API.user.name,
+                    limit: limit,
+                    page: page
+                });
+            }
+        },
+
+        geo: {
+            getEvents: function(limit, page) {
+                return API.get('geo.getEvents', {
+                    limit: limit,
+                    page: page
+                })
             }
         },
 

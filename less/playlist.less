@@ -26,6 +26,7 @@
         opacity: .5;
         color: @dark;
         font-size: 12px;
+        line-height: 12px;
         margin: 0;
         .transition(all);
 
@@ -39,11 +40,19 @@
         &:focus {
           width: 100%;
         }
+
+        &::-webkit-input-placeholder {
+          line-height: 16px;
+        }
       }
     }
   }
 
   .tracks {
-    .scroll-box(70px, 10px, 10px, 10px);
+    .scroll-box(60px, 0, 0, 0);
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 }

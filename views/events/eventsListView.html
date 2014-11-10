@@ -1,152 +1,26 @@
-<section data-ui-scrollbar class="events">
-    <ul class="events-list">
-        <li class="status-possibly">
-            <div class="event-date" data-month="sep">
-                16
+<section data-ng-class="{show: app.events.length}" data-ui-scrollbar data-ui-scrollbar-shadow-box=".artist-header" class="events">
+    <ul class="events-list" data-click-delegate data-events-watch>
+        <li data-ng-repeat="item in ::app.events">
+            <div class="event-date" data-month="{{ item.date.month }}">
+                {{ item.date.date }}
             </div>
             <div class="event-title">
-                <a href="#">Five Finger Death Punch</a><br />
+                <a href="#">{{ item.title }}</a><br />
                 <ul>
-                    <li>Hellyeah</li>
-                    <li>Nothing More</li>
+                    <li data-ng-repeat="artist in item.artists.artist"> {{ artist }}</li>
                 </ul>
             </div>
             <div class="event-venue">
-                Sacramento, Sacramento,<br>
-                United States
+                {{ item.venue.name}}, {{ item.venue.location.street }}<br>
+                {{ item.venue.location.city }}
             </div>
             <ul class="event-options">
-                <li class="show" data-toggle-event-menu>
+                <li data-click data-click-name="menu" class="show">
                     <div></div>
                 </li>
-                <li class="go" data-title="I go it"></li>
-                <li class="possibly"></li>
-                <li class="more"></li>
-            </ul>
-        </li>
-
-        <li class="status-go">
-            <div class="event-date" data-month="sep">
-                16
-            </div>
-            <div class="event-title">
-                <a href="#">Five Finger Death Punch</a><br />
-                <ul>
-                    <li>Hellyeah</li>
-                    <li>Nothing More</li>
-                </ul>
-            </div>
-            <div class="event-venue">
-                Sacramento, Sacramento,<br>
-                United States
-            </div>
-            <ul class="event-options">
-                <li class="show" data-toggle-event-menu>
-                    <div></div>
-                </li>
-                <li class="go"></li>
-                <li class="possibly"></li>
-                <li class="more"></li>
-            </ul>
-        </li>
-
-        <li>
-            <div class="event-date" data-month="sep">
-                16
-            </div>
-            <div class="event-title">
-                <a href="#">Five Finger Death Punch</a><br />
-                <ul>
-                    <li>Hellyeah</li>
-                    <li>Nothing More</li>
-                </ul>
-            </div>
-            <div class="event-venue">
-                Sacramento, Sacramento,<br>
-                United States
-            </div>
-            <ul class="event-options">
-                <li class="show" data-toggle-event-menu>
-                    <div></div>
-                </li>
-                <li class="go"></li>
-                <li class="possibly"></li>
-                <li class="more"></li>
-            </ul>
-        </li>
-
-        <li>
-            <div class="event-date" data-month="sep">
-                16
-            </div>
-            <div class="event-title">
-                <a href="#">Five Finger Death Punch</a><br />
-                <ul>
-                    <li>Hellyeah</li>
-                    <li>Nothing More</li>
-                </ul>
-            </div>
-            <div class="event-venue">
-                Sacramento, Sacramento,<br>
-                United States
-            </div>
-            <ul class="event-options">
-                <li class="show" data-toggle-event-menu>
-                    <div></div>
-                </li>
-                <li class="go"></li>
-                <li class="possibly"></li>
-                <li class="more"></li>
-            </ul>
-        </li>
-
-        <li>
-            <div class="event-date" data-month="sep">
-                16
-            </div>
-            <div class="event-title">
-                <a href="#">Five Finger Death Punch</a><br />
-                <ul>
-                    <li>Hellyeah</li>
-                    <li>Nothing More</li>
-                </ul>
-            </div>
-            <div class="event-venue">
-                Sacramento, Sacramento,<br>
-                United States
-            </div>
-            <ul class="event-options">
-                <li class="show" data-toggle-event-menu>
-                    <div></div>
-                </li>
-                <li class="go"></li>
-                <li class="possibly"></li>
-                <li class="more"></li>
-            </ul>
-        </li>
-
-        <li>
-            <div class="event-date" data-month="sep">
-                16
-            </div>
-            <div class="event-title">
-                <a href="#">Five Finger Death Punch</a><br />
-                <ul>
-                    <li>Hellyeah</li>
-                    <li>Nothing More</li>
-                </ul>
-            </div>
-            <div class="event-venue">
-                Sacramento, Sacramento,<br>
-                United States
-            </div>
-            <ul class="event-options">
-                <li class="show" data-toggle-event-menu>
-                    <div></div>
-                </li>
-                <li class="go"></li>
-                <li class="possibly"></li>
-                <li class="more"></li>
+                <li data-click="app.setStatus(2)" class="go" data-title="I go it"></li>
+                <li data-click="app.setStatus(1)" class="possibly"></li>
+                <li data-click data-click-name="more" class="more"></li>
             </ul>
         </li>
     </ul>

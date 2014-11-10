@@ -62,12 +62,21 @@
         else if (selector instanceof Node) {
             return this.pushElements([selector]);
         }
+        else if (selector instanceof Object) {
+            var tmp = [];
+            this.each.call(selector, function(elem) {
+                elem instanceof Node && tmp.push(elem);
+            }.bind(this));
+
+            return this.pushElements(tmp);
+        }
 
         return this;
     };
 
     BikeJS.Modules.Events =  {
         cache: [],
+        triggerCache: [],
 
         ready: function(callback) {
             this.on('DOMContentLoaded', function(e) {
@@ -89,12 +98,20 @@
             return this;
         },
 
-        on: function(event, callback) {
+        on: function(event, delegateName, callback) {
             if (this.length) {
+                if (typeof delegateName === 'function') {
+                    callback = delegateName;
+                }
+                else {
+                    var userCallback = function(e) {
+                        e.detail.name === delegateName && callback.call(e.detail.target, e);
+                    }.bind(this);
+                }
+
                 this.each(function(el) {
                     event = event.split('.');
-
-                    el.addEventListener(event[0], callback, false);
+                    el.addEventListener(event[0], userCallback || callback, false);
 
                     this.cache.push({
                         name: event.join('.'),
@@ -106,6 +123,76 @@
             else {
                 document.addEventListener(event, callback, false);
             }
+
+            return this;
+        },
+
+        trigger: function(event, detail) {
+            this[0].dispatchEvent(new CustomEvent(event, { detail: detail }));
+        },
+
+        watch: function(event, watcher) {
+            var delegateEvents = {
+                    selectors: [],
+                    callbacks: [],
+                    default: null
+                },
+                settings = {
+                    dataAttr: 'click',
+                    scope: null
+                };
+
+            if (watcher && typeof watcher === 'function') {
+                var tmp = watcher.call(this), t;
+                for (var eventHandler in tmp) if(eventHandler !== 'settings') {
+                    if (typeof tmp[eventHandler] !== 'function')
+                        throw new Error('`'+ eventHandler +'` is not a function.');
+                    t = tmp[eventHandler].call(this);
+
+                    if (eventHandler === 'default') {
+                        delegateEvents.default = t;
+                    }
+                    else {
+                        if (t.selector && t.then && typeof t.then === 'function') {
+                            delegateEvents.selectors.push([t.selector, t.selector + ' *']);
+                            delegateEvents.callbacks.push(t.then);
+                        }
+                        else throw new Error('`'+ eventHandler +'` invalid params');
+                    }
+                }
+
+                if (tmp.settings && tmp.settings.scope) {
+                    settings.dataAttr = tmp.settings.dataAttr || settings.dataAttr;
+                    settings.scope = tmp.settings.scope;
+
+                    delegateEvents.selectors.push(['[data-' + settings.dataAttr + ']', '[data-' + settings.dataAttr + '] *']);
+                }
+            }
+
+            this.then = function(selector, callback) {
+                delegateEvents.selectors.push([selector, selector + ' *']);
+                delegateEvents.callbacks.push(callback);
+
+                return this;
+            };
+
+            this.on(event, function(e) {
+                if (e.target.matches(delegateEvents.selectors)) {
+                    for (var i = 0, c = delegateEvents.selectors.length; i < c; i++) {
+                        var elem = findElementInParent(e.path, delegateEvents.selectors[i], this[0]);
+
+                        if (elem && elem.dataset[settings.dataAttr]) {
+                            settings.scope.$eval(elem.dataset[settings.dataAttr]);
+                        }
+                        else {
+                            elem && delegateEvents.callbacks[i].call(this.pushElements([elem]), e);
+                        }
+                    }
+                }
+                else {
+                    delegateEvents.default && delegateEvents.default.call(this.pushElements([e.target]));
+                }
+            }.bind(this));
 
             return this;
         },
@@ -214,13 +301,27 @@
             return this;
         },
 
-        parent: function() {
+        parent: function(className) {
             var _parents = [];
             this.each(function(el) {
-                _parents.push(el.parentNode);
+                _parents.push(className ? el.parentNode.classList.contains(className) : el.parentNode);
             });
 
             return this.pushElements(_parents);
+        },
+
+        parents: function(selector) {
+            var elem = this[0];
+
+            while((elem = elem.parentNode) && elem !== this[0]) {
+                if (elem.nodeType === 1) {
+                    if (selector && elem.matches(selector)) {
+                        return this.pushElements([elem]);
+                    }
+                }
+            }
+
+            return !selector ? this.pushElements(matched) : false;
         },
 
         next: function() {
@@ -394,7 +495,22 @@
         }
     };
 
-    var merge = function(first, second) {
+    function findElementInParent(collection, classList, parentElement) {
+        if (collection && collection.length) {
+            for (var i = 0, c = collection.length; i < c; ++i) {
+                if (parentElement && collection[i] === parentElement) return false;
+
+                if (collection[i].matches(classList[0])) return collection[i];
+            }
+
+            return false;
+        }
+        else {
+            throw new Error('Invalid arguments');
+        }
+    }
+
+    function merge(first, second) {
         var length = +second.length,
             j = 0,
             i = first.length;
@@ -412,7 +528,5 @@
 
     BikeJS.Init.prototype = BikeJS.Core;
 
-    if (name) {
-        scope[name] = BikeJS;
-    }
-})(window, '$');
+    scope.$ = BikeJS;
+})(window);

@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module('cMusic', ['ngAnimate', 'pascalprecht.translate'])
-        .config(function($translateProvider, Config) {
+        .config(function($translateProvider, $controllerProvider, $injector,  Config) {
             $translateProvider.useStaticFilesLoader({
                 prefix: Config.lang.prefix,
                 suffix: Config.lang.suffix
@@ -39,15 +39,22 @@
         .directive('uiPlaylist', PlaylistDirective)
 
         .directive('toggle', ToggleDirective)
-        .directive('toggleEventMenu', EventsToggleMenu)
+        .directive('eventsWatch', EventsWatchDirective)
+        .directive('clickDelegate', ClickDelegateDirective)
         .directive('uiScrollbar', ScrollBarDirective)
 
         .run(function(Storage, State, User) {
-            /*Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
+            Storage.get(['app', 'vk', 'lastFm']).then(function(data) {
                 User.set(data);
 
             }).then(null, function() {
                 State.set('showAuthProcess');
-            });*/
+            });
+        });
+
+    /*$(document).ready(function() {
+        angular.bootstrap(document, ['cMusic']).invoke(function(Config) {
+            console.dir(Config);
         })
+    });*/
 })();

@@ -2,6 +2,12 @@
 
 .events {
   .scroll-box(120px, 0, 0, 0);
+  opacity: 0;
+  .transition(opacity);
+
+  &.show {
+    opacity: 1;
+  }
 
   &::-webkit-scrollbar {
     width: 0;

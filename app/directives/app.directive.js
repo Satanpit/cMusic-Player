@@ -1,6 +1,6 @@
-function ToggleDirective() {
-    "use strict";
+"use strict";
 
+function ToggleDirective() {
     return {
         scope: {
             toggle: '='
@@ -19,21 +19,38 @@ function ToggleDirective() {
     }
 }
 
-function EventsToggleMenu() {
-    "use strict";
-
+function ClickDelegateDirective() {
     return {
-        link: function(scope, element) {
-            element.on('click', function() {
-                var showed = $('.event-options.show'),
-                    parent = element.parent();
+        restrict: 'A',
 
-                if (parent.hasClass('show')) {
-                    parent.removeClass('show');
-                }
-                else {
-                    showed.removeClass('show');
-                    parent.addClass('show');
+        link: function(scope, element) {
+            var elem;
+
+            $(element).on('click', function(e) {
+                if (e.target.matches(['[data-click]', '[data-click] *'])) {
+                    elem = !angular.isUndefined(e.target.dataset['click']) ? e.target : e.target.parentNode;
+
+                    if (angular.isUndefined(elem.dataset['click'])) {
+                        for (var i = 0, c = elem.path.length; i < c; ++i) {
+                            if (elem.path[i] === this[0]) return false;
+
+                            if (!angular.isUndefined(elem.path[i].dataset['click'])) {
+                                elem = elem.path[i];
+                                return false;
+                            }
+                        }
+                    }
+
+                    if (elem) {
+                        if (!angular.isUndefined(elem.dataset['clickName'])) {
+                            $(this).trigger('delegate', {
+                                name: elem.dataset['clickName'] || 'default',
+                                target: elem
+                            })
+                        }
+
+                        !angular.isUndefined(elem.dataset['click']) && scope.$apply(elem.dataset['click']);
+                    }
                 }
             });
         }
@@ -41,22 +58,25 @@ function EventsToggleMenu() {
 }
 
 function ScrollBarDirective() {
-    "use strict";
-
     return {
         scope: {
             offset: '=uiScrollbarOffset',
-            observe: '=uiScrollbarObserve'
+            observe: '=uiScrollbarObserve',
+            shadowBox: '@uiScrollbarShadowBox'
         },
 
         link: function(scope, element) {
-            var block = $(element[0]),
+            var block = $(element),
                 children = element[0].children[0],
                 observe = scope.observe || true,
                 offset = scope.offset || {
                     top: 20,
                     bottom: 20
                 };
+
+            if (scope.shadowBox) {
+                var shadowBox = $(scope.shadowBox);
+            }
 
             block.afret('<div class="ui-scrollbar"><div></div></div>');
 
@@ -72,6 +92,11 @@ function ScrollBarDirective() {
 
             block.on('scroll.scrollbar', function(e) {
                 scrollBarParent[0].scrollTop = e.target.scrollTop;
+
+                if (shadowBox) {
+                    e.target.scrollTop > 0 ? shadowBox.addClass('shadow') : shadowBox.removeClass('shadow');
+                }
+
             });
 
             scrollBarParent.on('scroll.scrollbar', function(e) {
@@ -88,15 +113,13 @@ function ScrollBarDirective() {
 }
 
 function ImageDirective(Utils) {
-    "use strict";
-
     return {
         restrict:'EA',
         replace: true,
         template: '<img>',
 
         link: function(scope, element, attr) {
-            attr.$observe('imageSrc', function(src) {
+            attr.$observe('src', function(src) {
                 Utils.loadBlobImage(src).then(function(response) {
                     element[0].src = response;
                 });
@@ -110,8 +133,6 @@ function LoaderDirective() {
 }
 
 function PlaylistDirective() {
-    "use strict";
-
     return {
         restrict: 'EA',
         replace: true,

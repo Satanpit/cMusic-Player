@@ -37,7 +37,7 @@ function UtilsService($http, $q) {
                 if (typeof obj1 === 'object') return obj1;
             }
 
-            throw Error('obj1 is not object');
+            throw Error('Attributes is not object');
         },
 
         parseURL: function(url) {
