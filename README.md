@@ -16,4 +16,4 @@ cMusic Player - это приложение Google Chrome которое обл�
 ### Интерфейс приложения
 
 
-![alt tag](https://ps.vk.me/c609923/u12327425/docs/052f02e52570/artist-1-info.png?extra=mRpMW7o6uHUgVDl_fYqDJOkh0A-Gqdijt4znyqT2GZ2meVKI1ckoTAMAL-1YJj93LLvl1NpPQk6k9SKaZ5oeJqhULi-u8Lg)
+![alt tag](https://psv4.vk.me/c609923/u12327425/docs/7bef1d82ed5e/artist-1-info.png?extra=F828n5ZbCavg7SNrVyUeL_PubW31zaN3TvVKZvdVVKVTQ_JuzLvojOCr4-O2Mv8zs7a3MJwyGwg4UzW5pykymdSDDdpWtgc)
