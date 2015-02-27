@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-csp>
+<head>
+	<title>cMusic Player</title>
+    <meta charset="utf-8">
+
+    <!-- inject:js -->
+    <script src="components/angular/angular.js"></script>
+    <script src="components/angular-animate/angular-animate.js"></script>
+    <script src="components/angular-translate/angular-translate.js"></script>
+    <script src="components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="components/js-md5/js/md5.js"></script>
+    <script src="js/vendor/BikeJS.js"></script>
+    <script src="js/services/auth.service.js"></script>
+    <script src="js/services/data.service.js"></script>
+    <script src="js/services/lastfm.api.service.js"></script>
+    <script src="js/services/state.service.js"></script>
+    <script src="js/services/storage.service.js"></script>
+    <script src="js/services/utils.service.js"></script>
+    <script src="js/services/vk.api.service.js"></script>
+    <script src="js/controllers/app.controller.js"></script>
+    <script src="js/controllers/auth.controller.js"></script>
+    <script src="js/controllers/header.controller.js"></script>
+    <script src="js/controllers/menu.controller.js"></script>
+    <script src="js/controllers/playlist.controller.js"></script>
+    <script src="js/controllers/window.controller.js"></script>
+    <script src="js/directives/app.directive.js"></script>
+    <script src="js/directives/events.directive.js"></script>
+    <script src="js/app.config.js"></script>
+    <script src="js/app.js"></script>
+    <!-- endinject -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/main.min.css">
+    <!-- endinject -->
+</head>
+<body class="app" data-ng-app="cMusic" data-ng-controller="AppController as app">
+    <section data-ng-cloak>
+        <section data-ng-controller="AuthController as auth" data-ng-init="auth.checkUserAuth()">
+            <ng-include src="'templates/auth/authView.html'" class="app-auth" data-ng-if="auth.showAuthForm"></ng-include>
+        </section>
+
+        <ng-include src="'templates/main/headerView.html'"></ng-include>
+        <ng-include src="'templates/main/menuView.html'"></ng-include>
+
+        <ui-playlist></ui-playlist>
+
+        <ng-include src="'templates/main/contentView.html'"></ng-include>
+    </section>
+
+    <ui-loader whait="state.loaded"></ui-loader>
+</body>
+</html>

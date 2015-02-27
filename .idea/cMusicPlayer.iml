@@ -8,6 +8,7 @@
     <orderEntry type="library" name="chrome-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="angular-translate-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="BikeJS" level="project" />
+    <orderEntry type="library" name="es6-promises-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="Node.js v0.12.0 Core Modules" level="application" />
   </component>
 </module>
-
