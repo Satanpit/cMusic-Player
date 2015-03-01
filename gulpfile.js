@@ -44,7 +44,7 @@ gulp.task('build:sprite', function() {
         .pipe(gulp.dest( config.root.src ))
 });
 
-gulp.task('build:styles', ['build:sprite'], function() {
+gulp.task('build:styles', function() {
     return gulp.src(config.styles.src)
         .pipe(less())
         .pipe(concat(config.styles.output.name))
@@ -106,12 +106,13 @@ gulp.task('copy:index', function() {
 
 gulp.task('copy', ['copy:styles', 'copy:fonts', 'copy:images', 'copy:background', 'copy:index']);
 
-gulp.task('build', ['build:styles', 'build:scripts', 'build:index', 'build:manifest']);
+gulp.task('build', ['build:sprite', 'build:styles', 'build:scripts', 'build:index', 'build:manifest']);
 
-gulp.task('watch', ['build:styles', 'build:index'], function() {
+gulp.task('watcher', ['build:sprite', 'build:styles', 'build:index'], function() {
     livereload.listen(config.server);
 
     gulp.watch(config.styles.watch, ['build:styles']);
+    gulp.watch(config.sprite.src, ['build:sprite']);
     gulp.watch(config.templates.index.src, ['build:index'])
 });
 

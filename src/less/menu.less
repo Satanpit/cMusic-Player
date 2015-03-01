@@ -1,5 +1,6 @@
 @import "mixins";
 
+
 .app-menu {
   .absolute(0, 0, 0, 0);
   width: 60px;
@@ -23,9 +24,8 @@
         opacity: .6;
         color: #FFF;
 
-        &[class^="icon-menu-"] {
-          background-image: url(@sprite-menu);
-          background-repeat: no-repeat;
+        i[class^="icon-menu-"] {
+          display: inline-block;
           .transition(opacity);
         }
 
@@ -141,37 +141,5 @@
     .alarm:before {
       opacity: 0;
     }
-  }
-
-  .icon-menu-news {
-    .icon-menu(4);
-  }
-
-  .icon-menu-search {
-    .icon-menu(6);
-  }
-
-  .icon-menu-lib {
-    .icon-menu(3);
-  }
-
-  .icon-menu-recommends {
-    .icon-menu(5);
-  }
-
-  .icon-menu-events {
-    .icon-menu(2);
-  }
-
-  .icon-menu-about {
-    .icon-menu(0);
-  }
-
-  .icon-menu-settings {
-    .icon-menu(7);
-  }
-
-  .icon-menu-could {
-    .icon-menu(1);
   }
 }
