@@ -1,4 +1,4 @@
-<header class="app-header">
+<header class="app-header test123">
     <section class="app-header-controls">
         <div class="play-controls">
             <a class="prev"></a>
@@ -31,8 +31,14 @@
         </div>
     </section>
     <section class="app-header-window-controls" data-ng-controller="WindowController as window">
-        <a data-ng-click="window.minimize()" class="window-minimize"></a>
-        <a data-ng-click="window.fullScreen()" class="window-full-screen"></a>
-        <a data-ng-click="window.close()" class="window-close"></a>
+        <a data-ng-click="window.minimize()" class="window-minimize">
+            <i class="icon-window-collapse"></i>
+        </a>
+        <a data-ng-click="window.fullScreen()" class="window-full-screen">
+            <i class="icon-window-expand"></i>
+        </a>
+        <a data-ng-click="window.close()" class="window-close">
+            <i class="icon-window-close"></i>
+        </a>
     </section>
 </header>

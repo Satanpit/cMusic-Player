@@ -27,11 +27,12 @@ module.exports = {
 
     sprite: {
         src: 'src/img/sources/sprite-assets/*.svg',
+        template: 'src/sprite-less.tpl',
         output: {
             spritePath: 'img/sprite.svg',
             lessPath: 'less/',
 
-            padding: 10,
+            padding: 0,
             prefix: '.icon-%s'
         }
     },
@@ -47,7 +48,7 @@ module.exports = {
             'src/js/services/*.js',
             'src/js/controllers/*.js',
             'src/js/directives/*.js',
-            'build/js/templates.js',
+            //'src/js/templates.js',
             'src/js/*.js'
         ],
         output: {
@@ -58,10 +59,8 @@ module.exports = {
     },
 
     templates: {
-        cache: {
-            src: 'src/templates/**/*.html',
-            output: 'build/js'
-        },
+        src: 'src/templates/**/*.html',
+        output: 'src/js',
         index: {
             src: 'src/templates/index.html'
         }

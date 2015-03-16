@@ -1,6 +1,5 @@
 @import "mixins";
 
-
 .app-menu {
   .absolute(0, 0, 0, 0);
   width: 60px;
@@ -8,6 +7,7 @@
   overflow: hidden;
   z-index: 5;
   .transition(width);
+
 
   menu {
     width: 190px;
@@ -20,13 +20,14 @@
       a {
         display: block;
         height: 100%;
-        padding: 20px 0 20px 60px;
+        padding: 20px 0 20px 22px;
         opacity: .6;
         color: #FFF;
+        white-space: nowrap;
+        .transition(opacity);
 
         i[class^="icon-menu-"] {
-          display: inline-block;
-          .transition(opacity);
+          margin-right: 20px;
         }
 
         &:hover,

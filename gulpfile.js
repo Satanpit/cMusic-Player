@@ -1,4 +1,6 @@
 var path = require("path"),
+    fs = require("fs"),
+    crypto = require("crypto"),
     gulp = require("gulp"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
@@ -33,11 +35,18 @@ gulp.task('build:sprite', function() {
             },
             mode: {
                 css: {
-                    render: { less: true },
+                    render: {
+                        less: { template: config.sprite.template }
+                    },
                     bust: false,
                     prefix: config.sprite.output.prefix,
                     sprite: path.join(__dirname, config.sprite.output.spritePath),
                     dest: path.join(__dirname, config.sprite.output.lessPath)
+                }
+            },
+            variables: {
+                hash: function() {
+                    return spriteHash
                 }
             }
         }))
@@ -63,9 +72,9 @@ gulp.task('build:scripts', ['build:templates'], function() {
 });
 
 gulp.task('build:templates', function() {
-    return gulp.src(config.templates.cache.src)
+    return gulp.src(config.templates.src)
         .pipe(templateCache())
-        .pipe(gulp.dest(config.templates.cache.output))
+        .pipe(gulp.dest(config.templates.output))
 });
 
 gulp.task('build:manifest', function() {
@@ -113,7 +122,11 @@ gulp.task('watcher', ['build:sprite', 'build:styles', 'build:index'], function()
 
     gulp.watch(config.styles.watch, ['build:styles']);
     gulp.watch(config.sprite.src, ['build:sprite']);
-    gulp.watch(config.templates.index.src, ['build:index'])
+    gulp.watch(config.templates.index.src, ['build:index']);
+
+    gulp.watch(config.templates.src, function(e) {
+        livereload.changed(e.path);
+    })
 });
 
 
@@ -121,4 +134,9 @@ function transformInjectsSrc() {
     var args = arguments;
     args[0] = args[0].replace(/\/build\/|\/src\//, '');
     return inject.transform.apply(inject.transform, args);
+}
+
+function spriteHash(file, render) {
+    var src = path.join(config.root.src, render(file).replace('../', ''));
+    return (fs.existsSync(src) ? crypto.createHash("md5").update(fs.readFileSync(src, 'utf-8')).digest('hex') : false);
 }

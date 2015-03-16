@@ -1,21 +1,30 @@
 (function() {
     "use strict";
 
-    var config = {
-        host: 'localhost:',
-        port: 666
-    };
-
     try {
-        var connection = new WebSocket('ws://' + config.host + config.port + '/livereload');
+        new WebSocket('ws://localhost:666/livereload')
+            .addEventListener('message', function(message) {
+                var data = JSON.parse(message.data || "{ }");
+                if (data.command !== 'reload') return false;
 
-        connection.onmessage = function(message) {
-            if (message.data) {
-                var data = JSON.parse(message.data);
-                if (data && data.command === 'reload') {
+                if (~data.path.indexOf('.css')) {
+                    var doc = chrome.app.window.get('parent').contentWindow.document;
+
+                    Array.prototype.forEach.call(doc.querySelectorAll('link[rel=stylesheet]'), function(item) {
+                        var href = item.href,
+                            random = Math.floor(Math.random() * Math.pow(10, 16));
+
+                        if (~href.indexOf('?')) {
+                            href = href.replace(/\?([\d]){15,16}/, '?' + random);
+                        } else {
+                            href += '?' + random;
+                        }
+
+                        item.setAttribute('href', href);
+                    });
+                } else {
                     chrome.runtime.reload();
                 }
-            }
-        }
+        });
     } catch (e) { }
 }());
