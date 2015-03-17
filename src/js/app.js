@@ -68,9 +68,36 @@
             });
         });
 
-    /*$(document).ready(function() {
-        angular.bootstrap(document, ['cMusic']).invoke(function(Config) {
-            console.dir(Config);
-        })
-    });*/
+    // Debug info
+    function getWatchersCount() {
+        var root = angular.element(document.getElementsByTagName('body'));
+        var watchers = [];
+
+        var f = function (element) {
+            if (element.data().hasOwnProperty('$scope')) {
+                angular.forEach(element.data().$scope.$$watchers, function (watcher) {
+                    watchers.push({
+                        element: [
+                            element[0].nodeName.toLowerCase(),
+                            (element[0].id ? '#' + element[0].id + ' ' : ' '),
+                            Array.prototype.join.call(element[0].classList || [ ], '.')
+                        ].join(''),
+                        fn: watcher.fn.name
+                    });
+                });
+            }
+
+            angular.forEach(element.children(), function (childElement) {
+                f(angular.element(childElement));
+            });
+        };
+
+        f(root);
+
+        console.table(watchers);
+
+        return watchers.length;
+    }
+
+    angular.getWatchersCount = getWatchersCount;
 })();
