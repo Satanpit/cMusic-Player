@@ -1,6 +1,8 @@
 cMusic-Player
 =============
 
+[![Join the chat at https://gitter.im/Satanpit/cMusic-Player](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Satanpit/cMusic-Player?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 cMusic Player - это приложение Google Chrome которое облегчит Вам прослушивание музыки и поможет обрести новых  любимых исполнителей. С cMusic Вы сможете следить за концертами групп, которые Вам нравятся, скробблить композиции на LastFM, просматривать рекомендованных  Вам исполнителей, узнавать больше об артистах, которые нравятся и все глубже поглощаться в мир музыки, которую мы все так любим.
 
 ### Основные возможности плеера:
