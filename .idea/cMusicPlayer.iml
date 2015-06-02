@@ -10,5 +10,6 @@
     <orderEntry type="library" name="BikeJS" level="project" />
     <orderEntry type="library" name="es6-promises-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="Node.js v0.12.0 Core Modules" level="application" />
+    <orderEntry type="library" name="cMusic Player 3.0 node_modules" level="project" />
   </component>
 </module>

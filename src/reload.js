@@ -2,10 +2,12 @@
     "use strict";
 
     try {
-        new WebSocket('ws://localhost:666/livereload')
+        new WebSocket('ws://localhost:8081/livereload')
             .addEventListener('message', function(message) {
                 var data = JSON.parse(message.data || "{ }");
                 if (data.command !== 'reload') return false;
+
+                window.focus();
 
                 if (~data.path.indexOf('.css')) {
                     var doc = chrome.app.window.get('parent').contentWindow.document;
@@ -19,6 +21,8 @@
                         } else {
                             href += '?' + random;
                         }
+
+                        item.href = '#breakingTheUrl';
 
                         item.setAttribute('href', href);
                     });

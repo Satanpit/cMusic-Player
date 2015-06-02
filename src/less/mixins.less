@@ -69,9 +69,9 @@
   transform: @property;
 }
 
-.animation(@name, @time: 0.2s, @func: ease) {
-  -webkit-animation: @name @time @func;
-  animation: @name @time @func;
+.animation(@name, @time: 0.2s, @func: ease, @iteration: infinite) {
+  -webkit-animation: @name @time @func @iteration;
+  animation: @name @time @func @iteration;
 }
 
 .blur(@size: 5px) {

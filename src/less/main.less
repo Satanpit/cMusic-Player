@@ -29,6 +29,20 @@
   }
 }*/
 
+@-webkit-keyframes app-loader {
+  0% {
+    .transform(rotate(-360deg));
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+  100% {
+    .transform(rotate(360deg));
+    opacity: 1;
+  }
+}
+
 .app-loader {
   display: flex;
   .absolute(0, 0, 0, 0);
@@ -37,7 +51,26 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  .transition(opacity);
+
+  img {
+    .animation(app-loader, 2.5s, ease-in-out);
+  }
+
+  .logo {
+    position: relative;
+
+    div {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -13px 0 0 -7px;
+      width: 0;
+      height: 0;
+      border-top: 14px solid transparent;
+      border-left: 24px solid #8fc7ed;
+      border-bottom: 14px solid transparent;
+    }
+  }
 }
 
 body.loaded {
