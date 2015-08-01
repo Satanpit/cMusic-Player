@@ -1572,4 +1572,21 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	chrome.app.window.current().onClosed.addListener(function(){
 		tracker.sendEvent('Закрытие приложения', 'Закрытие приложения');
 	});
+
+	chrome.commands.onCommand.addListener(function(command) {
+		switch (command) {
+			case 'play-pause':
+				$scope.controlPlay();
+				break;
+			case 'previous-track':
+				$scope.controlPrev();
+				break;
+			case 'next-track':
+				$scope.controlNext();
+				break;
+			default:
+				throw new Error('Unknown command: ' + command);
+			break;
+		}
+	});
 });

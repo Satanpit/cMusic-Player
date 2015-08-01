@@ -8,7 +8,39 @@
 	},
 	"app": {
 		"background": {
-			"scripts": ["background.js"]
+			"scripts": [
+				"background.js"
+			]
+		}
+	},
+	"commands": {
+		"next-track": {
+			"description": "next track",
+			"global": true,
+			"suggested_key": {
+				"default": "MediaNextTrack"
+			}
+		},
+		"play-pause": {
+			"description": "play/pause",
+			"global": true,
+			"suggested_key": {
+				"default": "MediaPlayPause"
+			}
+		},
+		"previous-track": {
+			"description": "previous track",
+			"global": true,
+			"suggested_key": {
+				"default": "MediaPrevTrack"
+			}
+		},
+		"stop": {
+			"description": "stop playback",
+			"global": true,
+			"suggested_key": {
+				"default": "MediaStop"
+			}
 		}
 	},
 	"permissions": [
@@ -19,12 +51,13 @@
 		"http://userserve-ak.last.fm/*",
 		"https://www.google-analytics.com/",
 		"fileSystem",
-		"storage", 
+		"storage",
 		"webview",
 		"notifications",
 		"identity",
 		"syncFileSystem",
-        "unlimitedStorage",
+		"unlimitedStorage",
 		"<all_urls>"
-	]
+	],
+	"minimum_chrome_version": "36.0.0.0"
 }
