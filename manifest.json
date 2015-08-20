@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "cMusic Player",
 	"description": "Приложение для прослушивания Вашей музыки ВКонтакте",
-	"version": "2.0.5",
+	"version": "2.0.6",
 	"icons": {
 		"128": "icons/128.png"
 	},
@@ -14,34 +14,34 @@
 		}
 	},
 	"commands": {
-		"next-track": {
-			"description": "next track",
-			"global": true,
-			"suggested_key": {
-				"default": "MediaNextTrack"
-			}
-		},
-		"play-pause": {
-			"description": "play/pause",
-			"global": true,
-			"suggested_key": {
-				"default": "MediaPlayPause"
-			}
-		},
-		"previous-track": {
-			"description": "previous track",
-			"global": true,
-			"suggested_key": {
-				"default": "MediaPrevTrack"
-			}
-		},
-		"stop": {
-			"description": "stop playback",
-			"global": true,
-			"suggested_key": {
-				"default": "MediaStop"
-			}
+	  "next-track": {
+		  "description": "Следующий трек",
+		  "global": true,
+		  "suggested_key": {
+			  "default": "MediaNextTrack"
+		  }
+	  },
+	  "previous-track": {
+		"description": "Предыдущий трек",
+		"global": true,
+		"suggested_key": {
+		  "default": "MediaPrevTrack"
 		}
+	  },
+	  "play-pause": {
+		  "description": "Плей/Пауза",
+		  "global": true,
+		  "suggested_key": {
+			  "default": "MediaPlayPause"
+		  }
+	  },
+	  "stop": {
+		  "description": "Остановить воспроизведение",
+		  "global": true,
+		  "suggested_key": {
+			  "default": "MediaStop"
+		  }
+	  }
 	},
 	"permissions": [
 		"https://api.vk.com/*",
