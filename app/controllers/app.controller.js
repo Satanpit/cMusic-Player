@@ -59,6 +59,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 					
 					$scope.playlistTracks.count 	= result.response.tracks.count;
 					$scope.playlists 				= result.response.albums.items;
+					$scope.allTracksCount 			= result.response.tracks.count;
 					
 					stateManager.remove('tracksLoad');
 				});
@@ -129,8 +130,9 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 				}
 				
 				if($scope.isShuffle) {
-					if($scope[var_name].count > 50) {
-						offset = (Math.random() * (($scope[var_name].count - 50) - 1) + 1).toFixed(0);
+					if($scope.allTracksCount > 50) {
+						offset = (Math.random() * (($scope[var_name].count || $scope.allTracksCount - 50) - 1) + 1).toFixed(0);
+						console.log(offset);
 					}
 				}
 				
@@ -396,7 +398,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 					}
 				}
 				
-				LastFM.user.getTopArtists('', 36, page || 0, function(result){
+				LastFM.user.getTopArtists('', 36, page || 1, function(result){
 					if(isLoadMoreItems) {
 						angular.forEach(result.topartists.artist, function(item) {
 							$scope[var_name].items.push(item);
@@ -469,7 +471,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 				
 				stateManager.set('recommendedArtistsLoad');
 				
-				LastFM.user.getRecommendedArtists(36, page || 0, function(result) {
+				LastFM.user.getRecommendedArtists(36, page || 1, function(result) {
 					if(page) {
 						angular.forEach(result.recommendations.artist, function(item) {
 							$scope[var_name].items.push(item);

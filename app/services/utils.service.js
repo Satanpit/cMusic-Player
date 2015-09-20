@@ -4,8 +4,8 @@ Player.factory('utils', function(){
 		var xhr = new XMLHttpRequest();
 		xhr.responseType = 'blob';
 		xhr.onload = function() {
-			callback(window.webkitURL.createObjectURL(xhr.response), xhr.response);
-		}
+			callback(URL.createObjectURL(xhr.response), xhr.response);
+		};
 		xhr.open('GET', url, true);
 		xhr.send();
 	};
