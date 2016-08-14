@@ -1,4 +1,4 @@
-Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, $interval, $templateCache, VK, LastFM, audio, stateManager, storage, utils){
+Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, $interval, $q, $templateCache, VK, LastFM, audio, stateManager, storage, utils){
 	/**
 	 * cMusic Player ver 2.0.3
 	 * Глобальный контроллер приложения
@@ -197,7 +197,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 				}
 				
 				VK.search(query, 50, offset, $scope.performer_only, function(result){
-					angular.element('#search-input').val(query);
+					//angular.element('#search-input').val(query);
 					
 					angular.forEach(result.response.items, function(item) {
 						item.duration_sec 	= item.duration;
@@ -866,9 +866,11 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	 */
 	
 	// Установка громкости
-	$scope.$watch('volume', function(new_val, old_val){
-		audio.volume(new_val);
-		$rootScope.volume = new_val;
+	$scope.$watch('volume', function(new_val){
+		if (new_val !== undefined) {
+			audio.volume(new_val);
+			$rootScope.volume = new_val;
+		}
 	});
 	
 	// Воспроизводится ли текущий трек
@@ -1207,16 +1209,12 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	// Вызываем окно поиска
 	$scope.showSearch = function() {
 		$scope.isSearchShow		= !$scope.isSearchShow;
-		this.q 					= '';
+		$scope.searchQuery = $scope.query = '';
 		
 		if($scope.isSearchShow) {
 			if(!$scope.searchTracks || $scope.count == 0) {
-				$timeout(function() {
-					$scope.Recommended('searchTracks').getTracks(0);
-					
-					//$scope.isContentShow 		= true;
-					$scope.isVkRecomendations	= true;
-				}, 500);
+				$scope.Recommended('searchTracks').getTracks(0);
+				$scope.isVkRecomendations	= true;
 			}
 		}
 		else {
@@ -1230,8 +1228,10 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	// Поиск исполнителя из основного плейлиста
 	$scope.searchByArtist = function(artist) {
 		$scope.searchBy(1);
-		$scope.isVkRecomendations	= false;
-		
+		$scope.isVkRecomendations = false;
+		$scope.searchQuery = artist;
+		$scope.query = artist;
+
 		if($scope.isSearchShow) {
 			$scope.Tracks('searchTracks').search(artist);
 		}
@@ -1239,25 +1239,25 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 			$scope.isSearchShow = true;
 			$scope.Tracks('searchTracks').search(artist);
 		}
-	}
+	};
 	
 	$scope.searchBy = function(val) {
 		$scope.performer_only = val;
-	}
-	
+	};
+
 	$scope.$watch('performer_only', function(new_val, old_val) {
 		if(old_val != undefined && new_val != old_val) {
-			q = angular.element('#search-input').val();
-			$scope.Tracks('searchTracks').search(q);
+			$scope.Tracks('searchTracks').search($scope.searchQuery);
 		}
 	});
 	
 	// Поиск трека/исполнителя
-	$scope.search = function(q) {
+	$scope.search = function() {
 		$scope.isVkRecomendations	= false;
+		$scope.searchQuery = this.searchQuery;
 		
-		$scope.Tracks('searchTracks').search(this.q);
-	}
+		$scope.Tracks('searchTracks').search($scope.searchQuery);
+	};
 	
 	// Подгружаем результаты поиска при скроле
 	$scope.loadMoreSearchResult = function(){
@@ -1265,41 +1265,19 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 			$scope.Recommended('searchTracks').getTracks(0, 1);
 		}
 		else {
-			$scope.Tracks('searchTracks').search(this.q, 1);
+			$scope.Tracks('searchTracks').search($scope.searchQuery, 1);
 		}
-	}
-	
+	};
+
 	// Автокомплит для поиска 
 	$scope.getSearchAutocomplete = function(val) {
-		if(val) {
-			return LastFM.artist.search(val, 5, 0, function(result){
-				searchAutocomplete = [];
-				
-				if(result.results.artistmatches.artist && result.results.artistmatches.artist.length > 0) {
-					angular.forEach(result.results.artistmatches.artist, function(item){
-						searchAutocomplete.push({
-							name: item.name,
-							type: 1
-						});
-					});
-					
-					return LastFM.track.search(val, 5, 0, function(result) {
-						angular.forEach(result.results.trackmatches.track, function(item){
-							searchAutocomplete.push({
-								name: item.name,
-								type: 0
-							});
-						});
-						
-						return searchAutocomplete;
-					});
-				}
-				else {
-					return false;
-				}
-			});
-		}
-	}
+		return LastFM.search(val);
+	};
+
+	$scope.selectAutocompleteItem = function (item) {
+		$scope.searchQuery = item;
+		$scope.Tracks('searchTracks').search($scope.searchQuery);
+	};
 	
 	// Закрываем окно поиска
 	$scope.closeSearch = function() {
@@ -1570,10 +1548,6 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 		storage.remove(['lastfm_session', 'lastfm_user']);
 		$scope.is_lastfm_auth = false;
 	}
-	
-	chrome.app.window.current().onClosed.addListener(function(){
-		tracker.sendEvent('Закрытие приложения', 'Закрытие приложения');
-	});
 
 	chrome.commands.onCommand.addListener(function(command) {
 		switch (command) {

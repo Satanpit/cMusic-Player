@@ -3,22 +3,23 @@
     	<h3><span class="blue-bg"><i class="a-icon-search a-icon-white"></i></span> Поиск аудиозаписей</h3>
         <form data-ng-submit="search()">
         	<input 
-                type="text" 
-                name="q" 
+                type="text"
                 data-ng-trim="true"
-                data-ng-model="q" 
+                data-ng-model="query"
                 data-typeahead="searchAutocomplete as searchAutocomplete.name for searchAutocomplete in getSearchAutocomplete($viewValue) | filter:{name:$viewValue}"
                 data-typeahead-template-url="views/typehead.html"
+                data-typeahead-on-select="selectAutocompleteItem($item)"
+                data-typeahead-focus-first="false"
                 placeholder="Введите название исполнителя или трека..." 
                 id="search-input" />
-            <a data-ng-if="!$parent.performer_only" class="dropdown-toggle" id="search-type" href="">по названию трека <i class="a-icon-chevron-down a-icon-opacity"></i></a>
-            <a data-ng-if="$parent.performer_only == 1" class="dropdown-toggle" id="search-type" href="">по исполнителю <i class="a-icon-chevron-down a-icon-opacity"></i></a>
+            <a data-ng-if="!performer_only" class="dropdown-toggle" id="search-type" href="">по названию трека <i class="a-icon-chevron-down a-icon-opacity"></i></a>
+            <a data-ng-if="performer_only == 1" class="dropdown-toggle" id="search-type" href="">по исполнителю <i class="a-icon-chevron-down a-icon-opacity"></i></a>
             <ul class="dropdown-menu search">
                 <li>
-                    <a data-ng-click="searchBy(0);" href="">по названию трека</a>
+                    <a ng-click="searchBy(0);" href="">по названию трека</a>
                 </li>
                 <li>
-                    <a data-ng-click="searchBy(1);" href="">по исполнителю</a>
+                    <a ng-click="searchBy(1);" href="">по исполнителю</a>
                 </li>
             </ul>
         </form>

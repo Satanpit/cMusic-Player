@@ -1,11 +1,11 @@
-Player.factory('LastFM', function($http, storage){
+Player.factory('LastFM', function($http, $q, storage){
 	var options	= {
 		api_key		: '4d1b3ad77378fa5c95fe3483b3caf97b',
 		api_secret	: 'b19a84c20f77a31b7113f128380d66d6',
 		api_url		: 'https://ws.audioscrobbler.com/2.0/',
 		user		: false,
 		session		: false
-	}
+	}, searchTimeout = null;
 	
 	var call = function(method, params, callback, data, session, requestMethod, api_sig){
 		params['api_key'] 	= options.api_key;
@@ -38,7 +38,8 @@ Player.factory('LastFM', function($http, storage){
 				'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}).then(function(res){
-			return callback(res.data);
+			callback(res.data);
+			return res.data;
 		});
 	};
 	
@@ -88,7 +89,7 @@ Player.factory('LastFM', function($http, storage){
 		chart: {
 			getTopArtists: function(page, limit, callback) {
 				call('chart.getTopArtists', {
-					page	: page,
+					page	: page || 1,
 					limit	: limit,
 					lang	: 'ru'
 				}, function(result){
@@ -159,7 +160,7 @@ Player.factory('LastFM', function($http, storage){
 				return call('artist.search', {
 					artist		: artist,
 					limit		: limit,
-					page		: page,
+					page		: page || 1,
 					autocorrect	: 1,
 					lang		: 'ru'
 				}, function(result){
@@ -357,6 +358,57 @@ Player.factory('LastFM', function($http, storage){
 					callback(result);
 				});
 			}
+		},
+
+		search: function (query) {
+			var defer = $q.defer();
+
+			if (!query) {
+				defer.reject();
+				return defer.promise;
+			}
+
+			window.clearTimeout(searchTimeout);
+			searchTimeout = window.setTimeout(function () {
+				var autocompleteResult = [],
+					artistPromise, trackPromise;
+
+				artistPromise = this.artist.search(query, 5, 0, function (result) {
+					if (!result.results) {
+						return;
+					}
+
+					result.results.artistmatches.artist.forEach(function (item) {
+						autocompleteResult.push({
+							name: item.name,
+							type: 1
+						});
+					});
+				});
+
+				trackPromise = this.track.search(query, 5, 0, function (result) {
+					if (!result.results) {
+						return;
+					}
+
+					result.results.trackmatches.track.forEach(function (item) {
+						autocompleteResult.push({
+							name: item.name,
+							type: 1
+						});
+					});
+				});
+
+				$q.all([artistPromise, trackPromise]).then(function () {
+					autocompleteResult.sort(function (a, b)  {
+						return b.type - a.type;
+					});
+
+					defer.resolve(autocompleteResult);
+				}).catch(defer.reject);
+			}.bind(this), 200);
+
+			return defer.promise;
 		},
 		
 		geo: {

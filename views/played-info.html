@@ -24,10 +24,6 @@
                 data-ng-click="Artist(currentArtistInfo.name).getAlbums('playedAlbums'); $parent.playedInfoType = 'albums'" 
                 data-ng-class="{'active' : playedInfoType == 'albums'}" 
             href=""><i class="a-icon-th a-icon-opacity"></i> Дискография</a>
-            <a 
-                data-ng-click="Artist(currentArtistInfo.name).getEvents('playedEvenets'); $parent.playedInfoType = 'events'" 
-                data-ng-class="{'active' : playedInfoType == 'events'}" 
-            href=""><i class="a-icon-time a-icon-opacity"></i> События</a>
         </nav>
     </header>
     
@@ -217,31 +213,6 @@
         </div>
         <div data-ng-if="!state.loadAlbum">
         	Подождите, загружаю альбом...
-        </div>
-    </div>
-    
-    <div data-ng-if="$parent.playedInfoType == 'events'" class="slide">
-        <div data-ng-if="playedEvenets">
-            <div class="event clear" data-ng-repeat="event in playedEvenets">
-                <div class="event-date">
-                    <b>{{event.startDate.date}}</b>
-                    {{event.startDate.month}} {{event.startDate.year}}
-                </div>
-                <div class="event-content">
-                    <h3>{{event.title}}</h3>
-                    <div class="event-artists text-overflow">{{event.artists.artist}}</div>
-                    
-                    <div class="event-venue">
-                        <span class="blue-bg"><i class="a-icon-map-marker a-icon-white"></i></span>
-                        <span class="venue">{{event.venue.location.city}}, {{event.venue.location.country}}</span>
-                    </div>
-                    
-                    <a href="" class="btn btn-min" data-ng-click="getEventFull(event.id)">Читать больше</a>
-                </div>
-            </div>
-        </div>
-        <div class="message" data-ng-if="!moreInfoArtistEvents">
-        	У этого исполнителя нет событий
         </div>
     </div>
 </section>
