@@ -1208,18 +1208,15 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	
 	// Вызываем окно поиска
 	$scope.showSearch = function() {
-		$scope.isSearchShow		= !$scope.isSearchShow;
-		$scope.searchQuery = $scope.query = '';
+		$scope.isSearchShow	= !$scope.isSearchShow;
+		$scope.query = '';
 		
 		if($scope.isSearchShow) {
-			if(!$scope.searchTracks || $scope.count == 0) {
-				$scope.Recommended('searchTracks').getTracks(0);
-				$scope.isVkRecomendations	= true;
-			}
+			$scope.Recommended('searchTracks').getTracks(0);
+			$scope.isVkRecomendations = true;
 		}
 		else {
 			$scope.searchTracks = false;
-			$templateCache.remove('views/search.html');
 		}
 		
 		tracker.sendAppView('Открыт поиск');
@@ -1227,36 +1224,26 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	
 	// Поиск исполнителя из основного плейлиста
 	$scope.searchByArtist = function(artist) {
-		$scope.searchBy(1);
+		$scope.performer_only = 1;
 		$scope.isVkRecomendations = false;
-		$scope.searchQuery = artist;
 		$scope.query = artist;
 
-		if($scope.isSearchShow) {
-			$scope.Tracks('searchTracks').search(artist);
-		}
-		else {
+		if(!$scope.isSearchShow) {
 			$scope.isSearchShow = true;
-			$scope.Tracks('searchTracks').search(artist);
 		}
+
+		search();
 	};
 	
 	$scope.searchBy = function(val) {
 		$scope.performer_only = val;
+		search();
 	};
-
-	$scope.$watch('performer_only', function(new_val, old_val) {
-		if(old_val != undefined && new_val != old_val) {
-			$scope.Tracks('searchTracks').search($scope.searchQuery);
-		}
-	});
 	
 	// Поиск трека/исполнителя
 	$scope.search = function() {
 		$scope.isVkRecomendations	= false;
-		$scope.searchQuery = this.searchQuery;
-		
-		$scope.Tracks('searchTracks').search($scope.searchQuery);
+		search();
 	};
 	
 	// Подгружаем результаты поиска при скроле
@@ -1265,7 +1252,7 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 			$scope.Recommended('searchTracks').getTracks(0, 1);
 		}
 		else {
-			$scope.Tracks('searchTracks').search($scope.searchQuery, 1);
+			search(1);
 		}
 	};
 
@@ -1275,9 +1262,15 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	};
 
 	$scope.selectAutocompleteItem = function (item) {
-		$scope.searchQuery = item;
-		$scope.Tracks('searchTracks').search($scope.searchQuery);
+		$scope.query = item.name;
+		$scope.performer_only = item.type;
+
+		search();
 	};
+
+	function search(isMore) {
+		$scope.Tracks('searchTracks').search({name: $scope.query, type: $scope.performer_only}, isMore);
+	}
 	
 	// Закрываем окно поиска
 	$scope.closeSearch = function() {

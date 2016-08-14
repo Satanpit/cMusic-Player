@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
@@ -2116,7 +2118,7 @@ input[type="password"] {
 }
 
 .dropdown-menu.search,
-.dropdown-menu.autocomplete {
+[uib-typeahead] + .dropdown-menu {
 	left:auto;
 	right:0;
 	margin-top:-1px;
@@ -2127,7 +2129,7 @@ input[type="password"] {
 }
 
 .dropdown-menu.search > li > a,
-.dropdown-menu.autocomplete > li > a {
+[uib-typeahead] + .dropdown-menu > li > a {
 	color:#999;
 	opacity:1;
 	height:auto;
@@ -2138,28 +2140,28 @@ input[type="password"] {
 }
 
 .dropdown-menu.search > li > a:hover,
-.dropdown-menu.autocomplete > li > a:hover {
+[uib-typeahead] + .dropdown-menu > li > a:hover {
 	color:#444;
 	background:#f5f5f5;
 }
 
-.dropdown-menu.autocomplete > li.active a {
+[uib-typeahead] + .dropdown-menu > li.active a {
 	background:#f5f5f5;
 }
 
 .dropdown-menu.search > li,
-.dropdown-menu.autocomplete > li {
+[uib-typeahead] + .dropdown-menu > li {
 	border-bottom:none;
 }
 
-.dropdown-menu.autocomplete {
+[uib-typeahead] + .dropdown-menu {
 	width:100%;
 	max-height:380px;
 	visibility:visible;
 	overflow:hidden;
 }
 
-.dropdown-menu.autocomplete > li > a {
+[uib-typeahead] + .dropdown-menu > li > a {
 	line-height:14px;
 	color:#444;
 	padding:15px;
@@ -2283,6 +2285,31 @@ input[type="password"] {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none;
+}
+
+[uib-typeahead-popup].dropdown-menu {
+	display: block;
+	visibility: visible;
+}
+
+.uib-position-measure {
+	display: block !important;
+	visibility: hidden !important;
+	position: absolute !important;
+	top: -9999px !important;
+	left: -9999px !important;
+}
+
+.uib-position-scrollbar-measure {
+	position: absolute !important;
+	top: -9999px !important;
+	width: 50px !important;
+	height: 50px !important;
+	overflow: scroll !important;
+}
+
+.uib-position-body-scrollbar-measure {
+	overflow: scroll !important;
 }
 
 /* End Angular */

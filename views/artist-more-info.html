@@ -24,10 +24,6 @@
                 data-ng-click="Artist(artist_min_info.name).getAlbums('moreInfoArtistTopAlbums'); $parent.moreInfoType = 'albums'" 
                 data-ng-class="{'active' : moreInfoType == 'albums'}" 
             href=""><i class="a-icon-th a-icon-opacity"></i> Дискография</a>
-            <a 
-                data-ng-click="Artist(artist_min_info.name).getEvents('moreInfoArtistEvents'); $parent.moreInfoType = 'events'" 
-                data-ng-class="{'active' : moreInfoType == 'events'}" 
-            href=""><i class="a-icon-time a-icon-opacity"></i> События</a>
         </nav>
     </header>
     
@@ -141,7 +137,7 @@
         <ul class="artists">
             <li data-ng-repeat="s in moreInfoSimilar">
                 <a data-ng-click="artistMoreInfo(s.name)" href="">
-                    <img src="icons/no-image.png" width="126" height="126" data-image="{{s.image.2['#text']}}" >
+                    <img src="icons/no-image.png" width="126" height="126" data-image="{{s.image[2]['#text']}}" >
                     <span>{{s.name}}</span>
                     <i class="red" data-ng-if="s.match == 1">Такая же музыка</i>
                     <i class="orange" data-ng-if="s.match < 1 && s.match > 0.35">Очень похожая</i>
@@ -155,7 +151,7 @@
     	<ul class="albums">
         	<li data-ng-repeat="album in moreInfoArtistTopAlbums">
            		<a data-ng-click="Artist(album.artist).getAlbum(album.name, 'albumTracks')" href="">
-                	<img src="icons/no-image.png" width="250" height="250" image="{{album.image.3['#text']}}">
+                	<img src="icons/no-image.png" width="250" height="250" image="{{album.image[3]['#text']}}">
                     <div class="album-info">
                     	<span class="name">{{album.name}}</span>
                         <span class="year" data-ng-if="album.year">{{album.year}} г.</span>
@@ -175,7 +171,7 @@
         	<a data-ng-click="toAlbumList()" class="to-albums-list clear" href=""><i class="a-icon-chevron-left a-icon-opacity"></i> Вернуться к альбомам</a>
     		
             <div class="album-info">
-            	<img src="icons/no-image.png" width="126" height="126" image="{{albumTracks.image.2['#text']}}">
+            	<img src="icons/no-image.png" width="126" height="126" image="{{albumTracks.image[2]['#text']}}">
 
                 <div class="info">
                 	<div class="name">{{albumTracks.name}}</div>

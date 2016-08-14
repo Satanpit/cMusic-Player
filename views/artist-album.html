@@ -13,7 +13,7 @@
     <div class="slide">
     	<div data-ng-if="isAlbumLoad" class="artist-album clear">
         	<h3>{{album.name}}</h3>
-        	<img src="icons/no-image.png" width="126" height="126" image="{{album.image.2['#text']}}">
+        	<img src="icons/no-image.png" width="126" height="126" image="{{album.image[2]['#text']}}">
             <ul>
                 <li class="track search-track"
                     data-ng-class="{current : isCurrentTrack(track)}" 

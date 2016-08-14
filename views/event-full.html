@@ -36,7 +36,7 @@
             
             <ul class="event-artists">
             	<li data-ng-repeat="a in eventFull.artists.full">
-                	<img width="100" height="100" src="icons/no-image.png" data-image="{{a.image.2['#text']}}" />
+                	<img width="100" height="100" src="icons/no-image.png" data-image="{{a.image[2]['#text']}}" />
                     <div class="title">{{a.name}}</div>
                     <a data-ng-click="playArtiist(a.name)" href="" class="play-artist">
                     	<span class="blue-bg"><i data-ng-class="{'a-icon-pause' : !eventPlayIsPaused && eventCurrentTrack.artist == a.name}" class="a-icon-play a-icon-white"></i></span>

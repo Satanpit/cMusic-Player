@@ -7,8 +7,8 @@
     <script src="app/vendor/jquery.min.js"></script>
     <script src="app/vendor/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="app/vendor/angular.min.js"></script>
-    
-	<link rel="stylesheet" type="text/css" href="styles/main.css">
+
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
     <link rel="stylesheet" type="text/css" href="styles/icons.css">
 </head>
 <body data-ng-cloak data-ng-controller="PlayerCtrl" data-ng-init="Init()">
@@ -50,7 +50,7 @@
         </div>
         
         <div data-ng-cloak id="player-info-panel">
-        	<img width="64" height="64" image="{{current_image.0['#text']}}" src="icons/no-album.png">
+        	<img width="64" height="64" image="{{current_image[0]['#text']}}" src="icons/no-album.png">
             
             <div data-ng-bind-html="currentTrack.artist || playlistTracks[0].artist" id="current-artist-name"></div>
             <div data-ng-bind-html="currentTrack.title || playlistTracks[0].title" id="current-track-name"></div>
@@ -97,9 +97,9 @@
     </header>
     
     <menu id="global-menu">
-    	<li class="dropdown">
-        	<a class="dropdown-toggle" id="menu-playlist" href="">Плейлисты</a>
-            <ul class="dropdown-menu pull-right playlists">
+    	<li uib-dropdown class="dropdown">
+        	<a uib-dropdown-toggle class="dropdown-toggle" id="menu-playlist" href="">Плейлисты</a>
+            <ul uib-dropdown-menu class="dropdown-menu pull-right playlists">
                 <li>
                     <a data-ng-click="setAlbum(0)" href=""><i class="a-icon-all-playlists a-icon-white"></i> Все аудиозаписи</a>
                 </li>
@@ -214,10 +214,10 @@
     <script src="app/vendor/md5.min.js"></script>
     <script src="app/vendor/angular-animate.min.js"></script>
     <script src="app/vendor/angular-sortable.js"></script>
-    
-    <script src="app/vendor/ui-bootstrap-custom-0.10.0.min.js"></script>
-    <script src="app/vendor/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
-    
+
+    <script src="app/vendor/ui-bootstrap-custom-2.0.1.min.js"></script>
+    <script src="app/vendor/ui-bootstrap-custom-tpls-2.0.1.min.js"></script>
+
     <script src="app/app.js"></script>
     <script src="app/app.directives.js"></script>
     <script src="app/app.filters.js"></script>

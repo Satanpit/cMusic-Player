@@ -17,7 +17,7 @@
         <li data-ng-repeat="a in userLibArtists.items">
             <a data-ng-click="artistMoreInfo(a.name)" href="">
                 <b>{{a.playcount|number}}</b>
-                <img src="icons/no-image.png" width="126" height="126" data-image="{{a.image.2['#text']}}" >
+                <img src="icons/no-image.png" width="126" height="126" data-image="{{a.image[2]['#text']}}" >
                 <span>{{a.name}}</span>
             </a>
         </li>
