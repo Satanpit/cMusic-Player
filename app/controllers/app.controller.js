@@ -1199,17 +1199,21 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 		else {
 			VK.setBroadcast('');
 		}
-	}
+	};
 	
 	/**
 	 * Поиск еби его мать 
 	 * жрать хочу, но эту херь надо доделать
 	 */
+
+	$scope.searchData = {
+		prevent: null
+	};
 	
 	// Вызываем окно поиска
 	$scope.showSearch = function() {
 		$scope.isSearchShow	= !$scope.isSearchShow;
-		$scope.query = '';
+		$scope.searchData = {};
 		
 		if($scope.isSearchShow) {
 			$scope.Recommended('searchTracks').getTracks(0);
@@ -1220,13 +1224,14 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 		}
 		
 		tracker.sendAppView('Открыт поиск');
-	}
+	};
 	
 	// Поиск исполнителя из основного плейлиста
-	$scope.searchByArtist = function(artist) {
+	$scope.searchByArtist = function (artist) {
 		$scope.performer_only = 1;
 		$scope.isVkRecomendations = false;
-		$scope.query = artist;
+
+		$scope.searchData.query = artist;
 
 		if(!$scope.isSearchShow) {
 			$scope.isSearchShow = true;
@@ -1241,8 +1246,8 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	};
 	
 	// Поиск трека/исполнителя
-	$scope.search = function() {
-		$scope.isVkRecomendations	= false;
+	$scope.search = function (query) {
+		$scope.isVkRecomendations = false;
 		search();
 	};
 	
@@ -1262,14 +1267,19 @@ Player.controller('PlayerCtrl', function($scope, $rootScope, $filter, $timeout, 
 	};
 
 	$scope.selectAutocompleteItem = function (item) {
-		$scope.query = item.name;
+		$scope.searchData.query = item.name;
 		$scope.performer_only = item.type;
 
 		search();
 	};
 
 	function search(isMore) {
-		$scope.Tracks('searchTracks').search({name: $scope.query, type: $scope.performer_only}, isMore);
+		if ($scope.searchData.query === $scope.searchData.prevent && !isMore) {
+			return;
+		}
+
+		$scope.searchData.prevent = $scope.searchData.query;
+		$scope.Tracks('searchTracks').search({name: $scope.searchData.query, type: $scope.performer_only}, isMore);
 	}
 	
 	// Закрываем окно поиска

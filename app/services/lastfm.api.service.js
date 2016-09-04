@@ -394,7 +394,7 @@ Player.factory('LastFM', function($http, $q, storage){
 					result.results.trackmatches.track.forEach(function (item) {
 						autocompleteResult.push({
 							name: item.name,
-							type: 1
+							type: 0
 						});
 					});
 				});

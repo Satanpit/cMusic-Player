@@ -5,7 +5,8 @@
         	<input 
                 type="text"
                 ng-trim="true"
-                ng-model="query"
+                name="query"
+                ng-model="searchData.query"
                 uib-typeahead="searchAutocomplete.name for searchAutocomplete in getSearchAutocomplete($viewValue)"
                 typeahead-template-url="views/typehead.html"
                 typeahead-on-select="selectAutocompleteItem($item)"
